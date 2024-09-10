@@ -1,0 +1,4 @@
+{
+  "files": ["dist/*/.js"],
+  "ignore": ["dist/*/.js"]
+}
