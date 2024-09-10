@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ProjectSection = ({ setConditionalComponent, projectId }) => {
+
   const [projects, setProjects] = useState({
     projectName: "Project Name",
     clientName: "Client Name",
@@ -25,6 +26,33 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
     designation: "Designation",
     _id: "Employee Id",
   }]);
+
+  const [tickets, setTickets] = useState([{
+    ticketName: "Ticket Name",
+    ticketId: "Ticket Id",
+    ticketDescription: "Ticket Description",
+    priority: "Priority",
+    status: "Status",
+    assignedTo: "Assigned To",
+    assignedByEmail: "Assigned By Email",
+    assignedByName: "Assigned By Name",
+  }]);
+
+  const [tasks, setTasks] = useState([{
+
+    taskName: "Task Name",
+    taskId: "Task Id",
+    taskDescription: "Task Description",
+    priority: "Priority",
+    status: "Status",
+    assignedTo: "Assigned To",
+    assignedByEmail: "Assigned By Email",
+    assignedByName: "Assigned By Name",
+
+  }]);
+
+  const [isTaskOpen, setIsTaskOpen] = useState(false);
+
 
   const fetchProjects = async () => {
     console.log("projectId => ", projectId);
@@ -62,7 +90,9 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
         Back
       </button>
 
-      <div className="card mb-3">
+
+      <details title='Project Detail' className="card mb-3">
+        <summary> Project Detail </summary>
         <div className="card-body">
           <h2 className="card-title">Project Section</h2>
           <div className="row">
@@ -75,9 +105,10 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
             </div>
           </div>
         </div>
-      </div>
+      </details>
 
-      <div className="card mb-3">
+      <details className="card mb-3">
+        <summary> Team Details </summary>
         <div className="card-body">
           <legend>Team Details</legend>
           <div className="row">
@@ -88,35 +119,43 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
             </div>
           </div>
         </div>
-      </div>
+      </details>
 
-      <div className="card">
-  <div className="card-body">
-    <legend>Employee Details</legend>
-   
-    <div className="row">
-      {employeeDetails.map((employee, index) => (
-        <div className="col-md-4 mb-3" key={index}>
-          <div className="card">
-            <div className="card-body">
-              <h5 className="card-title">{employee.employeeName}</h5>
-              <p className="card-text"><strong>Email:</strong> {employee.employeeEmail}</p>
-              <p className="card-text"><strong>Designation:</strong> {employee.designation}</p>
-              <div className="row mb-3">
-      <div className="col-md-6">
-        <button className="btn btn-primary">Task Status</button>
-      </div>
-      <div className="col-md-6 text-end">
-        <button className="btn btn-success">Add Task</button>
-      </div>
-    </div>
+      <details className="card">
+        <summary> Employee Details </summary>
+        <div className="card-body">
+          <legend>Employee Details</legend>
+        
+          <div className="row">
+            {employeeDetails.map((employee, index) => (
+              <div className="col-md-4 mb-3" key={index}>
+                <div className="card">
+                  <div className="card-body">
+                    <h5 className="card-title">{employee.employeeName}</h5>
+                    <p className="card-text"><strong>Email:</strong> {employee.employeeEmail}</p>
+                    <p className="card-text"><strong>Designation:</strong> {employee.designation}</p>
+                    <div className="row mb-3">
+            <div className="col-md-6">
+              <button className="btn btn-primary">View Task List</button>
+            </div>
+            <div className="col-md-6 text-end">
+              <button className="btn btn-success">Add Task</button>
             </div>
           </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
-    </div>
-  </div>
-</div>
+      </details>
+
+      <br/>
+
+      <details>
+        <summary> Task List </summary>
+      
+      </details>
 
     </div>
   );
