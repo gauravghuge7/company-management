@@ -9,7 +9,7 @@ const Projectlist = ({setConditionalComponent}) => {
    const [projectData, setProjectData] = useState([
       {
          projectName: 'Example Project',
-        
+
          spokePersonEmail: 'example@example.com',
          spokePersonName: 'John Doe',
          spokePersonNumber: '123-456-7890',
@@ -19,10 +19,20 @@ const Projectlist = ({setConditionalComponent}) => {
 
    ]);
 
-   const handleAddTask = () => {
-      setIsEditing(true);
 
-      
+   const [currentProject, setCurrentProject] = useState({
+      projectName: '',
+      spokePersonEmail: '',
+      spokePersonName: '',
+      spokePersonNumber: '',
+      description: '',  
+      teamLead: '',
+      _id: "",
+   });
+
+   const handleAddTask = (data) => {
+      setIsEditing(true);
+      setCurrentProject(data);
    };
 
 
@@ -57,7 +67,7 @@ const Projectlist = ({setConditionalComponent}) => {
 
    if (isEditing) {
       return <EditProjectForm 
-         projectData={projectData} 
+         currentProject={currentProject} 
          setConditionalComponent={setConditionalComponent}
          onSave={handleSave}
          setIsEditing={setIsEditing}
@@ -74,7 +84,7 @@ const Projectlist = ({setConditionalComponent}) => {
             <thead>
                <tr>
                   <th>Project Name</th>
-                
+
                   <th>Spokesperson Email</th>
                   <th>Spokesperson Name</th>
                   <th>Spokesperson Number</th>
@@ -88,15 +98,23 @@ const Projectlist = ({setConditionalComponent}) => {
                   projectData.map((data, index) => (
                      <tr key={index}>
                         <td>{data.projectName}</td>
-                       
+
                         <td>{data.spokePersonEmail}</td>
                         <td>{data.spokePersonName}</td>
                         <td>{data.spokePersonNumber}</td>
                         <td>{data.teamLead}</td>
                         <td>{data.description}</td>
                         <td>
-                           <button className="btn btn-primary me-2" onClick={handleAddTask}>Add Task</button>
+                           <button 
+                              className="btn btn-primary me-2" 
+                              onClick={() => handleAddTask(data)}
+                           >
+                           Add Ticket
+                           </button>
+
+
                            {/* <button className="btn btn-danger" onClick={handleDelete}>Delete</button> */}
+
                         </td>
                      </tr>
                   ))

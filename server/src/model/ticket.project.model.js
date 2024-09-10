@@ -1,4 +1,7 @@
-import {Schema, model} from 'mongoose';
+import {
+  model,
+  Schema,
+} from 'mongoose';
 
 const ticketSchema = new Schema({
 
@@ -7,6 +10,11 @@ const ticketSchema = new Schema({
         ref: "Project"
     },
     
+    ticketName: {
+        type: String,
+        required: true,
+    },
+
     ticketId: {
         type: String,
         required: true,
@@ -15,6 +23,11 @@ const ticketSchema = new Schema({
     projectTeamLead: {
         type: Schema.Types.ObjectId,
         ref: "Project"
+    },
+
+
+    saptype:{
+        type: String,
     },
 
 
@@ -55,6 +68,8 @@ const ticketSchema = new Schema({
     assignedByName: {
         type: String
     },  
+
+    
 
 });
   

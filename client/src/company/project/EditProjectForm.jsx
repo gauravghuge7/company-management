@@ -2,24 +2,34 @@ import React, { useRef, useState } from 'react';
 import JoditEditor from 'jodit-react';
 import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
 
-const TaskForm = ({ projectData, setConditionalComponent, onSave, setIsEditing }) => {
+const TaskForm = ({ currentProject, setConditionalComponent, onSave, setIsEditing }) => {
 
     const editor = useRef(null);
     const [content, setContent] = useState('');
 
     const [formData, setFormData] = useState({
-        companyName: '',
-        priority: '',
+
+        assignedTo: "", 
+        assignedByEmail: "", 
+        assignedByName: "", 
+
+    
+        priority: "",
+        project: "",
+
+        ticketName: "",
+        ticketId: "",
+        ticketDescription: '',
+        saptype: "",
+
         taskDetail: '',
         ticketCreateDate: '',
         dueDate: '',
-        assignName: '',
+
+        document: ""
     });
 
-    const config = {
-        readonly: false,
-        placeholder: 'Start typing your task details...',
-    };
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -29,18 +39,45 @@ const TaskForm = ({ projectData, setConditionalComponent, onSave, setIsEditing }
         });
     };
 
-    const handleJoditChange = (newContent) => {
-        setContent(newContent);
-        setFormData({
-            ...formData,
-            taskDetail: newContent,
-        });
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Form Data Submitted:', formData);
-        // Handle form submission logic here
+        
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        const body = {
+            
+            assignedByEmail: formData.assignedByName, 
+            assignedByName: formData.assignedByEmail,
+
+            projectId: formData.project,
+            priority: formData.priority,
+            project: currentProject._id,
+
+            ticketId: formData.ticketId,
+            ticketDescription: formData.ticketDescription,
+        }
+
+
+
+
+
+
+    };
+
+
+
+
+    const selectFile = (e) => {
+        const file = e.target.files[0];
+        setFormData({
+            ...formData,
+            document: file,
+        });
     };
 
     return (
@@ -55,12 +92,13 @@ const TaskForm = ({ projectData, setConditionalComponent, onSave, setIsEditing }
                         <Card.Body>
                             <h2 className="text-center mb-4" style={{ fontWeight: 'bold' }}>Create New Task</h2>
                             <Form onSubmit={handleSubmit}>
+
                                 <Form.Group controlId="companyName" className="mb-3">
-                                    <Form.Label>Task Name</Form.Label>
+                                    <Form.Label>Ticket Name</Form.Label>
                                     <Form.Control
                                         type="text"
                                         name="companyName"
-                                        value={formData.taskName}
+                                        value={formData.ticketName}
                                         onChange={handleChange}
                                         required
                                         style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
@@ -114,7 +152,7 @@ const TaskForm = ({ projectData, setConditionalComponent, onSave, setIsEditing }
                                         style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
                                     />
                                 </Form.Group>
-                             
+                            
 
                                 <Form.Group controlId="dueDate" className="mb-3">
                                     <Form.Label>Due Date</Form.Label>
@@ -133,7 +171,7 @@ const TaskForm = ({ projectData, setConditionalComponent, onSave, setIsEditing }
                                     <Form.Control
                                         type="text"
                                         name="assignName"
-                                        value={formData.assignName}
+                                        value={formData.assignedByName}
                                         onChange={handleChange}
                                         required
                                         style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
@@ -152,31 +190,31 @@ const TaskForm = ({ projectData, setConditionalComponent, onSave, setIsEditing }
                                 </Form.Group>
 
                                 <section>
-                  <label> Project Description </label>
-                  <textarea 
-                     cols="50" 
-                     className='w-full border p-2 mb-4'
-                     placeholder="Add text to the slide"
-                     value={formData.description}
-                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                     style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
-                  >
-                  </textarea>
-               </section>
-               <div>
-                  <label> Select Document </label>
-                  <br/>
-                  <input 
-                     type="file"
-                     
-                     accept='*'
-                  />
-              
+                                <label> Project Description </label>
+                                    <textarea 
+                                        cols="50" 
+                                        className='w-full border p-2 mb-4'
+                                        placeholder="Add text to the slide"
+                                        value={formData.description}
+                                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                                        style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
+                                    >
+                                    </textarea>
+                            </section>
+                                <div>
+                                    <label> Select Document </label>
+                                    <br/>
+                                    <input 
+                                        type="file"
+                                        onChange={selectFile}
+                                        accept='*'
+                                    />
+                                
 
-               </div>
-               <br/>
+                                </div>
+                            <br/>
 
-              
+                            
                                 <Button
                                     variant="primary"
                                     type="submit"

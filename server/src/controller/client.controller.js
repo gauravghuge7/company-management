@@ -315,8 +315,72 @@ const fetchTasks = asyncHandler (async (req,res) => {
 
 })
 
+
+
+const createTicket = asyncHandler(async (req, res) => {
+
+    try {
+        
+        const { 
+            assignedTo, 
+            assignedByEmail, 
+            assignedByName, 
+
+            projectId, 
+            priority,
+            project,
+
+            ticketId,
+            ticketDescription,  
+            ticketName,
+            saptype
+        
+        } = req.body;
+
+
+
+        if(!assignedTo || !assignedByEmail || !assignedByName || !projectId || !priority || !project || !ticketId || !ticketDescription) {
+            throw new ApiError(400, "Please provide all the required fields");
+        }
+
+        // find the entry in the database
+        const client = await Client.findOne({ clientEmail: req.user.clientEmail })
+        
+        if(!client) {
+            throw new ApiError(400, "Client does not exist");
+        }
+
+        // create a entry in the database
+        const ticket = await Ticket.create({
+            assignedTo,
+            assignedByEmail,
+            assignedByName,
+            projectId,
+            priority,
+            project,
+            ticketId,
+            ticketDescription,
+            status: "Open",
+
+        })
+    
+        return res
+            .status(200)
+            .json(
+                new ApiResponse(200, "Ticket created successfully", ticket)
+            )
+
+    } 
+    catch (e) {
+        console.error('Error', e)
+        throw new ApiError(400, e.message)
+    }
+    
+})
+
 export {
   createProject,
+  createTicket,
   fetchProjects,
   fetchTasks,
   loginClient,

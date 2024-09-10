@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { Container, Row, Col, Table, Button } from 'react-bootstrap';
 
 const TaskList = ({ setConditionalComponent, projectId }) => {
@@ -73,13 +73,13 @@ const TaskList = ({ setConditionalComponent, projectId }) => {
 
   /**  unComment this code after */
 
-  // if(tasks || tasks?.length === 0) {
-  //   return (
-  //     <div className="container mt-5">
-  //       <h2 className="text-center">No tasks found.</h2>
-  //     </div>
-  //   );
-  // }
+  if(tasks || tasks?.length === 0) {
+    return (
+      <div className="container mt-5">
+        <h2 className="text-center">No tasks found.</h2>
+      </div>
+    );
+  }
 
 
 

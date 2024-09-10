@@ -2,6 +2,7 @@ import express from 'express';
 
 import {
   createProject,
+  createTicket,
   fetchProjects,
   fetchTasks,
   loginClient,
@@ -51,6 +52,13 @@ clientRouter.route("/fetchTasks/:projectId").get( //verify client
    verifyClient,   
    fetchTasks
 )  
+
+
+clientRouter.route("/createTicket").post( //verify client   
+   verifyClient,   
+   upload.single("document"),
+   createTicket
+)
 
 
 export default clientRouter;

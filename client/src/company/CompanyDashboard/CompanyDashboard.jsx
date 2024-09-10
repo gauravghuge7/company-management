@@ -48,7 +48,7 @@ function CompanyDashboard() {
 
 
 
-     </div>
+    </div>
     
     
     

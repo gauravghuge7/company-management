@@ -40,7 +40,7 @@ const Componysidebar = ({ setConditionalComponent }) => {
             className="nav-link text-white"
             style={navButtonStyle}
           >
-            <i className="bi bi-list-task me-2"></i> View Tasks
+            <i className="bi bi-list-task me-2"></i> View Tickets
           </button>
         </li>
       </ul>
