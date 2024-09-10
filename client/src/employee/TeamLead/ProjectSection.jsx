@@ -1,182 +1,125 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const ProjectSection = ({setConditionalComponent, projectId}) => {
+const ProjectSection = ({ setConditionalComponent, projectId }) => {
+  const [projects, setProjects] = useState({
+    projectName: "Project Name",
+    clientName: "Client Name",
+    description: "Description",
+    spokePersonName: "Spoke Person Name",
+    spokePersonNumber: 1234567890,
+    spokePersonEmail: "Spoke Person Email",
+    projectId: "Project Id",
+  });
 
+  const [team, setTeam] = useState({
+    teamId: "Team Id",
+    teamName: "Team Name",
+    createdAt: ""
+  });
 
-   const [projects, setProjects] = useState(
-      
-      {
-         projectName: "Project Name",
-         clientName: "Client Name",
-         description: "Description",   
-         spokePersonName: "Spoke Person Name",
-         spokePersonNumber: 1234567890,
-         spokePersonEmail: "Spoke Person Email",
+  const [employeeDetails, setEmployeeDetails] = useState([{
+    employeeName: "Employee Name",
+    employeeEmail: "Employee Email",
+    designation: "Designation",
+    _id: "Employee Id",
+  }]);
 
-         projectId: "Project Id",
+  const fetchProjects = async () => {
+    console.log("projectId => ", projectId);
 
-         
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      withCredentials: true,
+    };
+
+    try {
+      const response = await axios.get(`/api/employee/fetchProjectById/${projectId}`, config);
+
+      console.log("response.data => ", response.data);
+
+      if (response.data.success === true) {
+        setProjects(response?.data?.data[0]);
+        setTeam(response?.data?.data[0]?.team[0]);
+        console.log("employee => ", response?.data?.data[0]?.team[0].employeeDetails);
+        setEmployeeDetails(response?.data?.data[0]?.team[0].employeeDetails);
       }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-   );
+  useEffect(() => {
+    fetchProjects();
+  }, []);
 
+  return (
+    <div className="container mt-4">
+      <button className="btn btn-primary mb-3" onClick={() => setConditionalComponent("teamLead")}>
+        Back
+      </button>
 
-
-   const [team, setTeam] = useState({
-      
-      teamId: "Team Id",
-      teamName: "Team Name",
-      createdAt: ""
-   })
-
-
-   const [employeeDetails, setEmployeeDetails] = useState([{
-
-      employeeName: "Employee Name",
-      employeeEmail: "Employee Email",
-      designation: "Designation",
-      
-      _id: "Employee Id",
-
-
-   }]);
-
-
-   const fetchProjects = async() => {
-
-      console.log("projectId => ", projectId);
-
-   
-      
-      const config = {
-         headers: {
-            'Content-Type': 'multipart/form-data',
-         },
-         withCredentials: true,
-      }
-
-
-      try {
-
-         const response = await axios.get(`/api/employee/fetchProjectById/${projectId}`, config);
-
-         console.log("response.data => ", response.data);  
-         
-         
-         if(response.data.success === true) {
-
-         //  response.data.data
-            setProjects(response?.data?.data[0]);
-
-            setTeam(response?.data?.data[0]?.team[0]);
-
-            console.log("employee => ", response?.data?.data[0]?.team[0].employeeDetails)
-            
-
-            setEmployeeDetails(response?.data?.data[0]?.team[0].employeeDetails);
-
-         }
-         
-      } 
-      catch (error) {
-      
-         console.log(error);
-      }
-
-   }
-
-   useEffect(() => {
-
-      fetchProjects();
-
-   }, [])
-
-
-
-
-   return (
-      <div>
-
-         <button onClick={() => setConditionalComponent("teamLead")}>
-            Back
-         </button>
-         
-         <nav className=''>
-
-            <section
-               className='shadow-md shadow-gray-500/50 rounded-lg'
-            >
-               <h2>Project Section</h2>
-
-               <div>
-                        
-                  <h3>{projects.projectName}</h3>
-                  <p>{projects.description}</p>
-                  <p>{projects.spokePersonName}</p>
-                  <p>{projects.spokePersonNumber}</p>
-                  <p>{projects.spokePersonEmail}</p>
-
-
-               </div>
-
-
-            </section>
-
-
-         </nav>
-
-         
-         
-
-         <main className='mt-5 shadow-md shadow-gray-500/50 p-4 rounded-lg '>
-         
-            <legend>Team Details</legend>
-
-            <div>
-               
-               <h3>{team.teamName}</h3>
-               <p>{team.teamId}</p>
-               <p>{team.createdAt}</p>
-            
-            
+      <div className="card mb-3">
+        <div className="card-body">
+          <h2 className="card-title">Project Section</h2>
+          <div className="row">
+            <div className="col-md-6">
+              <h3 className="card-title">{projects.projectName}</h3>
+              <p className="card-text"><strong>Description:</strong> {projects.description}</p>
+              <p className="card-text"><strong>Spoke Person:</strong> {projects.spokePersonName}</p>
+              <p className="card-text"><strong>Phone:</strong> {projects.spokePersonNumber}</p>
+              <p className="card-text"><strong>Email:</strong> {projects.spokePersonEmail}</p>
             </div>
-
-         </main>
-
-
-
-         <details name='employeeDetails'>
-            <legend>Employee Details</legend>
-         
-            <main className='mt-5 shadow-md shadow-gray-500/50 p-4 rounded-lg '>
-               
-               {
-                  employeeDetails.map((employee, index) => (
-                     <div key={index}>
-                        <h3>{employee.employeeName}</h3>
-                        <p>{employee.employeeEmail}</p>
-                        <p>{employee.designation}</p>
-                  
-                     </div>
-                  ))
-               }
-               
-               
-               
-            </main>
-         
-         
-         
-         </details>
-
-         
-
-
-         
+          </div>
+        </div>
       </div>
-   );
-}
+
+      <div className="card mb-3">
+        <div className="card-body">
+          <legend>Team Details</legend>
+          <div className="row">
+            <div className="col-md-6">
+              <h3 className="card-title">{team.teamName}</h3>
+              <p className="card-text"><strong>Team ID:</strong> {team.teamId}</p>
+              <p className="card-text"><strong>Created At:</strong> {team.createdAt}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="card">
+  <div className="card-body">
+    <legend>Employee Details</legend>
+   
+    <div className="row">
+      {employeeDetails.map((employee, index) => (
+        <div className="col-md-4 mb-3" key={index}>
+          <div className="card">
+            <div className="card-body">
+              <h5 className="card-title">{employee.employeeName}</h5>
+              <p className="card-text"><strong>Email:</strong> {employee.employeeEmail}</p>
+              <p className="card-text"><strong>Designation:</strong> {employee.designation}</p>
+              <div className="row mb-3">
+      <div className="col-md-6">
+        <button className="btn btn-primary">Task Status</button>
+      </div>
+      <div className="col-md-6 text-end">
+        <button className="btn btn-success">Add Task</button>
+      </div>
+    </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+    </div>
+  );
+};
 
 export default ProjectSection;
-
