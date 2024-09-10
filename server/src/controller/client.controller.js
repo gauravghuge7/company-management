@@ -1,12 +1,15 @@
-import { Client } from "../model/client.model.js";    // modeler client import here
-import { ApiError } from "../utils/ApiError.js";
-import { ApiResponse } from "../utils/ApiResponse.js";
-import bcrypt from "bcrypt";                 // this is the password bcrypt library for hashung the password
-import { asyncHandler } from "../utils/asyncHandler.js";
-import jwt from "jsonwebtoken";
-import { Project } from "../model/project.model.js";
-import mongoose from "mongoose";
+import bcrypt
+  from 'bcrypt';                 // this is the password bcrypt library for hashung the password
+import mongoose from 'mongoose';
 
+import {
+  Client,
+} from '../model/client.model.js';    // modeler client import here
+import { Project } from '../model/project.model.js';
+import { Ticket } from '../model/ticket.project.model.js';
+import { ApiError } from '../utils/ApiError.js';
+import { ApiResponse } from '../utils/ApiResponse.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
 
 const createAccessAndRefreshToken = async(clientId) => {            
 
@@ -280,18 +283,43 @@ const fetchProjects = asyncHandler(async (req, res) => {
 
 
 
+const fetchTasks = asyncHandler (async (req,res) => {
+    
+    try {
+
+        const { projectId } = req.params;
+
+        const tickets = await Ticket.aggregate([
+            {
+                $match: {
+                    project: new mongoose.Types.ObjectId(projectId)
+                }
+            }
+
+        ])
 
 
+        return res
+            .status(200)
+            .json(
+                new ApiResponse(200, "tickets fetched successfully", tickets)
+            )
+        
+        
+    } 
+    catch (error) {
+    
+        console.log(" Error => ", error.message)
+        throw new ApiError(400, error.message);
+    }
 
-
-
-
+})
 
 export {
-    registerClient,
-    loginClient,
-    createProject,
-    fetchProjects,
-    logoutClient,
-    
-}
+  createProject,
+  fetchProjects,
+  fetchTasks,
+  loginClient,
+  logoutClient,
+  registerClient,
+};

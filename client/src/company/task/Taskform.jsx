@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import JoditEditor from 'jodit-react';
 import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
 

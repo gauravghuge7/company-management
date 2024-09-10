@@ -1,8 +1,16 @@
 import express from 'express';
-import { createProject, fetchProjects, loginClient, logoutClient, registerClient } from '../controller/client.controller.js';
+
+import {
+  createProject,
+  fetchProjects,
+  fetchTasks,
+  loginClient,
+  logoutClient,
+  registerClient,
+} from '../controller/client.controller.js';
 import { verifyAdmin } from '../middleware/Admin.middleware.js';
-import { upload } from '../middleware/multer.middleware.js';
 import { verifyClient } from '../middleware/Compony.middleware.js';
+import { upload } from '../middleware/multer.middleware.js';
 
 const clientRouter= express.Router();
       
@@ -36,6 +44,12 @@ clientRouter.route("/createProject").post( //verify client
 clientRouter.route("/fetchProjects").get( //verify client   
    verifyClient,   
    fetchProjects
+)
+
+
+clientRouter.route("/fetchTasks/:projectId").get( //verify client   
+   verifyClient,   
+   fetchTasks
 )  
 
 

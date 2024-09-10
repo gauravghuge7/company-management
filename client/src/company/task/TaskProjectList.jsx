@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import EditProjectForm from './EditProjectForm';
-
 import axios from 'axios';
 
-const Projectlist = ({setConditionalComponent}) => {
-   const [isEditing, setIsEditing] = useState(false);
+
+
+const TaskProjectlist = ({setConditionalComponent, setProjectId}) => {
+
+   
 
    const [projectData, setProjectData] = useState([
       {
@@ -19,11 +20,7 @@ const Projectlist = ({setConditionalComponent}) => {
 
    ]);
 
-   const handleAddTask = () => {
-      setIsEditing(true);
-
-      
-   };
+   
 
 
    const getProjects = async () => {
@@ -49,20 +46,16 @@ const Projectlist = ({setConditionalComponent}) => {
 
 
 
-   const handleSave = (updatedData) => {
-      setProjectData(updatedData);
-      setIsEditing(false);
-   };
+   const sendProjectId = (Id) => {
 
+      setProjectId(Id);
+      setConditionalComponent('tasklist');
 
-   if (isEditing) {
-      return <EditProjectForm 
-         projectData={projectData} 
-         setConditionalComponent={setConditionalComponent}
-         onSave={handleSave}
-         setIsEditing={setIsEditing}
-      />;
    }
+
+
+
+   
 
    return (
       <div className="container mt-5">
@@ -74,7 +67,7 @@ const Projectlist = ({setConditionalComponent}) => {
             <thead>
                <tr>
                   <th>Project Name</th>
-                
+
                   <th>Spokesperson Email</th>
                   <th>Spokesperson Name</th>
                   <th>Spokesperson Number</th>
@@ -84,19 +77,27 @@ const Projectlist = ({setConditionalComponent}) => {
                </tr>
             </thead>
             <tbody>
+
                {
                   projectData.map((data, index) => (
                      <tr key={index}>
                         <td>{data.projectName}</td>
-                       
+
                         <td>{data.spokePersonEmail}</td>
                         <td>{data.spokePersonName}</td>
                         <td>{data.spokePersonNumber}</td>
                         <td>{data.teamLead}</td>
                         <td>{data.description}</td>
                         <td>
-                           <button className="btn btn-primary me-2" onClick={handleAddTask}>Add Task</button>
-                           {/* <button className="btn btn-danger" onClick={handleDelete}>Delete</button> */}
+                           <button 
+                              className="btn btn-primary me-2" 
+                              onClick={() => sendProjectId(data._id)}
+                           >
+                           
+                              View Tasks
+                           </button>
+
+                           
                         </td>
                      </tr>
                   ))
@@ -107,4 +108,4 @@ const Projectlist = ({setConditionalComponent}) => {
    );
 };
 
-export default Projectlist;
+export default TaskProjectlist;

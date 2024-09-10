@@ -6,10 +6,13 @@ import TaskForm from '../task/Taskform'
 import ProjectForm from '../project/Projectform'
 import Projectlist from '../project/Projectlist'
 import Componynavabar from '../navbar/Componynavabar'
+import TaskProjectlist from '../task/TaskProjectList'
 
 function CompanyDashboard() {
 
   const [conditionalComponent, setConditionalComponent] = useState("");
+
+  const [projectId, setProjectId] = useState("");
 
 
   return (
@@ -26,9 +29,19 @@ function CompanyDashboard() {
 
         {conditionalComponent === "CompanyDashboard" && <Dashboard />}
         {conditionalComponent === "" && <Dashboard />}
-        {conditionalComponent === "CompanyTasks" && <Tasklist setConditionalComponent={setConditionalComponent} />}
+
+
+        {conditionalComponent === "CompanyTasks" && <TaskProjectlist setProjectId={setProjectId} setConditionalComponent={setConditionalComponent} />}
+        
+
+        {conditionalComponent === "tasklist" && <Tasklist setConditionalComponent={setConditionalComponent} projectId={projectId} />}
+
+
         {conditionalComponent === "addTask" && <TaskForm />}
+
+
         {conditionalComponent === "projectform" && <ProjectForm  />}
+
         {conditionalComponent === "Projectlist" && <Projectlist setConditionalComponent={setConditionalComponent} />}
 
       </div>

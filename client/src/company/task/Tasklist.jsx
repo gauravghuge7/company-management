@@ -1,7 +1,12 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Table, Button } from 'react-bootstrap';
 
-const TaskList = ({ setConditionalComponent }) => {
+const TaskList = ({ setConditionalComponent, projectId }) => {
+
+
+  const [isEditing, setIsEditing] = useState(false);
+
   const [tasks, setTasks] = useState([
    
     { 
@@ -17,22 +22,7 @@ const TaskList = ({ setConditionalComponent }) => {
         document: "https://example.com/document.pdf"  
 
     },
-   
-    {     
 
-      companyName: "XYZ Company",   
-      priority: "Medium",   
-        saptype: "SAP ABAP",    
-        taskDetail: "Task Detail",      
-        ticketCreateDate: "2022-01-01",
-        dueDate: "2022-01-01",
-        assignbyteam: "XYZ Team",
-        assignName: "John Doe",
-        assignEmail: "johndoe@gmail.com",
-        assignTeam: "ABC Team",
-        document: "https://example.com/document.pdf"
-
-    }
   ]);
 
 
@@ -45,9 +35,53 @@ const TaskList = ({ setConditionalComponent }) => {
     console.log('Task deleted');
   };
 
+
+  // fetch the tasks from the server
+
+  const fetchTasks = async () => {
+
+    try {
+
+      const response = await axios.get(`/api/client/fetchTasks/${projectId}`);
+      
+
+      console.log("response.data", response.data);
+
+
+
+      if (response.data.success) {
+        console.log("ok");
+        setTasks(response.data.data);
+
+      }
+      
+
+    } 
+    catch (error) {
+      console.error('Error fetching tasks:', error);
+    }
+  };
+
+
+
+
   useEffect(() => {
-    console.log('Task List Data Fetched:', tasks);
-  }, [tasks]);
+    fetchTasks();
+  
+  }, []);
+
+
+  /**  unComment this code after */
+
+  // if(tasks || tasks?.length === 0) {
+  //   return (
+  //     <div className="container mt-5">
+  //       <h2 className="text-center">No tasks found.</h2>
+  //     </div>
+  //   );
+  // }
+
+
 
   return (
     <Container
@@ -70,7 +104,7 @@ const TaskList = ({ setConditionalComponent }) => {
         }}
       >
         <h2 style={{ margin: 0, color: "#333", fontWeight: "bold" }}>Task List</h2>
-       
+
       </div>
 
       <Row className="justify-content-md-center mt-5">

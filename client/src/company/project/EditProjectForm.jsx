@@ -2,7 +2,8 @@ import React, { useRef, useState } from 'react';
 import JoditEditor from 'jodit-react';
 import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
 
-const TaskForm = () => {
+const TaskForm = ({ projectData, setConditionalComponent, onSave, setIsEditing }) => {
+
     const editor = useRef(null);
     const [content, setContent] = useState('');
 
@@ -44,6 +45,10 @@ const TaskForm = () => {
 
     return (
         <Container className="mt-5">
+
+            <button onClick={() => setIsEditing(false)}>
+                back
+            </button>
             <Row className="justify-content-md-center">
                 <Col md={8}>
                     <Card className="p-4 border-0" style={{ borderRadius: '20px', boxShadow: '0 6px 12px rgba(0, 0, 0, 0.15)' }}>
