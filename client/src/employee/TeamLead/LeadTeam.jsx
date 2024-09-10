@@ -50,31 +50,35 @@ const LeadTeam = ({setConditionalComponent, setTeamId}) => {
 
    return (
       <div>
-
-         <h2> Teams That You Are Leading</h2>
-         <hr />
-         <main className="flex flex-wrap justify-center gap-6 sm:gap-x-4 lg:gap-x-8">
+    <h2 className="text-center">Teams That You Are Leading</h2>
+    <hr />
+    <div className="container">
+        <div className="row">
             {
-               teams?.map((team, index) => (
-                  <div 
-                     key={index}
-                     className="mb-3 p-3 w-[25rem] bg-light shadow-md shadow-gray-500/50 rounded-lg"
-                  >
-                     <h3 className="text-center">{team.teamName}</h3>
-                     <h3>{team.teamId}</h3>
-
-                     <button
-                        onClick={() => setTeamOfProject(team._id)}
-                     >
-                        View this team Projects
-                     </button>
-                  </div>
-               ))
+                teams?.map((team, index) => (
+                    <div 
+                        key={index}
+                        className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
+                    >
+                        <div className="card shadow-sm">
+                            <div className="card-body">
+                                <h5 className="card-title text-center">{team.teamName}</h5>
+                                <h6 className="card-subtitle mb-2 text-muted">{team.teamId}</h6>
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={() => setTeamOfProject(team._id)}
+                                >
+                                    View this team Projects
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                ))
             }
-         
-         </main>
-         
-      </div>
+        </div>
+    </div>
+</div>
+
    );
 }
 
