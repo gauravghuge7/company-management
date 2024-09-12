@@ -8,6 +8,8 @@ import {
 
 import axios from 'axios';
 
+import AssignTask from './AssignTask';
+
 const ProjectSection = ({ setConditionalComponent, projectId }) => {
 
   const [projects, setProjects] = useState({
@@ -23,7 +25,8 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
   const [team, setTeam] = useState({
     teamId: "Team Id",
     teamName: "Team Name",
-    createdAt: ""
+    createdAt: "",
+    _id: ""
   });
 
   const [employeeDetails, setEmployeeDetails] = useState([{
@@ -43,6 +46,10 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
     assignedTo: "Assigned To",
     assignedByEmail: "Assigned By Email",
     assignedByName: "Assigned By Name",
+    _id: "",
+    ticketDocument: "",
+    dueDate: "",
+
   }]);
 
 
@@ -52,6 +59,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
     taskId: "Task Id",
     taskDescription: "Task Description",
     priority: "Priority",
+    taskDocument: "",
     status: "Status",
     assignedTo: "Assigned To",
     assignedByEmail: "Assigned By Email",
@@ -62,6 +70,8 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
   const [assignTask, setAssignTask] = useState(false);
   const assignRef = useRef();
 
+  const [employeeTask, setEmployeeTask] = useState(false);
+  const employeeTaskRef = useRef();
 
   const fetchProjects = async () => {
     console.log("projectId => ", projectId);
@@ -100,6 +110,43 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
   useEffect(() => {
     fetchProjects();
   }, []);
+
+
+
+  const taskList = document.getElementById('taskList');
+
+
+  const fetchTasks = async () => {
+
+    try {
+
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        withCredentials: true,
+      };
+
+      const response = await axios.get(`/api/employee/fetchTasks/${team._id}`, config);
+
+      console.log("response.data => ", response.data);
+
+      if (response.data.success === true) {
+        setTasks(response?.data?.data);
+
+
+        setEmployeeTask(true);
+
+      }
+      
+
+    } 
+    catch (error) {
+      console.log(error);
+      
+    }
+  }
+
 
 
 
@@ -150,6 +197,37 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
       </details>
 
 
+      {/**** Ticket Details */}
+      <details className="card mb-3">
+        <summary> Ticket Details </summary>
+        <div className="card-body">
+          <legend>Ticket Details</legend>
+          <div className="row">
+            {
+              tickets.map((ticket, index) => (
+                <div className="col-md-4 mb-3" key={index}>
+                  <div className="card">
+                    <div className="card-body">
+                      <h5 className="card-title">{ticket.ticketName}</h5>
+                      <p className="card-text"><strong>Ticket ID:</strong> {ticket._id}</p>
+                      <p className="card-text"><strong>Ticket Description:</strong> {ticket.ticketDescription}</p>
+                      <p className="card-text"><strong>Priority:</strong> {ticket.priority}</p>
+                      <p className="card-text"><strong>Status:</strong> {ticket.status}</p>
+                      <p className="card-text"><strong>Assigned To:</strong> {ticket.assignedTo}</p>
+                      <p className="card-text"><strong>Assigned By Email:</strong> {ticket.assignedByEmail}</p>
+                      <p className="card-text"><strong>Assigned By Name:</strong> {ticket.assignedByName}</p>
+                      <p className="card-text"><strong>Ticket Document:</strong> {ticket.ticketDocument}</p>
+                      <p className="card-text"><strong>Due Date:</strong> {ticket.dueDate}</p>
+                    </div>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </details>
+
+
       {/**** Employee Details */}
       <details className="card">
         <summary> Employee Details </summary>
@@ -168,7 +246,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
             <div className="col-md-6">
               <button 
                 className="btn btn-primary"
-
+                onClick={() => fetchTasks()}
               >
                 
                 View Task List
@@ -197,11 +275,17 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
       { /**  Task List of Employees */}
       <details>
         <summary> Task List </summary>
-        <section>
+        <section id='taskList'>
             {
               tasks.map((task, index) => (
                 <div key={index} className="container mt-5">
-                   <p>{task.taskName}</p>
+                  <p>{task.taskName}</p>
+                  <p>{task.taskDescription}</p>
+                  <p>{task.priority}</p>
+                  <p>{task.status}</p>
+                  <p>{task.assignedTo}</p>
+                  <p>{task.assignedByEmail}</p>
+                  <p>{task.assignedByName}</p>
                 </div>
               ))
             }
@@ -215,133 +299,69 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
       <main className=''>
         {
           assignTask && 
-          <div className="fixed inset-0 bg-gray-800 bg-opacity-50  z-50">
-
-
-            
+          <AssignTask 
+            tickets={tickets} 
+            setAssignTask={setAssignTask} 
+            assignRef={assignRef}
+          />
+        }
       
+      </main>
 
 
-          {/* Add scrollable behavior */}
-          <dialog
-            open={assignRef}
-            className="bg-white p-6 rounded-md shadow-lg max-w-3xl w-full max-h-screen overflow-y-auto z-50"
-          >
-          <button
-            className="relative top-0 right-0 float-right bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
-            onClick={() => setAssignTask(false)}
-          >
-            Cancel
-          </button>
+      {/**  employee task dialog  */}
+      <main className=''>
+        {
+          employeeTask && 
+          <div className="fixed inset-0 bg-gray-800 bg-opacity-50 z-50">
+            {/* Large scrollable dialog */}
+            <dialog
+              open={employeeTaskRef}
+              className="bg-white p-6 rounded-md shadow-lg max-w-6xl w-full max-h-screen h-auto overflow-y-auto z-50"
+            >
+              <button
+                className="relative top-0 right-0 float-right bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+                onClick={() => setEmployeeTask(false)}
+              >
+                Cancel
+              </button>
 
+              <div className="container mx-auto">
+                <h2 className="text-center text-2xl font-semibold mb-4">Assign Task</h2>
 
-            <div className="container">
-              <h2 className="text-center text-xl font-semibold mb-4">Assign Task</h2>
-
-              <div className="">
-                {/* Form Section */}
-
-                <form>
-
-                  <div className="mb-4">
-                    <label className="block font-medium">Task Name</label>
-                    <input
-                      type="text"
-                      className="w-full border p-2 rounded-md"
-                      placeholder="Enter task name"
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label className="block font-medium">Assigned By</label>
-                    <input
-                      type="text"
-                      className="w-full border p-2 rounded-md"
-                      placeholder="Enter assigned by"
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label className="block font-medium">Assigned To</label>
-                    <input
-                      type="text"
-                      className="w-full border p-2 rounded-md"
-                      placeholder="Enter assigned to"
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label className="block font-medium">Priority</label>
-                    <input
-                      type="text"
-                      className="w-full border p-2 rounded-md"
-                      placeholder="Enter priority"
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label className="block font-medium">Due Date</label>
-                    <input
-                      type="text"
-                      className="w-full border p-2 rounded-md"
-                      placeholder="Enter due date"
-                    />
-                  </div>
-                  
-                  <div className="mb-4">
-                    <label className="block font-medium">All Tickets </label>
-
-
-                    <select
-                      className="w-full border p-2 rounded-md"
-                      placeholder="Enter due date"
-                    >
-                      <option value="">Select Ticket</option>
-
-                      <option value="">Select Own Work</option>
-
-
-                      {
-                        tickets.map((ticket, index) => (
-                          <option value={ticket._id} key={index}>
-                            {ticket.ticketName}
-                          </option>
-                        ))
-                      }
-
-                    </select>
-
-                    
-                  
-
-                  </div>
-
-                  
-                  <div className="mb-4">
-                    <label className="block font-medium">Ticket Description</label>
-                    <textarea
-                      className="w-full border p-2 rounded-md"
-                      placeholder="Enter ticket description"
-                    ></textarea>
-                  </div>
-                  <div className="mb-4">
-                    <label className="block font-medium">Ticket Document</label>
-                    <input
-                      type="file"
-                      className="w-full border p-2 rounded-md"
-                      placeholder="Enter ticket document"
-                    />
-                  </div>
-
-                  <button
-                    type="button"
-                    className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
-                  >
-                    Assign Task
-                  </button>
-                </form>
-          
-                
+                <div className="overflow-x-auto">
+                  {/* Table Section */}
+                  <table className="table-auto w-full">
+                    <thead>
+                      <tr>
+                        <th className="border px-4 py-2">Task Name</th>
+                        <th className="border px-4 py-2">Task Description</th>
+                        <th className="border px-4 py-2">Priority</th>
+                        <th className="border px-4 py-2">Status</th>
+                        <th className="border px-4 py-2">Assigned To</th>
+                        <th className="border px-4 py-2">Assigned By Email</th>
+                        <th className="border px-4 py-2">Assigned By Name</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {tasks.map((task, index) => (
+                        <tr key={index}>
+                          <td className="border px-4 py-2">{task.taskName}</td>
+                          <td className="border px-4 py-2">{task.taskDescription}</td>
+                          <td className="border px-4 py-2">{task.priority}</td>
+                          <td className="border px-4 py-2">{task.status}</td>
+                          <td className="border px-4 py-2">{task.assignedTo}</td>
+                          <td className="border px-4 py-2">{task.assignedByEmail}</td>
+                          <td className="border px-4 py-2">{task.assignedByName}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
-          </dialog>
+            </dialog>
           </div>
+
   
         }
       

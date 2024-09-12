@@ -54,7 +54,41 @@ const assignTasksToTeamMembers = asyncHandler(async (req, res) => {
 })
 
 
+const getTeamTasks = asyncHandler(async (req, res) => {
+      
+      try {
+
+            const { employee } = req.params;
+
+            if(!employee) {
+                  throw new ApiError(400, "Please provide the team lead email");
+            }
+
+            const tasks = await Task.find({employee: employee})
+                  .populate("project")
+                  .populate("employee")
+                  .populate("teamLead")
+                  .populate("ticket")
+                  .populate("assignBy")
+                  .sort({createdAt: "desc"})
+                  .limit(10)
+
+            return res
+                  .status(200)
+                  .json(
+                        new ApiResponse(200, "Team Tasks fetched successfully", tasks)
+                  )
+      } 
+      catch (error) {
+            
+            console.log(" Error => ", error.message)
+            throw new ApiError(400, error.message);
+      }
+
+})
+
 
 export {
-      assignTasksToTeamMembers
+      assignTasksToTeamMembers,
+      getTeamTasks
 }

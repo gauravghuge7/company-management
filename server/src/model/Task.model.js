@@ -23,11 +23,6 @@ const taskSchema = new Schema({
    }],
 
 
-   projectId: {
-      type: String,
-      required: true,
-   },
-
    description: {
       type: String,
       required: true,
@@ -43,10 +38,6 @@ const taskSchema = new Schema({
       ref: "Team"
    },
 
-
-   description: {
-      type: String,
-   },
 
    assignBy: {
       type: Schema.Types.ObjectId,
