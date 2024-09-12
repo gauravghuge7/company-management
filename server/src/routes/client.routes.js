@@ -55,7 +55,7 @@ clientRouter.route("/fetchTasks/:projectId").get( //verify client
 
 
 clientRouter.route("/createTicket").post( //verify client   
-   verifyClient,   
+   verifyClient,
    upload.single("document"),
    createTicket
 )

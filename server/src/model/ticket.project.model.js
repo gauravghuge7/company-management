@@ -39,7 +39,7 @@ const ticketSchema = new Schema({
 
     ticketDocument: {
         type: String,
-        required: true,
+        // required: true,
     },
 
 
@@ -56,8 +56,24 @@ const ticketSchema = new Schema({
 
     assignedTo: {
         type: String,
-        enum: ["Team", "Employee"],
+        
     },
+
+
+
+    dueDate: {
+        type: Date,
+        required: true,
+    },
+
+
+
+
+
+
+
+
+    
 
 
 

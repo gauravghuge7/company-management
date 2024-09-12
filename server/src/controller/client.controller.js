@@ -10,6 +10,8 @@ import { Ticket } from '../model/ticket.project.model.js';
 import { ApiError } from '../utils/ApiError.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
+import {uploadOnCloudinary} from "../helper/cloudinary.js"
+
 
 const createAccessAndRefreshToken = async(clientId) => {            
 
@@ -326,20 +328,24 @@ const createTicket = asyncHandler(async (req, res) => {
             assignedByEmail, 
             assignedByName, 
 
-            projectId, 
+
             priority,
             project,
 
             ticketId,
-            ticketDescription,  
+            description,  
             ticketName,
-            saptype
+            saptype,
+            dueDate
         
         } = req.body;
 
+        console.log("req.body", req.body);
+
+        console.log("req.file", req.file);
 
 
-        if(!assignedTo || !assignedByEmail || !assignedByName || !projectId || !priority || !project || !ticketId || !ticketDescription) {
+        if(!assignedTo || !assignedByEmail || !assignedByName || !priority || !project || !ticketId || !description) {
             throw new ApiError(400, "Please provide all the required fields");
         }
 
@@ -350,16 +356,28 @@ const createTicket = asyncHandler(async (req, res) => {
             throw new ApiError(400, "Client does not exist");
         }
 
+
+
+    
+
+        const response = await uploadOnCloudinary(req.file.path);
+        
+
+
         // create a entry in the database
         const ticket = await Ticket.create({
+
             assignedTo,
             assignedByEmail,
             assignedByName,
-            projectId,
             priority,
             project,
             ticketId,
-            ticketDescription,
+            ticketDescription: description,
+            ticketName,
+            ticketDocument: response?.url,
+            saptype,
+            dueDate,
             status: "Open",
 
         })

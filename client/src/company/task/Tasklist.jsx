@@ -1,6 +1,15 @@
+import {
+  useEffect,
+  useState,
+} from 'react';
+
 import axios from 'axios';
-import  { useEffect, useState } from 'react';
-import { Container, Row, Col, Table, Button } from 'react-bootstrap';
+import {
+  Col,
+  Container,
+  Row,
+  Table,
+} from 'react-bootstrap';
 
 const TaskList = ({ setConditionalComponent, projectId }) => {
 
@@ -8,18 +17,19 @@ const TaskList = ({ setConditionalComponent, projectId }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const [tasks, setTasks] = useState([
-   
+  
     { 
-      companyName: "ABC Company", 
+      ticketName: "",
+      assignedByName: "ABC Company", 
       priority: "High",
-        saptype: "SAP ABAP",    
-        taskDetail: "Task Detail",
-        ticketCreateDate: "2022-01-01",
-        dueDate: "2022-01-01",
-        assignName: "John Doe",
-        assignEmail: "johndoe@gmail.com",
-        assignTeam: "ABC Team",
-        document: "https://example.com/document.pdf"  
+      saptype: "SAP ABAP",    
+      status: "",
+      ticketCreateDate: "2022-01-01",
+      dueDate: "2022-01-01",
+      assignName: "John Doe",
+      assignedByEmail: "johndoe@gmail.com",
+      assignTeam: "ABC Team",
+      ticketDocument: "https://example.com/ticketDocument.pdf"  
 
     },
 
@@ -42,15 +52,17 @@ const TaskList = ({ setConditionalComponent, projectId }) => {
 
     try {
 
+
       const response = await axios.get(`/api/client/fetchTasks/${projectId}`);
       
 
-      console.log("response.data", response.data);
+      console.log("response.data.data => ", response.data.data);
 
+      
 
-
-      if (response.data.success) {
+      if(response.data.success) {
         console.log("ok");
+
         setTasks(response.data.data);
 
       }
@@ -73,10 +85,10 @@ const TaskList = ({ setConditionalComponent, projectId }) => {
 
   /**  unComment this code after */
 
-  if(tasks || tasks?.length === 0) {
+  if(tasks && tasks?.length === 0) {
     return (
       <div className="container mt-5">
-        <h2 className="text-center">No tasks found.</h2>
+        <h2 className="text-center">No Tickets found...</h2>
       </div>
     );
   }
@@ -134,43 +146,40 @@ const TaskList = ({ setConditionalComponent, projectId }) => {
                 <th>Ticket Name</th>
                 <th>Priority</th>
                 <th>SAP Type</th>
-               
-               
+              
                 <th>Due Date</th>
-               
-                <th>Assign To Team</th>
-                <th>Assign BY Name</th>
+              
+                <th>Ticket Status</th>
                 <th>Assign BY Email</th>
-                <th>Task Detail</th>
-                <th>Document</th>
+
+                <th>ticket Document</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
+
               {tasks.map((task, index) => (
                 <tr key={index} style={{ textAlign: "center" }}> {/* Center align table text */}
                   <td>{index + 1}</td>
-                  <td>{task.companyName}</td>
+                  <td>{task.ticketName}</td>
                   <td>{task.priority}</td>
                   <td>{task.saptype}</td>
-                 
-                   
-                  <td>{task.dueDate}</td>
-                  <td>{task.assignTeam}</td>
-                 
-                  <td>{task.assignName}</td>
-                  <td>{task.assignEmail}</td>
-                 
-                 <td>{task.taskDetail}</td>
-                   <td> 
-                     <a href={task.document} target="_blank" rel="noreferrer">
-                       <button className="btn btn-primary">View</button>
-                     </a>
-                   </td>  
-                 
+              
+                <td>{task.dueDate}</td>
+                <td>{task.status}</td>
+              
+                
+                <td>{task.assignedByEmail}</td>
+                
+                <td> 
+                  <a href={task.ticketDocument} target="_blank" rel="noreferrer">
+                    <button className="btn btn-primary">View</button>
+                  </a>
+                </td>  
+                
                   <td>
-                      <button className="btn btn-primary me-2" onClick={handleEdit}>Edit</button>
-                      <button className="btn btn-danger" onClick={handleDelete}>Delete</button> 
+                    <button className="btn btn-primary me-2" onClick={handleEdit}>Edit</button>
+                    <button className="btn btn-danger" onClick={handleDelete}>Delete</button> 
 
 
 

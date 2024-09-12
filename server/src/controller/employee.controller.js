@@ -231,7 +231,8 @@ const getEmployeePassword = asyncHandler(async(req, res) => {
     }
 
 })
-  
+
+
 const employeelogout = asyncHandler(async(req, res) => {
     
     try {
@@ -708,6 +709,11 @@ const fetchProjectByTeamId = asyncHandler (async (req, res) => {
                 }
             },
             {
+                $addFields: {
+                    ticket: "$ticket"
+                }
+            },
+            {
                 $project: {
                     admin: 1,
                     clientName: 1,
@@ -748,6 +754,7 @@ const fetchProjectByTeamId = asyncHandler (async (req, res) => {
     }
 
 })
+
 
 export {
   fetchProjectById,
