@@ -71,7 +71,7 @@ function Componynavabar() {
 
   return (
     <div className="d-flex">
-      <Navbar bg="white" expand="lg" className="flex flex-row w-full h-20">
+      <Navbar bg="light" expand="lg" className="flex flex-row w-full h-20">
         <Container className="flex flex-row justify-center align-items-center">
           {/* Logo */}
           <Navbar.Brand href="#" className="mb-3">
@@ -87,7 +87,7 @@ function Componynavabar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
             <Nav.Item className="d-flex align-items-center text-black">
-              {client?.clientName}
+              SANATAN
             </Nav.Item>
             <Nav.Item>
               <Button variant="outline-dark" onClick={onLogout} className="ml-3">

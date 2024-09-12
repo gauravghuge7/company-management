@@ -14,6 +14,7 @@ import {
 import { verifyAdmin } from '../middleware/Admin.middleware.js';
 import { verifyEmployee } from '../middleware/Employee.middleware.js';
 import { upload } from '../middleware/multer.middleware.js';
+import { getTeamTasks } from '../controller/teamLead.controller.js';
 
 const employeeRouter = express.Router();
 
@@ -78,6 +79,13 @@ employeeRouter.route("/fetchProjectByTeamId/:teamId").get(
 
 
 
+
+employeeRouter.route("/fetchTasks/:employee").get(
+    
+    verifyEmployee,
+    upload.none(),
+    getTeamTasks
+)
 
 
 

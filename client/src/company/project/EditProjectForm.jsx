@@ -108,14 +108,15 @@ const TaskForm = ({ currentProject, setConditionalComponent, onSave, setIsEditin
     return (
         <Container className="mt-5">
 
-            <button onClick={() => setIsEditing(false)}>
-                back
+            <button onClick={() => setIsEditing(false)}
+                  className="btn btn-primary btn-lg px- py-2">
+                Back
             </button>
             <Row className="justify-content-md-center">
                 <Col md={8}>
                     <Card className="p-4 border-0" style={{ borderRadius: '20px', boxShadow: '0 6px 12px rgba(0, 0, 0, 0.15)' }}>
                         <Card.Body>
-                            <h2 className="text-center mb-4" style={{ fontWeight: 'bold' }}>Create New Task</h2>
+                            <h2 className="text-center mb-4" style={{ fontWeight: 'bold' }}>Create New Ticket</h2>
                             <Form onSubmit={handleSubmit}>
 
                                 <Form.Group controlId="companyName" className="mb-3">
@@ -291,7 +292,7 @@ const TaskForm = ({ currentProject, setConditionalComponent, onSave, setIsEditin
                                         e.target.style.transform = 'scale(1)'; // Reset scale when not hovering
                                     }}
                                 >
-                                    Submit Task
+                                    Submit Ticket
                                 </Button>
                             </Form>
                         </Card.Body>
