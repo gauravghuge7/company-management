@@ -51,7 +51,7 @@ const TaskForm = () => {
                             <h2 className="text-center mb-4" style={{ fontWeight: 'bold' }}>Create New Task</h2>
                             <Form onSubmit={handleSubmit}>
                                 <Form.Group controlId="companyName" className="mb-3">
-                                    <Form.Label>Task Name</Form.Label>
+                                    <Form.Label>Ticket Name</Form.Label>
                                     <Form.Control
                                         type="text"
                                         name="companyName"
@@ -143,7 +143,7 @@ const TaskForm = () => {
                                 </Form.Group>
 
                                 <Form.Group controlId="taskDetail" className="mb-4">
-                                    <Form.Label>Task Details</Form.Label>
+                                    <Form.Label>Ticket Details</Form.Label>
                                     <JoditEditor
                                         ref={editor}
                                         value={content}
@@ -178,7 +178,7 @@ const TaskForm = () => {
                                         e.target.style.transform = 'scale(1)'; // Reset scale when not hovering
                                     }}
                                 >
-                                    Submit Task
+                                    Submit Ticket
                                 </Button>
                             </Form>
                         </Card.Body>

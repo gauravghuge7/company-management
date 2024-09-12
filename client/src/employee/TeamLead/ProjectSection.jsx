@@ -165,24 +165,28 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
       </button>
 
       {/**** Project Detail */}
-      <details title='Project Detail' className="card mb-3">
+      {/* <details title='Project Detail' className="card mb-3">
         <summary> Project Detail </summary>
         <div className="card-body">
           <h2 className="card-title">Project Section</h2>
           <div className="row">
             <div className="col-md-6">
               <h3 className="card-title">{projects.projectName}</h3>
-              <p className="card-text"><strong>Description:</strong> {projects.description}</p>
+        
               <p className="card-text"><strong>Spoke Person:</strong> {projects.spokePersonName}</p>
-              <p className="card-text"><strong>Phone:</strong> {projects.spokePersonNumber}</p>
+             
               <p className="card-text"><strong>Email:</strong> {projects.spokePersonEmail}</p>
+              <p className="card-text"><strong>Phone:</strong> {projects.spokePersonNumber}</p>
+              <p className="card-text"><strong>Description:</strong> {projects.description}</p>
             </div>
           </div>
         </div>
-      </details>
+      </details> */}
+
+
 
       {/**** Team Details */}
-      <details className="card mb-3">
+      {/* <details className="card mb-3">
         <summary> Team Details </summary>
         <div className="card-body">
           <legend>Team Details</legend>
@@ -194,37 +198,57 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
             </div>
           </div>
         </div>
-      </details>
+      </details> */}
 
 
       {/**** Ticket Details */}
       <details className="card mb-3">
-        <summary> Ticket Details </summary>
-        <div className="card-body">
-          <legend>Ticket Details</legend>
-          <div className="row">
-            {
-              tickets.map((ticket, index) => (
-                <div className="col-md-4 mb-3" key={index}>
-                  <div className="card">
-                    <div className="card-body">
-                      <h5 className="card-title">{ticket.ticketName}</h5>
-                      <p className="card-text"><strong>Ticket ID:</strong> {ticket._id}</p>
-                      <p className="card-text"><strong>Ticket Description:</strong> {ticket.ticketDescription}</p>
-                      <p className="card-text"><strong>Priority:</strong> {ticket.priority}</p>
-                      <p className="card-text"><strong>Status:</strong> {ticket.status}</p>
-                      <p className="card-text"><strong>Assigned To:</strong> {ticket.assignedTo}</p>
-                      <p className="card-text"><strong>Assigned By Email:</strong> {ticket.assignedByEmail}</p>
-                      <p className="card-text"><strong>Assigned By Name:</strong> {ticket.assignedByName}</p>
-                      <p className="card-text"><strong>Ticket Document:</strong> {ticket.ticketDocument}</p>
-                      <p className="card-text"><strong>Due Date:</strong> {ticket.dueDate}</p>
-                    </div>
-                  </div>
-                </div>
-              ))
-            }
-          </div>
-        </div>
+      <summary>Ticket Details</summary>
+<div className="card-body">
+  <legend>Ticket Details</legend>
+  <div className="table-responsive">
+    <table className="table table-bordered table-hover">
+      <thead className="thead-dark">
+        <tr>
+          <th>Ticket Name</th>
+          <th>Ticket ID</th>
+          
+          <th>Priority</th>
+          <th>Due Date</th>
+          <th>Assigned To</th>
+          <th>Assigned By Email</th>
+          <th>Assigned By Name</th>
+          
+          <th>Status</th>
+          <th>Document</th>
+          <th>Description</th>
+        
+        
+        </tr>
+      </thead>
+      <tbody>
+        {tickets.map((ticket, index) => (
+          <tr key={index}>
+            <td>{ticket.ticketName}</td>
+            <td>{ticket._id}</td>
+           
+            <td>{ticket.priority}</td>
+            <td>{ticket.dueDate}</td>
+            <td>{ticket.assignedTo}</td>
+            <td>{ticket.assignedByEmail}</td>
+            <td>{ticket.assignedByName}</td>
+            <td>{ticket.status}</td>
+            <td>{ticket.ticketDocument}</td>
+            <td>{ticket.ticketDescription}</td>
+           
+           
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
+
       </details>
 
 
@@ -275,21 +299,40 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
       { /**  Task List of Employees */}
       <details>
         <summary> Task List </summary>
-        <section id='taskList'>
-            {
-              tasks.map((task, index) => (
-                <div key={index} className="container mt-5">
-                  <p>{task.taskName}</p>
-                  <p>{task.taskDescription}</p>
-                  <p>{task.priority}</p>
-                  <p>{task.status}</p>
-                  <p>{task.assignedTo}</p>
-                  <p>{task.assignedByEmail}</p>
-                  <p>{task.assignedByName}</p>
-                </div>
-              ))
-            }
-        </section>
+        <table className="table-auto w-full">
+                    <thead>
+                      <tr>
+                        <th className="border px-4 py-2">Task Name</th>
+                      
+                        <th className="border px-4 py-2">Priority</th>
+                        <th className="border px-4 py-2">SAP Type</th>
+                        <th className="border px-4 py-2">Due Date</th>
+                        <th className="border px-4 py-2">Status</th>
+                        <th className="border px-4 py-2">Assigned To</th>
+                        <th className="border px-4 py-2">Assigned By Email</th>
+                        <th className="border px-4 py-2">Assigned By Name</th>
+                        <th className="border px-4 py-2">Task Description</th>
+                        <th className="border px-4 py-2">Task Document</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {tasks.map((task, index) => (
+                        <tr key={index}>
+                          <td className="border px-4 py-2">{task.taskName}</td>
+                       
+                          <td className="border px-4 py-2">{task.priority}</td>
+                          <td className="border px-4 py-2">{task.saptype}</td>
+                          <td className="border px-4 py-2">{task.dueDate}</td>
+                          <td className="border px-4 py-2">{task.status}</td>
+                          <td className="border px-4 py-2">{task.assignedTo}</td>
+                          <td className="border px-4 py-2">{task.assignedByEmail}</td>
+                          <td className="border px-4 py-2">{task.assignedByName}</td>
+                          <td className="border px-4 py-2">{task.taskDescription}</td>
+                          <td className="border px-4 py-2">{task.taskDocument}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
       
       </details>
 
@@ -335,24 +378,28 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
                     <thead>
                       <tr>
                         <th className="border px-4 py-2">Task Name</th>
-                        <th className="border px-4 py-2">Task Description</th>
+                        
                         <th className="border px-4 py-2">Priority</th>
                         <th className="border px-4 py-2">Status</th>
                         <th className="border px-4 py-2">Assigned To</th>
                         <th className="border px-4 py-2">Assigned By Email</th>
                         <th className="border px-4 py-2">Assigned By Name</th>
+                        <th className="border px-4 py-2">Task Description</th>
+                        <th className="border px-4 py-2">Task Document</th>
                       </tr>
                     </thead>
                     <tbody>
                       {tasks.map((task, index) => (
                         <tr key={index}>
                           <td className="border px-4 py-2">{task.taskName}</td>
-                          <td className="border px-4 py-2">{task.taskDescription}</td>
+                      
                           <td className="border px-4 py-2">{task.priority}</td>
                           <td className="border px-4 py-2">{task.status}</td>
                           <td className="border px-4 py-2">{task.assignedTo}</td>
                           <td className="border px-4 py-2">{task.assignedByEmail}</td>
                           <td className="border px-4 py-2">{task.assignedByName}</td>
+                          <td className="border px-4 py-2">{task.taskDescription}</td>
+                          <td className="border px-4 py-2">{task.taskDocument}</td>
                         </tr>
                       ))}
                     </tbody>

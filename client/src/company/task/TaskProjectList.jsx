@@ -64,7 +64,7 @@ const TaskProjectlist = ({setConditionalComponent, setProjectId}) => {
 
          
 
-         <h2 className="mb-4 text-center">Project List</h2>
+         <h2 className="mb-4 text-center">Tickes List</h2>
          <table className="table table-striped table-bordered">
             <thead>
                <tr>
@@ -88,7 +88,7 @@ const TaskProjectlist = ({setConditionalComponent, setProjectId}) => {
                         <td>{data.spokePersonEmail}</td>
                         <td>{data.spokePersonName}</td>
                         <td>{data.spokePersonNumber}</td>
-                        <td>{data.teamLead}</td>
+                        <td>{data.team}</td>
                         <td>{data.description}</td>
                         <td>
                            <button 
@@ -96,7 +96,7 @@ const TaskProjectlist = ({setConditionalComponent, setProjectId}) => {
                               onClick={() => sendProjectId(data._id)}
                            >
                            
-                              View Tasks
+                              View Tickets
                            </button>
 
                            

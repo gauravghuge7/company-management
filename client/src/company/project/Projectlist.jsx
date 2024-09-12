@@ -102,7 +102,7 @@ const Projectlist = ({setConditionalComponent}) => {
                         <td>{data.spokePersonEmail}</td>
                         <td>{data.spokePersonName}</td>
                         <td>{data.spokePersonNumber}</td>
-                        <td>{data.teamLead}</td>
+                        <td>{data.team}</td>
                         <td>{data.description}</td>
                         <td>
                            <button 

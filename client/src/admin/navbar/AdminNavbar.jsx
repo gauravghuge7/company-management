@@ -73,7 +73,7 @@ const AdminNavbar = () => {
               </Button>
             </Nav.Item>
           </Nav>
-        </Navbar.Collapse>
+        </Navbar.Collapse> 
       </Container> 
     </Navbar>
   );

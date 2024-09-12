@@ -68,15 +68,15 @@ const TeamList = ({ setValue}) => {
         <Container>
 
 <div className='flex justify-between'>
-                <h2 className="mb-4">Teams List</h2>
-                <button className=''
+                <h2 className="mb-4 text-center">Teams List</h2>
+                <button   className="btn btn-primary btn-lg px-4 py-2"
                     onClick={() => setValue("createteam")}
                 >Add New Team</button>
             </div> 
 
             <Row className="justify-content-md-center mt-5">
                 <Col md={12}>
-                    <h3>Registered Teams</h3>
+                   
                     {teams.length > 0 ? (
                         <Table striped bordered hover>
                             <thead>

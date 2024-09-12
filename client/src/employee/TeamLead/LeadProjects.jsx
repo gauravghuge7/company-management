@@ -36,33 +36,59 @@ const LeadProjects = ({ setConditionalComponent, teamId, setProjectId }) => {
         setProjectId(projectId);
     };
 
+    const handleDocumentView = (projectId) => {
+        console.log("View document for project:", projectId);
+        // Implement the document view logic
+    };
+
     return (
         <div className="container mt-4">
             <h2 className="text-center mb-4">Projects That You Are Leading</h2>
 
-            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-                {projects?.map((project, index) => (
-                    <div
-                        key={index}
-                        className="col"
-                    >
-                        <div className="card shadow-sm rounded-lg h-100">
-                            <div className="card-body">
-                                <h5 className="card-title text-center">{project.clientName}</h5>
-                                <h6 className="card-subtitle mb-2 text-muted">{project.projectName}</h6>
-                                <p className="card-text">{project.description}</p>
-                                <p className="card-text"><small className="text-muted">{project._id}</small></p>
-                                <button
+            <table className="table table-striped table-bordered">
+                <thead className="thead-dark">
+                    <tr>
+                        <th scope="col">Client Name</th>
+                        <th scope="col">Project Name</th>
+                        <th scope="col">Spokesperson Name</th>
+                        <th scope="col">Spokesperson Email</th>
+                        <th scope="col">Spokesperson Number</th>
+                        <th scope="col">Description</th>
+                        
+                        <th scope="col">Document</th>
+                        <th scope="col">View Work</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {projects?.map((project, index) => (
+                        <tr key={index}>
+                            <td>{project.clientName}</td>
+                            <td>{project.projectName}</td>
+                            <td>{project.spokePersonName}</td>
+                            <td>{project.spokePersonEmail}</td>
+                            <td>{project.spokePersonNumber}</td>
+                            <td>{project.description}</td>
+                            <td>
+                            <button
+                                    className="btn btn-primary"
+                                    onClick={() => handleDocumentView(project._id)}
+                                >
+                                    View 
+                                </button>
+                              
+                            </td>
+                            <td>
+                            <button
                                     className="btn btn-primary"
                                     onClick={() => handleProject(project._id)}
                                 >
                                     View Your Work
                                 </button>
-                            </div>
-                        </div>
-                    </div>
-                ))}
-            </div>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 };
