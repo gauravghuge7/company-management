@@ -2,6 +2,7 @@ import { Task } from "../model/Task.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import {uploadOnCloudinary} from "../helper/cloudinary.js"
 
 
 
@@ -14,18 +15,29 @@ const assignTasksToTeamMembers = asyncHandler(async (req, res) => {
                   project,
                   employee,
                   description,
-                  teamLead,
                   assignBy,
-                  ticket
+                  tickets
 
             } = req.body;
 
-            if(!project || !employee || !description || !teamLead || !assignBy || !ticket) {
+
+            console.log("req.body => ", req.body);
+
+            if(!project || !employee || !description || !assignBy || !tickets) {
                   throw new ApiError(400, "Please provide all the required fields");
             }
 
             // create a entry in Task Schema
 
+            let response;
+
+           
+
+            if(req.file) {
+
+                  response = await uploadOnCloudinary(req.file.path);
+            }
+            
             
 
             const task = await Task.create({
@@ -33,9 +45,10 @@ const assignTasksToTeamMembers = asyncHandler(async (req, res) => {
                   project,
                   employee,
                   description,
-                  teamLead,
                   assignBy,
-                  ticket
+                  tickets,
+                  taskDocument: response?.url,
+
 
             })
 

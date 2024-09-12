@@ -1,10 +1,79 @@
 import { useState } from 'react';
 
-const AssignTask = ({ tickets, setAssignTask, assignRef }) => {
+import axios from 'axios';
+import { message } from 'react-message-popup';
+
+const AssignTask = ({ teamLead, currentEmployee, projectId, tickets, setAssignTask, assignRef }) => {
 
 
 
       const [own, setOwn] = useState(false);
+
+      const [msg, setMsg] = useState("");
+
+      const [ticketDetails, setticketDetails] = useState({
+            ticketName: "",
+            ticketId: own,
+            ticketDescription: "",
+            priority: "",
+            status: "",
+            assignedTo: "",
+            assignedByEmail: "",
+            assignedByName: "",
+            _id: "",
+            ticketDocument: "",
+            dueDate: "",
+      })
+
+
+
+                  // employee,
+                  // description,
+                  // teamLead,
+                  // assignBy,
+                  // tickets
+
+      const sendTicketToEmployee = async(e) => {
+
+            e.preventDefault();
+            try {
+
+                  const config = {
+                        headers: {
+                              'Content-Type': 'multipart/form-data',
+                        },
+                        withCredentials: true,
+                  };
+
+
+                  const body = {
+
+                        project: projectId,
+                        employee: currentEmployee,
+                        description: ticketDetails.ticketDescription,
+                        document: ticketDetails.ticketDocument,
+                        tickets: own,
+                        assignBy: teamLead
+                  }
+
+                  setMsg("Sending Ticket...");
+                  const response = await axios.post(`/api/employee/assignTaskToEmployee`, body, config);
+
+                  console.log("response.data => ", response.data);
+
+                  if(response.data.success === true) {
+                     setMsg("");
+                     message?.success("Ticket Assigned Successfully");
+                     setAssignTask(false);
+                  }
+
+
+
+            } 
+            catch (error) {
+                  console.log(error);
+            }
+      }
 
       
 
@@ -32,9 +101,9 @@ const AssignTask = ({ tickets, setAssignTask, assignRef }) => {
 
                         <form>
 
-
+                               {/** Select ticketDetails Section */}
                               <div className="mb-4">
-                                    <label className="block font-medium">All Tickets </label>
+                                    <label className="block font-medium">All ticketDetails </label>
 
 
                                     <select
@@ -46,7 +115,7 @@ const AssignTask = ({ tickets, setAssignTask, assignRef }) => {
 
                                           <option value="">Select Ticket</option>
 
-                                          <option value="">Select Own Work</option>
+                                          <option value="ownWork">Select Own Work</option>
 
 
                                           {
@@ -59,63 +128,92 @@ const AssignTask = ({ tickets, setAssignTask, assignRef }) => {
 
                                     </select>
 
-                                    
-                                    
+                              </div>
 
+                                    {/** Task Name */}
+                              <div className="mb-4">
+                                    <label className="block font-medium">Task Name</label>
+                                    <input
+                                    type="text"
+                                    value={ticketDetails.ticketName}
+                                    onChange={(e) => setticketDetails({...ticketDetails, ticketName: e.target.value})}
+                                    className="w-full border p-2 rounded-md"
+                                    placeholder="Enter task name"
+                                    />
+                              </div>
+                              
+                              {/** Priority */}
+                              <div className="mb-4">
+                                    <label className="block font-medium">Priority</label>
+                                    <input
+                                    type="text"
+                                    value={ticketDetails.priority}
+                                    onChange={(e) => setticketDetails({...ticketDetails, priority: e.target.value})}
+                                    className="w-full border p-2 rounded-md"
+                                    placeholder="Enter priority"
+                                    />
+                              </div>
+
+                              {/** Due Date */}
+                              <div className="mb-4">
+                                    <label className="block font-medium">Due Date</label>
+                                    <input
+                                    type="date"
+                                    value={ticketDetails.dueDate}
+                                    onChange={(e) => setticketDetails({...ticketDetails, dueDate: e.target.value})}
+                                    className="w-full border p-2 rounded-md"
+                                    placeholder="Enter due date"
+                                    />
+                              </div>
+
+                              <div className="mb-4">
+                                    <label className="block font-medium">Task Description</label>
+                                    <textarea
+                                    value={ticketDetails.ticketDescription}
+                                    onChange={(e) => setticketDetails({...ticketDetails, ticketDescription: e.target.value})}
+                                    className="w-full border p-2 rounded-md"
+                                    placeholder="Enter ticket description"
+                                    ></textarea>
+                              </div>
+                              
+                              {/** Task Description & Document */}
+
+                              { own === "ownWork" &&
+                              <section>
+
+                                    <div className="mb-4">
+
+                                          <label className="block font-medium">Task Document</label>
+                                          <input
+                                          type="file"
+                                          onChange={(e) => setticketDetails({...ticketDetails, ticketDocument: e.target.files[0]})}
+                                          className="w-full border p-2 rounded-md"
+                                          placeholder="Enter ticket document"
+                                          />
                                     </div>
+                              </section>
 
-                              <div className="mb-4">
-                              <label className="block font-medium">Task Name</label>
-                              <input
-                              type="text"
-                              className="w-full border p-2 rounded-md"
-                              placeholder="Enter task name"
-                              />
-                              </div>
-                              
-                              <div className="mb-4">
-                              <label className="block font-medium">Priority</label>
-                              <input
-                              type="text"
-                              className="w-full border p-2 rounded-md"
-                              placeholder="Enter priority"
-                              />
-                              </div>
-                              <div className="mb-4">
-                              <label className="block font-medium">Due Date</label>
-                              <input
-                              type="date"
-                              className="w-full border p-2 rounded-md"
-                              placeholder="Enter due date"
-                              />
-                              </div>
-                              
-                              
+                              }
 
+                              <main className='flex justify-center gap-20'>
                               
-                              <div className="mb-4">
-                              <label className="block font-medium">Task Description</label>
-                              <textarea
-                              className="w-full border p-2 rounded-md"
-                              placeholder="Enter ticket description"
-                              ></textarea>
-                              </div>
+                                    <button
+                                          type="submit"
+                                          onClick={sendTicketToEmployee}
+                                          className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
+                                    >
+                                          Assign Task
+                                    </button>
 
-                              <div className="mb-4">
-                              <label className="block font-medium">Task Document</label>
-                              <input
-                              type="file"
-                              className="w-full border p-2 rounded-md"
-                              placeholder="Enter ticket document"
-                              />
-                              </div>
-
-                              <button
-                              type="button"
-                              className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
-                              >
-                              Assign Task
-                              </button>
+                                    <section className="mt-4">
+                                    {
+                                          msg &&
+                                          <p className=" rounded-full  border-r-4 border-t-4 text-center text-xl h-8 w-8 border-red-500 animate-spin"></p>
+                                    }
+                                    </section>
+                              
+                              </main>
+                              
                         </form>
                   
                         

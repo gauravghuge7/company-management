@@ -5,16 +5,20 @@ import {
   fetchProjectByTeamId,
   getEmployeeDetails,
   getEmployeeProjects,
+  getTasksByProjectId,
   getTeamLeadOrNot,
   getTeamLeadProjects,
   loginEmployee,
   logoutEmployee,
   registerEmployee,
 } from '../controller/employee.controller.js';
+import {
+  assignTasksToTeamMembers,
+  getTeamTasks,
+} from '../controller/teamLead.controller.js';
 import { verifyAdmin } from '../middleware/Admin.middleware.js';
 import { verifyEmployee } from '../middleware/Employee.middleware.js';
 import { upload } from '../middleware/multer.middleware.js';
-import { getTeamTasks } from '../controller/teamLead.controller.js';
 
 const employeeRouter = express.Router();
 
@@ -86,6 +90,26 @@ employeeRouter.route("/fetchTasks/:employee").get(
     upload.none(),
     getTeamTasks
 )
+
+
+
+employeeRouter.route("/assignTaskToEmployee").post(
+    
+    verifyEmployee,
+    upload.single("document"),
+    assignTasksToTeamMembers
+)
+
+
+employeeRouter.route("/getTasksByProjectId/:projectId").get(
+    
+    verifyEmployee,
+    getTasksByProjectId
+)
+
+
+
+
 
 
 

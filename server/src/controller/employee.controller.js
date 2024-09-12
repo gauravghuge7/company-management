@@ -7,6 +7,7 @@ import { Team } from '../model/team.model.js';
 import { ApiError } from '../utils/ApiError.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
+import { Task } from '../model/Task.model.js';
 
 const createAccessAndRefreshToken = async (_id) => {
     
@@ -756,15 +757,51 @@ const fetchProjectByTeamId = asyncHandler (async (req, res) => {
 })
 
 
+const getTasksByProjectId = asyncHandler (async (req, res) => {
+
+    try {
+
+        const  { projectId } = req.params;
+
+        if(!projectId) {
+            throw new ApiError(400, "Please provide the project id");
+        }
+
+        const task = await Task.find({
+            $and: [
+                {project: new mongoose.Types.ObjectId(projectId)},
+                {employee: new mongoose.Types.ObjectId(req.user._id)}
+            ]
+        })
+
+
+
+
+        return res
+            .status(200)
+            .json(
+                new ApiResponse(200, "Task fetched successfully", task)
+            )
+        
+    } 
+    catch (error) {
+    
+        console.log(" Error => ", error.message)
+        throw new ApiError(400, error.message);
+    }
+})
+
 export {
-  fetchProjectById,
-  fetchProjectByTeamId,
-  getEmployeeDetails,
-  getEmployeePassword,
-  getEmployeeProjects,
-  getTeamLeadOrNot,
-  getTeamLeadProjects,
-  loginEmployee,
-  logoutEmployee,
-  registerEmployee,
+    fetchProjectById,
+    fetchProjectByTeamId,
+    getEmployeeDetails,
+    getEmployeePassword,
+    getEmployeeProjects,
+    getTeamLeadOrNot,
+    getTeamLeadProjects,
+    loginEmployee,
+    logoutEmployee,
+    registerEmployee,
+
+    getTasksByProjectId
 };

@@ -20,11 +20,13 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
     spokePersonNumber: 1234567890,
     spokePersonEmail: "Spoke Person Email",
     projectId: "Project Id",
+    _id: "",
   });
 
   const [team, setTeam] = useState({
     teamId: "Team Id",
     teamName: "Team Name",
+    teamLead: "Team Lead",
     createdAt: "",
     _id: ""
   });
@@ -113,7 +115,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
 
 
 
-  const taskList = document.getElementById('taskList');
+
 
 
   const fetchTasks = async () => {
@@ -148,8 +150,16 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
   }
 
 
+  /**    for assign task to employee we getting the employee id from the employee list */
+  const [currentEmployee, setCurrentEmployee] = useState("");
 
 
+  const assignTaskToEmployee = async (employee) => {
+
+    console.log("employee => ", employee);
+    setCurrentEmployee(employee);
+    setAssignTask(true);
+  }
 
 
 
@@ -279,7 +289,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
             <div className="col-md-6 text-end">
               <button 
                 className="btn btn-success"
-                onClick={() => setAssignTask(true)}
+                onClick={() => assignTaskToEmployee(employee._id)}
               >
                 Add Task
               
@@ -319,7 +329,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
                       {tasks.map((task, index) => (
                         <tr key={index}>
                           <td className="border px-4 py-2">{task.taskName}</td>
-                       
+               
                           <td className="border px-4 py-2">{task.priority}</td>
                           <td className="border px-4 py-2">{task.saptype}</td>
                           <td className="border px-4 py-2">{task.dueDate}</td>
@@ -343,6 +353,9 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
         {
           assignTask && 
           <AssignTask 
+            teamLead={team._id}
+            currentEmployee={currentEmployee}
+            projectId={projectId}
             tickets={tickets} 
             setAssignTask={setAssignTask} 
             assignRef={assignRef}

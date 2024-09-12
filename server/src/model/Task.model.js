@@ -7,10 +7,6 @@ const taskSchema = new Schema({
       ref: "Project"
    },
 
-   employeeEmail: {
-      type: String,
-      required: true,
-   },
 
    employee: {
       type: Schema.Types.ObjectId,
@@ -28,9 +24,9 @@ const taskSchema = new Schema({
       required: true,
    },
 
-   clientName: {
+
+   taskDocument: {
       type: String,
-      required: true,
    },
 
    teamLead: {
@@ -42,6 +38,10 @@ const taskSchema = new Schema({
    assignBy: {
       type: Schema.Types.ObjectId,
       ref: "Team"
+   },
+
+   currentWork: {
+      type: String,
    },
 
    ticket: {
