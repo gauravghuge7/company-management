@@ -1,11 +1,20 @@
-import React, { useRef, useState } from 'react';
-import JoditEditor from 'jodit-react';
-import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
+import { useState } from 'react';
+
+import axios from 'axios';
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Form,
+  Row,
+} from 'react-bootstrap';
+import { message } from 'react-message-popup';
 
 const TaskForm = ({ currentProject, setConditionalComponent, onSave, setIsEditing }) => {
 
-    const editor = useRef(null);
-    const [content, setContent] = useState('');
+    
+    const [msg, setMsg] = useState("");
 
     const [formData, setFormData] = useState({
 
@@ -31,40 +40,56 @@ const TaskForm = ({ currentProject, setConditionalComponent, onSave, setIsEditin
 
 
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
 
 
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async(e) => {
+        
         e.preventDefault();
         
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        };
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+                withCredentials: true,
+            };
+    
+            const body = {
+                
+                assignedByEmail: formData.assignedByEmail, 
+                assignedByName: formData.assignedByName,
+                assignedTo: formData.assignteam,
+    
+                priority: formData.priority,
+                project: currentProject._id,
+    
+                ticketName: formData.ticketName,
+                ticketId: formData.ticketId,
+                description: formData.ticketDescription,
+                document: formData.document,
 
-        const body = {
-            
-            assignedByEmail: formData.assignedByName, 
-            assignedByName: formData.assignedByEmail,
+                saptype: formData.saptype,
+                dueDate: formData.dueDate,
 
-            projectId: formData.project,
-            priority: formData.priority,
-            project: currentProject._id,
+            }
+    
+            setMsg("Creating Ticket ...");
 
-            ticketId: formData.ticketId,
-            ticketDescription: formData.ticketDescription,
+            const response = await axios.post("/api/client/createTicket", body, config);
+    
+            console.log("response.data => ", response.data);
+    
+            if(response.data.success) {
+                setMsg("");
+                setIsEditing(false);
+                message.success("Ticket created successfully");
+            }
+    
+        } 
+        catch (error) {
+            message.error(error.message);
         }
-
-
-
-
 
 
     };
@@ -99,7 +124,7 @@ const TaskForm = ({ currentProject, setConditionalComponent, onSave, setIsEditin
                                         type="text"
                                         name="companyName"
                                         value={formData.ticketName}
-                                        onChange={handleChange}
+                                        onChange={(e) => setFormData({ ...formData, ticketName: e.target.value })}
                                         required
                                         style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
                                     />
@@ -111,7 +136,7 @@ const TaskForm = ({ currentProject, setConditionalComponent, onSave, setIsEditin
                                         as="select"
                                         name="priority"
                                         value={formData.priority}
-                                        onChange={handleChange}
+                                        onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
                                         required
                                         style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
                                     >
@@ -122,13 +147,14 @@ const TaskForm = ({ currentProject, setConditionalComponent, onSave, setIsEditin
                                     </Form.Control>
                                 </Form.Group>
 
+
                                 <Form.Group controlId="priority" className="mb-3">
                                     <Form.Label>SAP Type</Form.Label>
                                     <Form.Control
                                         as="select"
                                         name="saptype"
                                         value={formData.saptype}
-                                        onChange={handleChange}
+                                        onChange={(e) => setFormData({ ...formData, saptype: e.target.value })}
                                         required
                                         style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
                                     >
@@ -147,7 +173,7 @@ const TaskForm = ({ currentProject, setConditionalComponent, onSave, setIsEditin
                                         type="text"
                                         name="assignName"
                                         value={formData.assignteam}
-                                        onChange={handleChange}
+                                        onChange={(e) => setFormData({ ...formData, assignteam: e.target.value })}
                                         required
                                         style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
                                     />
@@ -160,7 +186,7 @@ const TaskForm = ({ currentProject, setConditionalComponent, onSave, setIsEditin
                                         type="date"
                                         name="dueDate"
                                         value={formData.dueDate}
-                                        onChange={handleChange}
+                                        onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
                                         required
                                         style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
                                     />
@@ -172,35 +198,52 @@ const TaskForm = ({ currentProject, setConditionalComponent, onSave, setIsEditin
                                         type="text"
                                         name="assignName"
                                         value={formData.assignedByName}
-                                        onChange={handleChange}
-                                        required
-                                        style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
-                                    />
-                                </Form.Group>
-                                <Form.Group controlId="assignName" className="mb-3">
-                                    <Form.Label>Assign By Email</Form.Label>
-                                    <Form.Control
-                                        type="Email"
-                                        name="assignEmail"
-                                        value={formData.assignEmail}
-                                        onChange={handleChange}
+                                        onChange={(e) => setFormData({ ...formData, assignedByName: e.target.value })}
                                         required
                                         style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
                                     />
                                 </Form.Group>
 
-                                <section>
-                                <label> Project Description </label>
-                                    <textarea 
-                                        cols="50" 
-                                        className='w-full border p-2 mb-4'
-                                        placeholder="Add text to the slide"
-                                        value={formData.description}
-                                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                                <Form.Group controlId="assignName" className="mb-3">
+                                    <Form.Label>Assign By Email</Form.Label>
+                                    <Form.Control
+                                        type="Email"
+                                        name="assignEmail"
+                                        value={formData.assignedByEmail}
+                                        onChange={(e) => setFormData({ ...formData, assignedByEmail: e.target.value })}
+                                        required
                                         style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
-                                    >
-                                    </textarea>
-                            </section>
+                                    />
+                                </Form.Group>
+
+                                <Form.Group controlId="ticketId" className="mb-3">
+                                    <Form.Label>Ticket ID</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="ticketId"
+                                        value={formData.ticketId}
+                                        onChange={(e) => setFormData({ ...formData, ticketId: e.target.value })}
+                                        required
+                                        style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
+                                    />
+                                </Form.Group>
+
+                            
+                                
+
+                                <section>
+                                    <label> Ticket Description </label>
+                                        <textarea 
+                                            cols="50" 
+                                            className='w-full border p-2 mb-4'
+                                            placeholder="Add text to the slide"
+                                            value={formData.ticketDescription}
+                                            onChange={(e) => setFormData({ ...formData, ticketDescription: e.target.value })}
+                                            style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
+                                        >
+                                        </textarea>
+                                </section>
+
                                 <div>
                                     <label> Select Document </label>
                                     <br/>
@@ -212,6 +255,16 @@ const TaskForm = ({ currentProject, setConditionalComponent, onSave, setIsEditin
                                 
 
                                 </div>
+
+                                <section>
+                                    {
+                                        msg &&
+                                        <div className="alert alert-success" role="alert">
+                                            {msg}
+                                        </div>
+                                    }
+                                </section>
+
                             <br/>
 
                             

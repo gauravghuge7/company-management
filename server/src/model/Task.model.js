@@ -51,6 +51,11 @@ const taskSchema = new Schema({
    assignBy: {
       type: Schema.Types.ObjectId,
       ref: "Team"
+   },
+
+   ticket: {
+      type: Schema.Types.ObjectId,
+      ref: "Ticket"
    }
 
 

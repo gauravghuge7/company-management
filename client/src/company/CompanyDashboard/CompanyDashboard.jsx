@@ -1,12 +1,11 @@
-import  { useState } from 'react'
-import Componysidebar from '../sidebar/Componysidebar'
-import Dashboard from '../dashboard/Dashboardcontain'
-import Tasklist from '../task/Tasklist'
-import TaskForm from '../task/Taskform'
-import ProjectForm from '../project/Projectform'
-import Projectlist from '../project/Projectlist'
-import Componynavabar from '../navbar/Componynavabar'
-import TaskProjectlist from '../task/TaskProjectList'
+import { useState } from 'react';
+
+import Dashboard from '../dashboard/Dashboardcontain';
+import Componynavabar from '../navbar/Componynavabar';
+import Projectlist from '../project/Projectlist';
+import Componysidebar from '../sidebar/Componysidebar';
+import Tasklist from '../task/Tasklist';
+import TaskProjectlist from '../task/TaskProjectList';
 
 function CompanyDashboard() {
 
@@ -34,13 +33,12 @@ function CompanyDashboard() {
         {conditionalComponent === "CompanyTasks" && <TaskProjectlist setProjectId={setProjectId} setConditionalComponent={setConditionalComponent} />}
         
 
+
+
+
         {conditionalComponent === "tasklist" && <Tasklist setConditionalComponent={setConditionalComponent} projectId={projectId} />}
 
 
-        {conditionalComponent === "addTask" && <TaskForm />}
-
-
-        {conditionalComponent === "projectform" && <ProjectForm  />}
 
         {conditionalComponent === "Projectlist" && <Projectlist setConditionalComponent={setConditionalComponent} />}
 

@@ -1,6 +1,9 @@
-import {Schema, model} from 'mongoose';
 import bcrypt from 'bcrypt';
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
+import {
+  model,
+  Schema,
+} from 'mongoose';
 
 const adminSchema = new Schema({
 

@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import {
+  useEffect,
+  useState,
+} from 'react';
+
 import axios from 'axios';
-
-
 
 const TaskProjectlist = ({setConditionalComponent, setProjectId}) => {
 
@@ -10,7 +12,7 @@ const TaskProjectlist = ({setConditionalComponent, setProjectId}) => {
    const [projectData, setProjectData] = useState([
       {
          projectName: 'Example Project',
-        
+      
          spokePersonEmail: 'example@example.com',
          spokePersonName: 'John Doe',
          spokePersonNumber: '123-456-7890',
