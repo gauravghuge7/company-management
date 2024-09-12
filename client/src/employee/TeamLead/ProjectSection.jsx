@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+//this is the testing component
 const ProjectSection = ({ setConditionalComponent, projectId }) => {
 
   const [projects, setProjects] = useState({
@@ -82,7 +82,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
 
   useEffect(() => {
     fetchProjects();
-  }, []);
+  }, [2]);
 
   return (
     <div className="container mt-4">
@@ -98,14 +98,18 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
           <div className="row">
             <div className="col-md-6">
               <h3 className="card-title">{projects.projectName}</h3>
-              <p className="card-text"><strong>Description:</strong> {projects.description}</p>
+        
               <p className="card-text"><strong>Spoke Person:</strong> {projects.spokePersonName}</p>
-              <p className="card-text"><strong>Phone:</strong> {projects.spokePersonNumber}</p>
+             
               <p className="card-text"><strong>Email:</strong> {projects.spokePersonEmail}</p>
+              <p className="card-text"><strong>Phone:</strong> {projects.spokePersonNumber}</p>
+              <p className="card-text"><strong>Description:</strong> {projects.description}</p>
             </div>
           </div>
         </div>
       </details>
+
+
 
       <details className="card mb-3">
         <summary> Team Details </summary>

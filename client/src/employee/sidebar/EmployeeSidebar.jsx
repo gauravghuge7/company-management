@@ -40,6 +40,13 @@ const EmployeeSidebar = ({ setConditionalComponent, isTeamLead }) => {
         >
           <i className="bi bi-speedometer2 me-2"></i> Dashboard
         </button>
+        <button 
+          onClick={() => setConditionalComponent("projects")} 
+          className="btn btn-success mb-2 d-flex align-items-center"
+        >
+          <i className="bi bi-briefcase me-2"></i> Project Section
+        </button>
+
 
         <button 
           onClick={() => setConditionalComponent("TaskList")} 
@@ -48,13 +55,7 @@ const EmployeeSidebar = ({ setConditionalComponent, isTeamLead }) => {
           <i className="bi bi-list-task me-2"></i> Task
         </button>
 
-        <button 
-          onClick={() => setConditionalComponent("projects")} 
-          className="btn btn-success mb-2 d-flex align-items-center"
-        >
-          <i className="bi bi-briefcase me-2"></i> Project Section
-        </button>
-
+       
         {teams?.length > 0 && 
           <button 
             onClick={() => setConditionalComponent("teamLead")} 
