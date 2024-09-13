@@ -34,6 +34,11 @@ const taskSchema = new Schema({
       ref: "Team"
    },
 
+   priority: {
+      type: String,
+      
+   },
+
 
    assignBy: {
       type: Schema.Types.ObjectId,
