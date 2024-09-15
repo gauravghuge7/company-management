@@ -80,7 +80,7 @@ const EmpProjects = () => {
 
       }
 
-    } 
+    }
     catch (error) {
       console.log(error);
     }

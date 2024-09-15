@@ -16,7 +16,10 @@ const assignTasksToTeamMembers = asyncHandler(async (req, res) => {
                   employee,
                   description,
                   assignBy,
-                  tickets
+                  tickets, 
+                  taskName,
+                  priority,
+
 
             } = req.body;
 
@@ -46,8 +49,12 @@ const assignTasksToTeamMembers = asyncHandler(async (req, res) => {
                   employee,
                   description,
                   assignBy,
-                  tickets,
+                  ticket: tickets,
                   taskDocument: response?.url,
+                  taskName,
+                  priority,
+                  status: "Started",
+                  currentWork: "Assigned task to employee",
 
 
             })

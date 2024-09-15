@@ -34,6 +34,16 @@ const taskSchema = new Schema({
       ref: "Team"
    },
 
+   taskName: {
+      type: String,
+   
+   },
+
+   status: {
+      type: String,
+      enum: ["Started", "assigned", "pending", "Completed", "Cancelled"],
+   },
+
    priority: {
       type: String,
       

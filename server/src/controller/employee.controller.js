@@ -794,7 +794,7 @@ const getTasksByProjectId = asyncHandler (async (req, res) => {
             },
             {
                 $addFields: {
-                    ticket: "$ticket"
+                    ticket: { $arrayElemAt: ["$ticket", 0]}
                 }
             },
 
@@ -825,15 +825,22 @@ const getTasksByProjectId = asyncHandler (async (req, res) => {
                 }
             },
 
-
+            /** FIND THE DETAILS SUCCESSFULLY AND SEND TO THE CLIENT */
             {
                 $project: {
                     _id: 1,
                     description: 1,
                     taskDocument: 1,
 
+                    status: 1,
+                    priority: 1,
+
+                    currentWork: 1,
+                    
+
                     ticket: 1,
                     teamLead: 1,
+
 
                 }
             }
