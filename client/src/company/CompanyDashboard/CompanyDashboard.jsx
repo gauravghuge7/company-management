@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import Dashboard from '../dashboard/Dashboardcontain';
 import Componynavabar from '../navbar/Componynavabar';
+import Adminfooter from '../footer/Adminfooter';
 import Projectlist from '../project/Projectlist';
 import Componysidebar from '../sidebar/Componysidebar';
 import Tasklist from '../task/Tasklist';
@@ -51,7 +52,7 @@ function CompanyDashboard() {
     
     
     
-    
+      <Adminfooter />
     
     </>
   )

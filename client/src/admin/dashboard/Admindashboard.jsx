@@ -1,5 +1,6 @@
 import  { useEffect, useState } from 'react'
 import AdminNavbar from '../navbar/AdminNavbar'
+import Adminfooter from '../footer/Adminfooter'
 import Sidebar from '../sidebar/Sidebar'
 import Admincontain from './Admincontain'
 import NewEmployeeForm from '../createemployee/NewEmployeeForm '
@@ -150,7 +151,7 @@ function Admindashboard() {
     </div>
     
     
-    
+    <Adminfooter />
     
     
     </>

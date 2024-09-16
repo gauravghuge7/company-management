@@ -30,8 +30,8 @@ const EmployeeSidebar = ({ setConditionalComponent, isTeamLead }) => {
   }, [])
 
   return (
-    <div className="d-flex flex-column vh-100 p-3 bg-dark text-light">
-      <h2 className="mb-4">Employee Panel</h2>
+    <div className="d-flex flex-column p-3 bg-dark text-light" style={{ width: '250px', height: 'auto', minHeight: '100vh' }}>
+     
       <hr className="bg-light" />
       <Nav className="flex-column">
         <button 

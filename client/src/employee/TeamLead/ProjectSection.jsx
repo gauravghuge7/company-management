@@ -224,7 +224,8 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
           <th>Ticket ID</th>
           
           <th>Priority</th>
-          <th>Due Date</th>
+          <th>SAP Type</th>
+          {/* <th>Due Date</th> */}
           <th>Assigned To</th>
           <th>Assigned By Email</th>
           <th>Assigned By Name</th>
@@ -232,6 +233,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
           <th>Status</th>
           <th>Document</th>
           <th>Description</th>
+          {/* <th>Permission</th> */}
         
         
         </tr>
@@ -243,16 +245,27 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
             <td>{ticket._id}</td>
            
             <td>{ticket.priority}</td>
-            <td>{ticket.dueDate}</td>
+            <td>{ticket.saptype}</td>
+            {/* <td>{ticket.dueDate}</td> */}
             <td>{ticket.assignedTo}</td>
             <td>{ticket.assignedByEmail}</td>
             <td>{ticket.assignedByName}</td>
             <td>{ticket.status}</td>
-            <td>{ticket.ticketDocument}</td>
+            <a href={ticket ? ticket.ticketDocument : ""} target="_blank" rel="noreferrer">
+                    <button className="btn btn-primary">View</button>
+                  </a>
             <td>{ticket.ticketDescription}</td>
+            {/* <td>
+
+              <button className="btn btn-primary me-2" onClick={() => handleEdit(ticket._id)}>
+
+                Approval
+
+                  </button>
+             </td> */}
            
            
-          </tr>
+          </tr> 
         ))}
       </tbody>
     </table>

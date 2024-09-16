@@ -181,7 +181,7 @@ const TaskForm = ({ currentProject, setConditionalComponent, onSave, setIsEditin
                                 </Form.Group>
                             
 
-                                <Form.Group controlId="dueDate" className="mb-3">
+                                {/* <Form.Group controlId="dueDate" className="mb-3">
                                     <Form.Label>Due Date</Form.Label>
                                     <Form.Control
                                         type="date"
@@ -191,7 +191,7 @@ const TaskForm = ({ currentProject, setConditionalComponent, onSave, setIsEditin
                                         required
                                         style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
                                     />
-                                </Form.Group>
+                                </Form.Group> */}
 
                                 <Form.Group controlId="assignName" className="mb-3">
                                     <Form.Label>Assign BY From</Form.Label>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 // import { Navbar } from 'react-bootstrap'
 import EmployeeSidebar from '../sidebar/EmployeeSidebar'
+import Adminfooter from '../footer/Adminfooter'
 
 import Employeenavbar from '../navbar/Employeenavbar'
 import Employeecontain from './Employeecontain'
@@ -84,7 +85,7 @@ function Employeedashboard() {
 
     </div>
     
-    
+    <Adminfooter />
     
     
     

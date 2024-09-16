@@ -4,12 +4,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const Componysidebar = ({ setConditionalComponent }) => {
   return (
     <div
-      className="d-flex flex-column vh-100 p-3 bg-dark text-white"
+      className="d-flex flex-column  p-3 bg-dark text-white"
       style={{
         width: '250px',
         backgroundColor: '#212529', // Darker background for better contrast
         boxShadow: '2px 0 5px rgba(0, 0, 0, 0.5)', // Add subtle shadow for depth
         borderRight: '1px solid #343a40', // Border to separate sidebar from content
+        height: 'auto',
+        minHeight: '100vh',
       }}
     >
     
