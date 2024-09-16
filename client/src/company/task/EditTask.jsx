@@ -15,7 +15,9 @@ const EditTask = ({ currentTask, setIsEditOpen, setCurrentTask }) => {
 
          console.log("currentTask => ", currentTask);
 
+
          
+
 
       } 
       catch (error) {
@@ -108,30 +110,21 @@ const EditTask = ({ currentTask, setIsEditOpen, setCurrentTask }) => {
                            />
                         </Form.Group>
 
-                        <Form.Group controlId="assignName" className="mb-3">
-                           <Form.Label>Assign Name</Form.Label>
-                           <Form.Control
-                                 type="text"
-                                 name="assignName"
-                                 value={currentTask.assignName}
-                                 onChange={(e) => setCurrentTask({ ...currentTask, assignName: e.target.value })}
-                                 required
-                                 style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
-                           />
+                        <Form.Group controlId="assignName" className="mb-3 flex flex-col">
+                           <Form.Label>desciption</Form.Label>
+              
+                           <textarea cols="30" rows="10"
+                           value={currentTask.taskDetail}
+                           onChange={(e) => setCurrentTask({ ...currentTask, taskDetail: e.target.value })}
+                           style={{ borderRadius: '12px', padding: '18px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
+                           className='w-full border-1'
+                        >
+                           {currentTask.taskDetail}
+
+                        </textarea>
+                    
                         </Form.Group>
 
-
-                        <Form.Group controlId="assignName" className="mb-3">
-                           <Form.Label>Assign To Team</Form.Label>
-                           <Form.Control
-                                 type="text"
-                                 name="assignName"
-                                 value={currentTask.assignTeam}
-                                 onChange={(e) => setCurrentTask({ ...currentTask, assignTeam: e.target.value })}
-                                 required
-                                 style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
-                           />
-                        </Form.Group>
 
 
 
