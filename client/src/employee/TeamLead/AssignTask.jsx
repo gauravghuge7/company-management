@@ -49,9 +49,17 @@ const AssignTask = ({ teamLead, currentEmployee, projectId, tickets, setAssignTa
                   const body = {
 
                         project: projectId,
+
+                        taskName: ticketDetails.ticketName,
+                        priority: ticketDetails.priority,
+                  
+                        
                         employee: currentEmployee,
+                        
                         description: ticketDetails.ticketDescription,
                         document: ticketDetails.ticketDocument,
+                        
+
                         tickets: own,
                         assignBy: teamLead
                   }
@@ -62,9 +70,9 @@ const AssignTask = ({ teamLead, currentEmployee, projectId, tickets, setAssignTa
                   console.log("response.data => ", response.data);
 
                   if(response.data.success === true) {
-                     setMsg("");
-                     message?.success("Ticket Assigned Successfully");
-                     setAssignTask(false);
+                        setMsg("");
+                        message?.success("Ticket Assigned Successfully");
+                        setAssignTask(false);
                   }
 
 

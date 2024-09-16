@@ -767,12 +767,85 @@ const getTasksByProjectId = asyncHandler (async (req, res) => {
             throw new ApiError(400, "Please provide the project id");
         }
 
-        const task = await Task.find({
-            $and: [
-                {project: new mongoose.Types.ObjectId(projectId)},
-                {employee: new mongoose.Types.ObjectId(req.user._id)}
-            ]
-        })
+        const task = await Task.aggregate([
+
+            {
+                $match: {
+                    $and: [
+                        {
+                            project: new mongoose.Types.ObjectId(projectId)
+                        },
+                        {
+                            employee: new mongoose.Types.ObjectId(req.user._id)
+                        }
+
+                    ]
+                }
+            },
+
+            /*** tickets find ***/
+            {
+                $lookup: {
+                    from: "tickets",
+                    localField: "ticket",
+                    foreignField: "_id",
+                    as: "ticket"
+                }
+            },
+            {
+                $addFields: {
+                    ticket: { $arrayElemAt: ["$ticket", 0]}
+                }
+            },
+
+            /** teams Lead find and add to response **/
+            {
+                $lookup: {
+                    from: "teams",
+                    localField: "assignBy",
+                    foreignField: "_id",
+                    as: "assignBy",
+
+                    pipeline: [
+                        {
+                            $lookup: {
+                                from: "employees",
+                                localField: "employee",
+                                foreignField: "_id",
+                                as: "employeeDetails"
+                            }
+                        },
+                        {
+                            $addFields: {
+                                teamLead: "$employeeDetails.employeeName"
+                            }
+                        },
+                    
+                    ]
+                }
+            },
+
+            /** FIND THE DETAILS SUCCESSFULLY AND SEND TO THE CLIENT */
+            {
+                $project: {
+                    _id: 1,
+                    description: 1,
+                    taskDocument: 1,
+
+                    status: 1,
+                    priority: 1,
+
+                    currentWork: 1,
+                    
+
+                    ticket: 1,
+                    teamLead: 1,
+
+
+                }
+            }
+            
+        ])
 
 
 
