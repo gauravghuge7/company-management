@@ -9,6 +9,20 @@ import axios from 'axios';
 
 const EmpProjects = () => {
 
+  
+  const [tickets, setTickets] = useState({
+    ticketName: "",
+    description: "",
+    priority: "",
+    status: "",
+    ticketDocument: "",
+    createdAt: "",
+    updatedAt: "",
+    assignedTo: "",
+    projectId: "",
+  
+  });
+
   const [projects, setProjects] = useState([
     {
       projectId: "",
@@ -33,7 +47,8 @@ const EmpProjects = () => {
       status: "",
       taskName: "",
       assignedTo: "",
-      taskDocument: ""
+      taskDocument: "",
+      ticket: ""
     },
   ]);
 
@@ -78,6 +93,8 @@ const EmpProjects = () => {
 
         setTasks(response.data?.data);
 
+        
+
       }
 
     }
@@ -86,8 +103,15 @@ const EmpProjects = () => {
     }
   };
 
+
+
+ 
+
+
+
   useEffect(() => {
     fetchProjects();
+    
   }, []);
 
   if (projects && projects?.length === 0) {
@@ -153,18 +177,57 @@ const EmpProjects = () => {
                   {
                     tasks.map((task, index) => (
                       <div key={index} className="card mb-3">
-                        <div className="card-body">
-                          <h5 className="card-title">{task.taskName}</h5>
-                          <p className="card-text">{task.description}</p>
-                          <p className="card-text">Assigned To: {task.assignedTo}</p>
-                          <p className="card-text">Priority: {task.priority}</p>
-                          <p className="card-text">Status: {task.status}</p>
-                          
-                          <p className="card-text">Description: {task.description}</p>
+
+                        { 
+                          task.ticket 
+                          ?  
+                           /** Task from directly client  */
+                          <div className="card-body">
+                            <h3> Client Ticket </h3>
+                            <h5 className="card-title">{task.ticket.ticketName}</h5>
+                            <p className="card-text">{task.ticket.saptype}</p>
+                            <p className="card-text">Assigned To: {task.ticket.assignedByName}</p>
+                            <p className="card-text">Priority: {task.ticket.priority}</p>
+                            <p className="card-text">Status: {task.ticket.status}</p>
+                            
+                            <p className="card-text">Description: {task.ticket.ticketDescription}</p>
 
 
-                          <a href={task.taskDocument} target='_blank' rel="noreferrer" className="btn btn-primary">Download Document</a>
-                        </div>
+                            <a href={task.ticket.ticketDocument} target='_blank' rel="noreferrer" className="btn btn-primary">Download Document</a>
+
+                            <button
+                              className="btn btn-primary"
+                            > 
+                              forward Ticket 
+                            </button>
+
+                          </div>
+
+                          : 
+                             /**   task from team lead */
+                          <div className="card-body">
+                            <h5 className="card-title">{task.taskName}</h5>
+                            <p className="card-text">{task.description}</p>
+                            <p className="card-text">Assigned To: {task.assignedTo}</p>
+                            <p className="card-text">Priority: {task.priority}</p>
+                            <p className="card-text">Status: {task.status}</p>
+                            
+                            <p className="card-text">Description: {task.description}</p>
+
+
+                            <a href={task.taskDocument} target='_blank' rel="noreferrer" className="btn btn-primary">Download Document</a>
+
+                            <button 
+                              className="btn btn-primary"
+                              
+                            >
+                              forward Ticket
+                            </button>
+                          </div>
+
+                        }
+
+                        
                       </div>
                     ))
                   }
