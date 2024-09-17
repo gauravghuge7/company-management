@@ -864,6 +864,132 @@ const getTasksByProjectId = asyncHandler (async (req, res) => {
     }
 })
 
+
+
+const forwardTicketsAndTasksToAnotherEmployee = asyncHandler(async(req, res) => {
+
+    try {
+
+        const {_id} = req.user;
+
+        if(!_id) {
+            throw new ApiError(400, "Please provide the employee email");
+        }
+
+
+        const {employeeId} = req.body;
+
+        // get data from the frontend
+        /**
+
+            employeeId  
+
+        
+        */
+
+    
+        // find the entry in the database
+
+        const employee = await Employee.findById(_id);
+
+        if(!employee) {
+            throw new ApiError(400, "Employee does not exist");
+        }
+
+        // check if the employee already exists
+
+        const existedEmployee = await Employee.findById(employeeId)
+
+        if(!existedEmployee) {
+            throw new ApiError(400, "Employee does not exist");
+        }
+
+        // check the entry in tasks 
+
+        const task = await Task.findOne({employee: employee._id})
+
+        if(!task) {
+            throw new ApiError(400, "Employee does not exists in the task");
+        }
+
+        /// push current employee to the previous employee array
+        task.previousEmployee.push(employee._id);
+
+        // set the current employee to the new employee
+        task.employee = req.body.employeeId;
+
+        await task.save({validateBeforeSave: false});
+        
+        
+        return res.status(200).json(                                           // 
+            new ApiResponse(200, "ticket forward successfully to another employee", employee)
+        )
+        
+    } 
+    catch (error) {
+        console.log(" Error => ", error.message)
+        throw new ApiError(400, error.message);    
+    }
+
+})
+
+
+
+const getEmployeeByTeam = asyncHandler(async(req, res) => {
+    try {
+    
+        const { teamId } = req.params;
+        
+        if(!teamId) {
+            throw new ApiError(400, "Please provide the team id");
+        }
+
+        const employee = await Employee.aggregate([
+
+            {
+                $match: {
+                    team: new mongoose.Types.ObjectId(teamId)
+                }
+            },
+
+            {
+                $lookup: {
+                    from: "employees",
+                    localField: "employee",
+                    foreignField: "_id",
+                    as: "employeeDetails"
+                }
+        
+            },
+            {
+                $addFields: {
+                    employeeDetails: "$employeeDetails"
+                }
+            },
+            {
+                $project: {
+                    employeeDetails: 1,
+                }
+            }
+
+
+        ])
+
+
+        return res
+            .status(200)
+            .json(
+                new ApiResponse(200, "Employee fetched successfully", employee)
+            )
+
+    } 
+    catch (error) {
+        console.log(" Error => ", error.message)    
+        throw new ApiError(400, error.message);
+    }
+})
+
+
 export {
     fetchProjectById,
     fetchProjectByTeamId,
@@ -876,5 +1002,8 @@ export {
     logoutEmployee,
     registerEmployee,
 
-    getTasksByProjectId
+    getTasksByProjectId,
+    forwardTicketsAndTasksToAnotherEmployee,
+
+    getEmployeeByTeam
 };

@@ -50,7 +50,44 @@ const EmpProjects = () => {
       taskDocument: "",
       ticket: ""
     },
+
+  ],
+
+  );
+
+  const [employee, setEmployee] = useState([
+    {
+      employeeName: "",
+      employeeEmail: "",
+      _id: ""
+    }
   ]);
+
+
+  const fetchEmployee = async (teamId) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      };
+      const response = await axios.get(`/api/employee/getEmployeeByTeam/${teamId}`, config);
+
+      console.log("response.data => ", response.data);
+
+      
+    } 
+    catch (error) {
+      console.log(error);
+    }
+  };
+
+
+  const [isForwaredOpen, setIsForwaredOpen] = useState(false);
+
+
+
 
 
   const fetchProjects = async () => {
@@ -105,14 +142,31 @@ const EmpProjects = () => {
 
 
 
- 
+  const setForwardTask = (teamId) => {
+
+
+    fetchEmployee(teamId);
+    setIsForwaredOpen(true);
+  }
+
+
 
 
 
   useEffect(() => {
     fetchProjects();
+    fetchEmployee();  
     
   }, []);
+
+  if(!projects ) {
+    return (
+      <div className="container mt-5">
+        <h2> you are not working on any project right now </h2>
+      </div>
+    )
+  }
+
 
   if (projects && projects?.length === 0) {
     return (
@@ -166,8 +220,9 @@ const EmpProjects = () => {
       <footer>
             {/* Footer */}
 
+            
             {
-              tasks && 
+              tasks.length > 0  ? 
               
               <section>
 
@@ -175,11 +230,12 @@ const EmpProjects = () => {
 
                 <main>
                   {
-                    tasks.map((task, index) => (
+                    tasks?.map  && tasks?.map((task, index) => (
+
                       <div key={index} className="card mb-3">
 
                         { 
-                          task.ticket 
+                          task?.ticket 
                           ?  
                            /** Task from directly client  */
                           <div className="card-body">
@@ -197,6 +253,7 @@ const EmpProjects = () => {
 
                             <button
                               className="btn btn-primary"
+                            
                             > 
                               forward Ticket 
                             </button>
@@ -236,9 +293,34 @@ const EmpProjects = () => {
                 
               
               </section>
+              : null
+
             }
       
       </footer>
+
+
+      <main>
+            {
+              isForwaredOpen && 
+              <div>
+                <h2>Forwarded Ticket</h2>
+                <p>Ticket Name: {tickets.ticketName}</p>
+
+                <section>
+                  <label>Select Team Member</label>
+                  <select className="form-select" aria-label="Default select example">
+                    <option selected > Choose...</option>
+                    {
+
+                    }
+                  </select>
+                </section>
+              
+              </div>
+            }
+      </main>
+
     </div>
   );
 };

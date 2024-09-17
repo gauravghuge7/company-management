@@ -112,7 +112,7 @@ const EditTask = ({ currentTask, setIsEditOpen, setCurrentTask }) => {
 
                         <Form.Group controlId="assignName" className="mb-3 flex flex-col">
                            <Form.Label>desciption</Form.Label>
-              
+
                            <textarea cols="30" rows="10"
                            value={currentTask.taskDetail}
                            onChange={(e) => setCurrentTask({ ...currentTask, taskDetail: e.target.value })}
@@ -122,7 +122,7 @@ const EditTask = ({ currentTask, setIsEditOpen, setCurrentTask }) => {
                            {currentTask.taskDetail}
 
                         </textarea>
-                    
+
                         </Form.Group>
 
 
