@@ -88,7 +88,7 @@ const TaskProjectlist = ({setConditionalComponent, setProjectId}) => {
                         <td>{data.spokePersonEmail}</td>
                         <td>{data.spokePersonName}</td>
                         <td>{data.spokePersonNumber}</td>
-                        <td>{data.team}</td>
+                        <td>{data?.team?.map(team => team?.teamLead?.map(teamLead => teamLead))}</td>
                         <td>{data.description}</td>
                         <td>
                            <button 

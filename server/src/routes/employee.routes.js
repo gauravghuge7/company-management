@@ -1,18 +1,18 @@
 import express from 'express';
 
 import {
-  fetchProjectById,
-  fetchProjectByTeamId,
-  forwardTicketsAndTasksToAnotherEmployee,
-  getEmployeeByTeam,
-  getEmployeeDetails,
-  getEmployeeProjects,
-  getTasksByProjectId,
-  getTeamLeadOrNot,
-  getTeamLeadProjects,
-  loginEmployee,
-  logoutEmployee,
-  registerEmployee,
+    fetchProjectById,
+    fetchProjectByTeamId,
+    forwardTicketsAndTasksToAnotherEmployee,
+    getEmployeeByTeam,
+    getEmployeeDetails,
+    getEmployeeProjects,
+    getTasksByProjectId,
+    getTeamLeadOrNot,
+    getTeamLeadProjects,
+    loginEmployee,
+    logoutEmployee,
+    registerEmployee,
 } from '../controller/employee.controller.js';
 import {
   assignTasksToTeamMembers,
@@ -127,12 +127,6 @@ employeeRouter.route("/getEmployeeByTeam/:teamId").get(
 )
 
 
-
-
-
-employeeRouter.route("/getEmployeePassword").get(
-    
-)
 
 
 

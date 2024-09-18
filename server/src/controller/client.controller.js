@@ -229,18 +229,7 @@ const createProject = asyncHandler(async(req, res) => {
 const fetchProjects = asyncHandler(async (req, res) => {
 
     try {
-        const { clientEmail } = req.user;
-        
-        // // find the entry in the database then check and return the response
-        
-        // const client = await Client.findOne({ clientEmail })
-        
-        // if(!client) {
-        //     throw new ApiError(400, "Client does not exist");
-        // }
-        
-        // const projects = await Project.find({ clientEmail })
-        
+
 
 
         const projects = await Project.aggregate([
@@ -253,19 +242,56 @@ const fetchProjects = asyncHandler(async (req, res) => {
 
             {
                 $lookup: {
-                    from: "tickets",
-                    localField: "_id",
-                    foreignField: "project",
-                    as: "tickets"
+                    from: "teams",
+                    foreignField: "_id",
+                    localField: "team",
+                    as: "team",
+                    
+                    pipeline: [
+
+                        {
+                            $lookup: {
+                                from: "employees",
+                                foreignField: "_id",
+                                localField: "teamLead",
+                                as: "teamLead",
+                            
+                            },
+
+                        },
+
+                        {
+                            $addFields: {
+                                teamLead: "$teamLead.employeeName"
+                            }
+                        }
+                    ]
                 }
+            
             },
 
             {
-                $addFields: {
-                    tickets: "$tickets"
+                $project: {
+
+                    teamLead: 1,
+
+                    projectName: 1,
+                    projectId: 1,
+
+                    team: 1,
+
+                    spokePersonEmail: 1,
+                    spokePersonName: 1,
+                    spokePersonNumber: 1,
+                    description: 1,
+                    descriptionDocument: 1,
+
+                    clientName: 1,
+                    clientEmail: 1,
                 }
-            },
-            
+            }
+
+
 
         ])
 
@@ -358,7 +384,7 @@ const createTicket = asyncHandler(async (req, res) => {
 
 
 
-    
+
 
         const response = await uploadOnCloudinary(req.file.path);
         
@@ -380,6 +406,7 @@ const createTicket = asyncHandler(async (req, res) => {
             dueDate,
             status: "Open",
 
+
         })
     
         return res
@@ -396,12 +423,13 @@ const createTicket = asyncHandler(async (req, res) => {
     
 })
 
+
 export {
-  createProject,
-  createTicket,
-  fetchProjects,
-  fetchTasks,
-  loginClient,
-  logoutClient,
-  registerClient,
+    createProject,
+    createTicket,
+    fetchProjects,
+    fetchTasks,
+    loginClient,
+    logoutClient,
+    registerClient,
 };

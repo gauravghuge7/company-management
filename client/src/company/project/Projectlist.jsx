@@ -1,7 +1,11 @@
-import { useEffect, useState } from 'react';
-import EditProjectForm from './EditProjectForm';
+import {
+  useEffect,
+  useState,
+} from 'react';
 
 import axios from 'axios';
+
+import EditProjectForm from './EditProjectForm';
 
 const Projectlist = ({setConditionalComponent}) => {
    const [isEditing, setIsEditing] = useState(false);
@@ -46,7 +50,7 @@ const Projectlist = ({setConditionalComponent}) => {
 
             setProjectData(response.data.data);
          }
- 
+
       } 
       catch (error) {
          console.log(error);
@@ -77,7 +81,6 @@ const Projectlist = ({setConditionalComponent}) => {
    return (
       <div className="container mt-5">
 
-         
 
          <h2 className="mb-4 text-center">Project List</h2>
          <table className="table table-striped table-bordered">
@@ -95,21 +98,21 @@ const Projectlist = ({setConditionalComponent}) => {
             </thead>
             <tbody>
                {
-                  projectData.map((data, index) => (
+                  projectData?.map((data, index) => (
                      <tr key={index}>
-                        <td>{data.projectName}</td>
+                        <td>{data?.projectName}</td>
 
-                        <td>{data.spokePersonEmail}</td>
-                        <td>{data.spokePersonName}</td>
-                        <td>{data.spokePersonNumber}</td>
-                        <td>{data.team}</td>
-                        <td>{data.description}</td>
+                        <td>{data?.spokePersonEmail}</td>
+                        <td>{data?.spokePersonName}</td>
+                        <td>{data?.spokePersonNumber}</td>
+                        <td>{data?.team?.map(team => team?.teamLead?.map(teamLead => teamLead))}</td>
+                        <td>{data?.description}</td>
                         <td>
                            <button 
                               className="btn btn-primary me-2" 
                               onClick={() => handleAddTask(data)}
                            >
-                           Add Ticket
+                              Add Ticket
                            </button>
 
 
