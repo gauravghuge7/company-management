@@ -146,33 +146,41 @@ const EmpProjects = () => {
               tasks && 
               
               <section>
-
-                <h2 className="text-center">Your Tasks</h2>
-
-                <main>
-                  {
-                    tasks.map((task, index) => (
-                      <div key={index} className="card mb-3">
-                        <div className="card-body">
-                          <h5 className="card-title">{task.taskName}</h5>
-                          <p className="card-text">{task.description}</p>
-                          <p className="card-text">Assigned To: {task.assignedTo}</p>
-                          <p className="card-text">Priority: {task.priority}</p>
-                          <p className="card-text">Status: {task.status}</p>
-                          
-                          <p className="card-text">Description: {task.description}</p>
-
-
-                          <a href={task.taskDocument} target='_blank' rel="noreferrer" className="btn btn-primary">Download Document</a>
-                        </div>
-                      </div>
-                    ))
-                  }
-                
-                </main>
-                
-              
-              </section>
+              <h2 className="text-center">Your Tasks</h2>
+              <main>
+                  <table className="table table-striped table-bordered mt-4">
+                      <thead className="thead-dark">
+                          <tr>
+                              <th scope="col">Task Name</th>
+                             
+                              <th scope="col">Assigned To</th>
+                              <th scope="col">Priority</th>
+                              <th>SAP Type</th>
+                              <th scope="col">Status</th>
+                              <th scope="col">Documents</th>
+                              <th scope="col">Description</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {tasks.map((task, index) => (
+                              <tr key={index}>
+                                  <td>{task.taskName}</td>
+                                
+                                  <td>{task.assignedTo}</td>
+                                  <td>{task.priority}</td>
+                                  <td>{task.saptype}</td>
+                                  <td>{task.status}</td>
+                                  <td>
+                                      <a href={task.taskDocument} target='_blank' rel="noreferrer" className="btn btn-primary">View</a>
+                                  </td>
+                                  <td>{task.description}</td>
+                              </tr>
+                          ))}
+                      </tbody>
+                  </table>
+              </main>
+          </section>
+          
             }
       
       </footer>

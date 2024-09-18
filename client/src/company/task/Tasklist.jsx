@@ -153,7 +153,7 @@ const TaskList = ({ setConditionalComponent, projectId }) => {
                 <th>Assign BY Email</th>
 
                 <th>ticket Document</th>
-                <th>Team Lead Permission</th>
+                {/* <th>Team Lead Permission</th> */}
                 <th>Action</th>
               </tr>
             </thead>
@@ -179,17 +179,14 @@ const TaskList = ({ setConditionalComponent, projectId }) => {
                     <button className="btn btn-primary">View</button>
                   </a>
                 </td> 
-                <td> 
+                {/* <td> 
                   <a href={task.ticketDocument} target="_blank" rel="noreferrer">
                     <button className="btn btn-primary">View</button>
                   </a>
-                </td> 
+                </td>  */}
                   <td>
                     <button className="btn btn-primary me-2" onClick={handleEdit}>Edit</button>
                     <button className="btn btn-danger" onClick={handleDelete}>Delete</button> 
-
-
-
                                 
                   </td>
 
