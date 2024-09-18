@@ -1,13 +1,13 @@
 import express from 'express';
 
 import {
-  createProject,
-  createTicket,
-  fetchProjects,
-  fetchTasks,
-  loginClient,
-  logoutClient,
-  registerClient,
+   createProject,
+   createTicket,
+   fetchProjects,
+   fetchTasks,
+   loginClient,
+   logoutClient,
+   registerClient,
 } from '../controller/client.controller.js';
 import { verifyAdmin } from '../middleware/Admin.middleware.js';
 import { verifyClient } from '../middleware/Compony.middleware.js';
@@ -59,6 +59,7 @@ clientRouter.route("/createTicket").post( //verify client
    upload.single("document"),
    createTicket
 )
+
 
 
 export default clientRouter;
