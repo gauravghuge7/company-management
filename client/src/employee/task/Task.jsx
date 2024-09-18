@@ -1,5 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Table, Button } from 'react-bootstrap';
+import React, {
+  useEffect,
+  useState,
+} from 'react';
+
+import {
+  Col,
+  Container,
+  Row,
+  Table,
+} from 'react-bootstrap';
 
 const TaskList = ({ setConditionalComponent }) => {
   const [tasks, setTasks] = useState([

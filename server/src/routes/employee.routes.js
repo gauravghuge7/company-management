@@ -3,6 +3,8 @@ import express from 'express';
 import {
   fetchProjectById,
   fetchProjectByTeamId,
+  forwardTicketsAndTasksToAnotherEmployee,
+  getEmployeeByTeam,
   getEmployeeDetails,
   getEmployeeProjects,
   getTasksByProjectId,
@@ -19,6 +21,7 @@ import {
 import { verifyAdmin } from '../middleware/Admin.middleware.js';
 import { verifyEmployee } from '../middleware/Employee.middleware.js';
 import { upload } from '../middleware/multer.middleware.js';
+import { get } from 'mongoose';
 
 const employeeRouter = express.Router();
 
@@ -108,6 +111,20 @@ employeeRouter.route("/getTasksByProjectId/:projectId").get(
 )
 
 
+
+employeeRouter.route("/forwardTicketsAndTasksToAnotherEmployee").post(
+    
+    verifyEmployee,
+    upload.none(),
+    forwardTicketsAndTasksToAnotherEmployee
+)
+
+
+employeeRouter.route("/getEmployeeByTeam/:teamId").get(
+    
+    verifyEmployee,
+    getEmployeeByTeam
+)
 
 
 

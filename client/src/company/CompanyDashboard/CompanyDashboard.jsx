@@ -12,7 +12,21 @@ function CompanyDashboard() {
 
   const [conditionalComponent, setConditionalComponent] = useState("");
 
+
   const [projectId, setProjectId] = useState("");
+
+  const [currentTask, setCurrentTask] = useState({
+    ticketId: "",
+    ticketName: "",
+    description: "",
+    priority: "",
+    status: "",
+    ticketDocument: "",
+    createdAt: "",
+    updatedAt: "",
+    assignedTo: "",
+    projectId: "",  
+  })
 
 
   return (
@@ -37,7 +51,11 @@ function CompanyDashboard() {
 
 
 
-        {conditionalComponent === "tasklist" && <Tasklist setConditionalComponent={setConditionalComponent} projectId={projectId} />}
+        {conditionalComponent === "tasklist" && <Tasklist 
+          setConditionalComponent={setConditionalComponent} 
+          projectId={projectId} 
+          setCurrentTask={setCurrentTask}
+        />}
 
 
 
@@ -48,6 +66,9 @@ function CompanyDashboard() {
 
 
     </div>
+
+
+    
     
     
     

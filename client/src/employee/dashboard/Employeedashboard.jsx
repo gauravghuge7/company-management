@@ -1,17 +1,20 @@
-import { useEffect, useState } from 'react'
-// import { Navbar } from 'react-bootstrap'
-import EmployeeSidebar from '../sidebar/EmployeeSidebar'
-import Adminfooter from '../footer/Adminfooter'
+import {
+  useEffect,
+  useState,
+} from 'react';
 
-import Employeenavbar from '../navbar/Employeenavbar'
-import Employeecontain from './Employeecontain'
-import Task from '../task/Task'
-import axios from 'axios'
-import { message } from 'react-message-popup'
-import LeadProjects from '../TeamLead/LeadProjects'
-import EmpProjects from '../EmployeeProjects/EmpProjects'
-import ProjectSection from '../TeamLead/ProjectSection'
-import LeadTeam from '../TeamLead/LeadTeam'
+import axios from 'axios';
+import { message } from 'react-message-popup';
+
+import EmpProjects from '../EmployeeProjects/EmpProjects';
+import Employeenavbar from '../navbar/Employeenavbar';
+// import { Navbar } from 'react-bootstrap'
+import EmployeeSidebar from '../sidebar/EmployeeSidebar';
+import Task from '../task/Task';
+import LeadProjects from '../TeamLead/LeadProjects';
+import LeadTeam from '../TeamLead/LeadTeam';
+import ProjectSection from '../TeamLead/ProjectSection';
+import Employeecontain from './Employeecontain';
 
 function Employeedashboard() {
 
@@ -64,7 +67,7 @@ function Employeedashboard() {
         {conditionalComponent === "" && <Employeecontain/>}
         {conditionalComponent === "Contain" && <Employeecontain/>}
 
-        {conditionalComponent === "projects" && <EmpProjects/>}
+        {conditionalComponent === "projects" && <EmpProjects />}
 
 
 
@@ -85,7 +88,7 @@ function Employeedashboard() {
 
     </div>
     
-    <Adminfooter />
+    
     
     
     
