@@ -164,6 +164,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
 
 
   return (
+
     <div className="container mt-4">
 
       {/**  back Button  */}
@@ -174,44 +175,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
         Back
       </button>
 
-      {/**** Project Detail */}
-      {/* <details title='Project Detail' className="card mb-3">
-        <summary> Project Detail </summary>
-        <div className="card-body">
-          <h2 className="card-title">Project Section</h2>
-          <div className="row">
-            <div className="col-md-6">
-              <h3 className="card-title">{projects.projectName}</h3>
-        
-              <p className="card-text"><strong>Spoke Person:</strong> {projects.spokePersonName}</p>
-             
-              <p className="card-text"><strong>Email:</strong> {projects.spokePersonEmail}</p>
-              <p className="card-text"><strong>Phone:</strong> {projects.spokePersonNumber}</p>
-              <p className="card-text"><strong>Description:</strong> {projects.description}</p>
-            </div>
-          </div>
-        </div>
-      </details> */}
-
-
-
-      {/**** Team Details */}
-      {/* <details className="card mb-3">
-        <summary> Team Details </summary>
-        <div className="card-body">
-          <legend>Team Details</legend>
-          <div className="row">
-            <div className="col-md-6">
-              <h3 className="card-title">{team.teamName}</h3>
-              <p className="card-text"><strong>Team ID:</strong> {team.teamId}</p>
-              <p className="card-text"><strong>Created At:</strong> {team.createdAt}</p>
-            </div>
-          </div>
-        </div>
-      </details> */}
-
-
-      {/**** Ticket Details */}
+      
       <details
   className="card mb-3"
   style={{
@@ -312,7 +276,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
             <div className="col-md-6">
               <button 
                 className="btn btn-primary"
-                onClick={() => fetchTasks()}
+              
               >
                 
                 View Tickets List
@@ -339,100 +303,102 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
       <br/>
 
       { /**  Task List of Employees */}
-      <details
-  className="card mb-3"
-  style={{
-    background: "#f0f4f8",
-    borderRadius: "12px",
-    boxShadow: "0 6px 15px rgba(0, 0, 0, 0.2)",
-    color: "#333",
-  }}
->
-<legend style={{ margin: "20px", fontSize: "24px" }}> Employees Ticket </legend>
-  <summary
+  <details
+    className="card mb-3"
+    onClick={() => fetchTasks()}
     style={{
-      padding: "15px",
-      cursor: "pointer",
-      fontSize: "18px",
-   
-      borderBottom: "1px solid #ddd",
-      // backgroundColor: "#007BFF",
-      color: "#000",
-      borderTopLeftRadius: "12px",
-      borderTopRightRadius: "12px",
+      background: "#f0f4f8",
+      borderRadius: "12px",
+      boxShadow: "0 6px 15px rgba(0, 0, 0, 0.2)",
+      color: "#333",
     }}
   >
-    Tickets List
-  </summary>
-  <div className="card-body" style={{ padding: "20px" }}>
-    <div className="table-responsive">
-      
-      <table
-        className="table table-bordered table-hover"
-        style={{
-          backgroundColor: "#fff",
-          borderRadius: "12px",
-          overflow: "hidden",
-        }}
-      > 
-        <thead
+  <legend style={{ margin: "20px", fontSize: "24px" }}> Employees Ticket </legend>
+    <summary
+      style={{
+        padding: "15px",
+        cursor: "pointer",
+        fontSize: "18px",
+    
+        borderBottom: "1px solid #ddd",
+        // backgroundColor: "#007BFF",
+        color: "#000",
+        borderTopLeftRadius: "12px",
+        borderTopRightRadius: "12px",
+      }}
+    >
+      Tickets List
+    </summary>
+
+    <div className="card-body" style={{ padding: "20px" }}>
+      <div className="table-responsive">
+        
+        <table
+          className="table table-bordered table-hover"
           style={{
-            backgroundColor: "#007BFF",
-            color: "#fff",
+            backgroundColor: "#fff",
+            borderRadius: "12px",
+            overflow: "hidden",
           }}
-        >
-          <tr>
-            <th className="border px-4 py-2">Tickets Name</th>
-            <th className="border px-4 py-2">Priority</th>
-            <th className="border px-4 py-2">SAP Type</th>
-            <th className="border px-4 py-2">Due Date</th>
-            <th className="border px-4 py-2">Status</th>
-            <th className="border px-4 py-2">Assigned To</th>
-            <th className="border px-4 py-2">Assigned By Email</th>
-            <th className="border px-4 py-2">Assigned By Name</th>
-            <th className="border px-4 py-2">Tickets Description</th>
-            <th className="border px-4 py-2">Tickets Document</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tasks.map((task, index) => (
-            <tr key={index}>
-              <td className="border px-4 py-2">{task.taskName}</td>
-              <td className="border px-4 py-2">{task.priority}</td>
-              <td className="border px-4 py-2">{task.saptype}</td>
-              <td className="border px-4 py-2">{task.dueDate}</td>
-              <td className="border px-4 py-2">{task.status}</td>
-              <td className="border px-4 py-2">{task.assignedTo}</td>
-              <td className="border px-4 py-2">{task.assignedByEmail}</td>
-              <td className="border px-4 py-2">{task.assignedByName}</td>
-              <td className="border px-4 py-2">{task.taskDescription}</td>
-              <td className="border px-4 py-2">
-                <a href={task.taskDocument} target="_blank" rel="noreferrer">
-                  <button
-                    className="btn"
-                    style={{
-                      backgroundColor: "#4CAF50",
-                      border: "none",
-                      padding: "8px 16px",
-                      borderRadius: "8px",
-                      color: "#fff",
-                      fontWeight: "bold",
-                      transition: "background-color 0.3s ease",
-                    }}
-                    onMouseEnter={(e) => (e.target.style.backgroundColor = "#45a049")}
-                    onMouseLeave={(e) => (e.target.style.backgroundColor = "#4CAF50")}
-                  >
-                    View
-                  </button>
-                </a>
-              </td>
+        > 
+          <thead
+            style={{
+              backgroundColor: "#007BFF",
+              color: "#fff",
+            }}
+          >
+            <tr>
+              <th className="border px-4 py-2">Tickets Name</th>
+              <th className="border px-4 py-2">Priority</th>
+              <th className="border px-4 py-2">SAP Type</th>
+              <th className="border px-4 py-2">Due Date</th>
+              <th className="border px-4 py-2">Status</th>
+              <th className="border px-4 py-2">Assigned To</th>
+              <th className="border px-4 py-2">Assigned By Email</th>
+              <th className="border px-4 py-2">Assigned By Name</th>
+              <th className="border px-4 py-2">Tickets Description</th>
+              <th className="border px-4 py-2">Tickets Document</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {tasks.map((task, index) => (
+              <tr key={index}>
+                <td className="border px-4 py-2">{task.taskName}</td>
+                <td className="border px-4 py-2">{task.priority}</td>
+                <td className="border px-4 py-2">{task.saptype}</td>
+                <td className="border px-4 py-2">{task.dueDate}</td>
+                <td className="border px-4 py-2">{task.status}</td>
+                <td className="border px-4 py-2">{task.assignedTo}</td>
+                <td className="border px-4 py-2">{task.assignedByEmail}</td>
+                <td className="border px-4 py-2">{task.assignedByName}</td>
+                <td className="border px-4 py-2">{task.taskDescription}</td>
+                <td className="border px-4 py-2">
+                  <a href={task.taskDocument} target="_blank" rel="noreferrer">
+                    <button
+                      className="btn"
+                      style={{
+                        backgroundColor: "#4CAF50",
+                        border: "none",
+                        padding: "8px 16px",
+                        borderRadius: "8px",
+                        color: "#fff",
+                        fontWeight: "bold",
+                        transition: "background-color 0.3s ease",
+                      }}
+                      onMouseEnter={(e) => (e.target.style.backgroundColor = "#45a049")}
+                      onMouseLeave={(e) => (e.target.style.backgroundColor = "#4CAF50")}
+                    >
+                      View
+                    </button>
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-</details>
+  </details>
 
 
             {/* Dialoing Box */}

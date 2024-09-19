@@ -26,7 +26,7 @@ const assignTasksToTeamMembers = asyncHandler(async (req, res) => {
 
             console.log("req.body => ", req.body);
 
-            if(!project || !employee || !description || !assignBy || !tickets) {
+            if(!project || !employee || !description || !assignBy ) {
                   throw new ApiError(400, "Please provide all the required fields");
             }
 
@@ -34,13 +34,18 @@ const assignTasksToTeamMembers = asyncHandler(async (req, res) => {
 
             let response;
 
-           
+
 
             if(req.file) {
 
                   response = await uploadOnCloudinary(req.file.path);
             }
             
+            let notTicket = "for ticket verification";
+
+            if(tickets === "ownWork") {
+                  notTicket = null
+            }
             
 
             const task = await Task.create({
@@ -49,7 +54,7 @@ const assignTasksToTeamMembers = asyncHandler(async (req, res) => {
                   employee,
                   description,
                   assignBy,
-                  ticket: tickets,
+      
                   taskDocument: response?.url,
                   taskName,
                   priority,
@@ -58,6 +63,14 @@ const assignTasksToTeamMembers = asyncHandler(async (req, res) => {
 
 
             })
+
+            if(notTicket) {
+                  task.ticket = tickets;
+
+                  await task.save({validateBeforeSave: false});
+            }
+
+
 
             return res
                   .status(200)
@@ -106,6 +119,9 @@ const getTeamTasks = asyncHandler(async (req, res) => {
       }
 
 })
+
+
+
 
 
 export {

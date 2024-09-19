@@ -775,10 +775,6 @@ const getTasksByProjectId = asyncHandler (async (req, res) => {
                         {
                             project: new mongoose.Types.ObjectId(projectId)
                         },
-                        {
-                            employee: new mongoose.Types.ObjectId(req.user._id)
-                        }
-
                     ]
                 }
             },
