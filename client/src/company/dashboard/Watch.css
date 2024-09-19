@@ -1,0 +1,45 @@
+.watch {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 50px;
+  background: rgb(231, 133, 133);
+  margin-top: -40px;
+}
+
+.hand {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform-origin: bottom;
+  background: black;
+}
+
+.hour {
+  width: 4px;
+  height: 50px;
+}
+
+.minute {
+  width: 3px;
+  height: 70px;
+}
+
+.second {
+  width: 2px;
+  height: 90px;
+  background: red;
+}
+
+.number-circle {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  border-radius: 50%;
+  
+  top: 87px;
+  left: 43%;
+  transform-origin: center;
+}

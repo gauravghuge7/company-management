@@ -212,54 +212,86 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
 
 
       {/**** Ticket Details */}
-      <details className="card mb-3">
-      <summary>Ticket Details</summary>
-<div className="card-body">
-  <legend>Ticket Details</legend>
-  <div className="table-responsive">
-    <table className="table table-bordered table-hover">
-      <thead className="thead-dark">
-        <tr>
-          <th>Ticket Name</th>
-          <th>Ticket ID</th>
-          
-          <th>Priority</th>
-          <th>Due Date</th>
-          <th>Assigned To</th>
-          <th>Assigned By Email</th>
-          <th>Assigned By Name</th>
-          
-          <th>Status</th>
-          <th>Document</th>
-          <th>Description</th>
-        
-        
-        </tr>
-      </thead>
-      <tbody>
-        {tickets.map((ticket, index) => (
-          <tr key={index}>
-            <td>{ticket.ticketName}</td>
-            <td>{ticket._id}</td>
-           
-            <td>{ticket.priority}</td>
-            <td>{ticket.dueDate}</td>
-            <td>{ticket.assignedTo}</td>
-            <td>{ticket.assignedByEmail}</td>
-            <td>{ticket.assignedByName}</td>
-            <td>{ticket.status}</td>
-            <td>{ticket.ticketDocument}</td>
-            <td>{ticket.ticketDescription}</td>
-           
-           
+      <details
+  className="card mb-3"
+  style={{
+    background: "#f0f4f8",
+    borderRadius: "12px",
+    boxShadow: "0 6px 15px rgba(0, 0, 0, 0.2)",
+    color: "#333",
+  }}
+>
+  <summary style={{ padding: "15px", cursor: "pointer", fontSize: "18px" }}> Client Ticket </summary>
+  <div className="card-body">
+    <legend style={{ marginBottom: "20px", fontSize: "24px" }}> Client Ticket </legend>
+    <div className="table-responsive">
+      <table
+        className="table table-bordered table-hover"
+        style={{
+          backgroundColor: "#fff",
+          borderRadius: "12px",
+          overflow: "hidden",
+        }}
+      >
+        <thead
+          className="thead-dark"
+          style={{
+            backgroundColor: "#007BFF",
+            color: "#fff",
+          }}
+        >
+          <tr>
+            <th>Ticket Name</th>
+            <th>Ticket ID</th>
+            <th>Priority</th>
+            <th>SAP Type</th>
+            <th>Assigned To</th>
+            <th>Assigned By Email</th>
+            <th>Assigned By Name</th>
+            <th>Status</th>
+            <th>Document</th>
+            <th>Description</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {tickets.map((ticket, index) => (
+            <tr key={index}>
+              <td>{ticket.ticketName}</td>
+              <td>{ticket._id}</td>
+              <td>{ticket.priority}</td>
+              <td>{ticket.saptype}</td>
+              <td>{ticket.assignedTo}</td>
+              <td>{ticket.assignedByEmail}</td>
+              <td>{ticket.assignedByName}</td>
+              <td>{ticket.status}</td>
+              <td>
+                <a href={ticket ? ticket.ticketDocument : ""} target="_blank" rel="noreferrer">
+                  <button
+                    className="btn btn-primary"
+                    style={{
+                      backgroundColor: "#4CAF50",
+                      border: "none",
+                      padding: "8px 16px",
+                      borderRadius: "8px",
+                      color: "#fff",
+                      fontWeight: "bold",
+                      transition: "background-color 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => (e.target.style.backgroundColor = "#45a049")}
+                    onMouseLeave={(e) => (e.target.style.backgroundColor = "#4CAF50")}
+                  >
+                    View
+                  </button>
+                </a>
+              </td>
+              <td>{ticket.ticketDescription}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
-
-      </details>
+</details>
 
 
       {/**** Employee Details */}
@@ -283,7 +315,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
                 onClick={() => fetchTasks()}
               >
                 
-                View Task List
+                View Tickets List
               </button>
             </div>
             <div className="col-md-6 text-end">
@@ -291,7 +323,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
                 className="btn btn-success"
                 onClick={() => assignTaskToEmployee(employee._id)}
               >
-                Add Task
+                Add Tickets
               
               </button>
             </div>
@@ -307,44 +339,100 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
       <br/>
 
       { /**  Task List of Employees */}
-      <details>
-        <summary> Task List </summary>
-        <table className="table-auto w-full">
-                    <thead>
-                      <tr>
-                        <th className="border px-4 py-2">Task Name</th>
-                      
-                        <th className="border px-4 py-2">Priority</th>
-                        <th className="border px-4 py-2">SAP Type</th>
-                        <th className="border px-4 py-2">Due Date</th>
-                        <th className="border px-4 py-2">Status</th>
-                        <th className="border px-4 py-2">Assigned To</th>
-                        <th className="border px-4 py-2">Assigned By Email</th>
-                        <th className="border px-4 py-2">Assigned By Name</th>
-                        <th className="border px-4 py-2">Task Description</th>
-                        <th className="border px-4 py-2">Task Document</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {tasks.map((task, index) => (
-                        <tr key={index}>
-                          <td className="border px-4 py-2">{task.taskName}</td>
-               
-                          <td className="border px-4 py-2">{task.priority}</td>
-                          <td className="border px-4 py-2">{task.saptype}</td>
-                          <td className="border px-4 py-2">{task.dueDate}</td>
-                          <td className="border px-4 py-2">{task.status}</td>
-                          <td className="border px-4 py-2">{task.assignedTo}</td>
-                          <td className="border px-4 py-2">{task.assignedByEmail}</td>
-                          <td className="border px-4 py-2">{task.assignedByName}</td>
-                          <td className="border px-4 py-2">{task.taskDescription}</td>
-                          <td className="border px-4 py-2">{task.taskDocument}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+      <details
+  className="card mb-3"
+  style={{
+    background: "#f0f4f8",
+    borderRadius: "12px",
+    boxShadow: "0 6px 15px rgba(0, 0, 0, 0.2)",
+    color: "#333",
+  }}
+>
+<legend style={{ margin: "20px", fontSize: "24px" }}> Employees Ticket </legend>
+  <summary
+    style={{
+      padding: "15px",
+      cursor: "pointer",
+      fontSize: "18px",
+   
+      borderBottom: "1px solid #ddd",
+      // backgroundColor: "#007BFF",
+      color: "#000",
+      borderTopLeftRadius: "12px",
+      borderTopRightRadius: "12px",
+    }}
+  >
+    Tickets List
+  </summary>
+  <div className="card-body" style={{ padding: "20px" }}>
+    <div className="table-responsive">
       
-      </details>
+      <table
+        className="table table-bordered table-hover"
+        style={{
+          backgroundColor: "#fff",
+          borderRadius: "12px",
+          overflow: "hidden",
+        }}
+      > 
+        <thead
+          style={{
+            backgroundColor: "#007BFF",
+            color: "#fff",
+          }}
+        >
+          <tr>
+            <th className="border px-4 py-2">Tickets Name</th>
+            <th className="border px-4 py-2">Priority</th>
+            <th className="border px-4 py-2">SAP Type</th>
+            <th className="border px-4 py-2">Due Date</th>
+            <th className="border px-4 py-2">Status</th>
+            <th className="border px-4 py-2">Assigned To</th>
+            <th className="border px-4 py-2">Assigned By Email</th>
+            <th className="border px-4 py-2">Assigned By Name</th>
+            <th className="border px-4 py-2">Tickets Description</th>
+            <th className="border px-4 py-2">Tickets Document</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tasks.map((task, index) => (
+            <tr key={index}>
+              <td className="border px-4 py-2">{task.taskName}</td>
+              <td className="border px-4 py-2">{task.priority}</td>
+              <td className="border px-4 py-2">{task.saptype}</td>
+              <td className="border px-4 py-2">{task.dueDate}</td>
+              <td className="border px-4 py-2">{task.status}</td>
+              <td className="border px-4 py-2">{task.assignedTo}</td>
+              <td className="border px-4 py-2">{task.assignedByEmail}</td>
+              <td className="border px-4 py-2">{task.assignedByName}</td>
+              <td className="border px-4 py-2">{task.taskDescription}</td>
+              <td className="border px-4 py-2">
+                <a href={task.taskDocument} target="_blank" rel="noreferrer">
+                  <button
+                    className="btn"
+                    style={{
+                      backgroundColor: "#4CAF50",
+                      border: "none",
+                      padding: "8px 16px",
+                      borderRadius: "8px",
+                      color: "#fff",
+                      fontWeight: "bold",
+                      transition: "background-color 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => (e.target.style.backgroundColor = "#45a049")}
+                    onMouseLeave={(e) => (e.target.style.backgroundColor = "#4CAF50")}
+                  >
+                    View
+                  </button>
+                </a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</details>
 
 
             {/* Dialoing Box */}

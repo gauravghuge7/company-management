@@ -15,6 +15,7 @@ import LeadProjects from '../TeamLead/LeadProjects';
 import LeadTeam from '../TeamLead/LeadTeam';
 import ProjectSection from '../TeamLead/ProjectSection';
 import Employeecontain from './Employeecontain';
+import Adminfooter from '../footer/Adminfooter';
 
 function Employeedashboard() {
 
@@ -90,7 +91,7 @@ function Employeedashboard() {
     
     
     
-    
+    <Adminfooter />
     
     
     </>

@@ -134,7 +134,7 @@ const NewEmployeeForm = ({ fetchEmployees }) => {
                   variant="primary"
                   type="submit"
                   style={{
-                    background: 'linear-gradient(90deg, #28a745, #5bc85c)',
+                    background: '#007BFF',
                     border: 'none',
                     borderRadius: '10px',
                     padding: '10px 20px',

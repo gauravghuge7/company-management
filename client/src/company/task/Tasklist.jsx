@@ -142,7 +142,7 @@ const TaskList = ({ setConditionalComponent, projectId }) => {
           marginBottom: "25px",
         }}
       >
-        <h2 style={{ margin: 0, color: "#333", fontWeight: "bold" }}>Task List</h2>
+        <h2 style={{ margin: 0, color: "#333", fontWeight: "bold" }}>Tickes List</h2>
 
       </div>
 
@@ -176,12 +176,13 @@ const TaskList = ({ setConditionalComponent, projectId }) => {
                 <th>Priority</th>
                 <th>SAP Type</th>
               
-                <th>Due Date</th>
+                {/* <th>Due Date</th> */}
               
                 <th>Ticket Status</th>
                 <th>Assign BY Email</th>
 
                 <th>ticket Document</th>
+                <th>ticket 	Description</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -195,7 +196,7 @@ const TaskList = ({ setConditionalComponent, projectId }) => {
                   <td>{task.priority}</td>
                   <td>{task.saptype}</td>
                 
-                  <td>{task.dueDate}</td>
+                  {/* <td>{task.dueDate}</td> */}
                   <td>{task.status}</td>
                 
                   
@@ -206,6 +207,8 @@ const TaskList = ({ setConditionalComponent, projectId }) => {
                       <button className="btn btn-primary">View</button>
                     </a>
                   </td>  
+                  
+                  <td>{task.ticketDescription}</td>
                   
                     <td>
                       <button 

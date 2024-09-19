@@ -152,15 +152,19 @@ const AssignTask = ({ teamLead, currentEmployee, projectId, tickets, setAssignTa
                               
                               {/** Priority */}
                               <div className="mb-4">
-                                    <label className="block font-medium">Priority</label>
-                                    <input
-                                    type="text"
-                                    value={ticketDetails.priority}
-                                    onChange={(e) => setticketDetails({...ticketDetails, priority: e.target.value})}
-                                    className="w-full border p-2 rounded-md"
-                                    placeholder="Enter priority"
-                                    />
-                              </div>
+    <label className="block font-medium">Priority</label>
+    <select
+        value={ticketDetails.priority}
+        onChange={(e) => setticketDetails({...ticketDetails, priority: e.target.value})}
+        className="w-full border p-2 rounded-md"
+    >
+        <option value="" disabled>Select priority</option>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+        <option value="Urgent">Urgent</option>
+    </select>
+</div>
 
                               {/** Due Date */}
                               <div className="mb-4">

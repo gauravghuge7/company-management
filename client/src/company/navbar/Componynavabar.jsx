@@ -1,6 +1,6 @@
 
-import { Navbar, Button, Container, Dropdown, Form, Modal, Nav } from "react-bootstrap";
-import { FaUser } from 'react-icons/fa'; // Import the profile icon
+import { Navbar, Button, Container,  Nav } from "react-bootstrap";
+// import { FaUser } from 'react-icons/fa'; // Import the profile icon
 import axios from 'axios'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -12,36 +12,13 @@ function Componynavabar() {
 
   const navigate = useNavigate();
 
-
-
-  const getClient = async () => {
-
-    try {
-      const response = await axios.get("http://localhost:8080/client/getClient");
-
-
-      console.log(response.data);
-      
-    } 
-    catch (error) {
-      console.log(error);
-    }
-
-  };
-
-
-  
   const onLogout = async () => {
 
     try {
       const response = await axios.post("/api/client/logout");
-      
-
+    
 
       console.log(response.data);
-
-
-
 
       if(response.data.success){
         navigate("/");
@@ -50,17 +27,56 @@ function Componynavabar() {
     catch (error) {
       console.log(error);  
     }
-  }
+  };
+
+  const fetchClient = async () => {
+    try {
+      const response = await axios.get("/api/client/getClient");  // this is the API call to get the client data
+
+      console.log(response.data);
+
+      if(response.data.success){
+        setClient(response.data.data);
+      }
+    }
+
+    catch (error) {
+      console.log(error);
+      
+    }
+  } ;
+ useEffect(() => {
+    fetchClient();
+  }, []);
+
+
+
+
+  // const getClient = async () => {
+
+  //   try {
+  //     const response = await axios.get("/api/client/getClient");
+
+
+  //     console.log(response.data);
+      
+  //   } 
+  //   catch (error) {
+  //     console.log(error);
+  //   }
+
+  // };
+
+ 
+
+  
+  
 
     
 
 
 
 
-
-  useEffect(() => {
-    getClient();
-  }, []);
 
 
 
@@ -87,7 +103,7 @@ function Componynavabar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
             <Nav.Item className="d-flex align-items-center text-black">
-              SANATAN
+              {client.clientName}
             </Nav.Item>
             <Nav.Item>
               <Button variant="outline-dark" onClick={onLogout} className="ml-3">
@@ -102,6 +118,6 @@ function Componynavabar() {
 
     </div>
   );
-}
+};
 
 export default Componynavabar;

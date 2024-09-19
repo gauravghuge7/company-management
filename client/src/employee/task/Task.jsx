@@ -45,14 +45,14 @@ const TaskList = ({ setConditionalComponent }) => {
   ]);
 
 
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
+  // const handleEdit = () => {
+  //   setIsEditing(true);
+  // };
 
-  const handleDelete = () => {
-    // Handle delete logic here (e.g., API call)
-    console.log('Task deleted');
-  };
+  // const handleDelete = () => {
+  //   // Handle delete logic here (e.g., API call)
+  //   console.log('Task deleted');
+  // };
 
   useEffect(() => {
     console.log('Task List Data Fetched:', tasks);
@@ -118,7 +118,9 @@ const TaskList = ({ setConditionalComponent }) => {
                 <th>Assign BY Email</th>
                 <th>Task Detail</th>
                 <th>Document</th>
-                <th>Action</th>
+                <th>Task Forward</th>
+                {/* <th>Action</th> */}
+                
               </tr>
             </thead>
             <tbody>
@@ -142,8 +144,11 @@ const TaskList = ({ setConditionalComponent }) => {
                        <button className="btn btn-primary">View</button>
                      </a>
                    </td>  
+                   <td>
+                    <button className="btn btn-primary me-2" >Forward</button>
+                  </td> 
                  
-                  <td>
+                  {/* <td>
                       <button className="btn btn-primary me-2" onClick={handleEdit}>Edit</button>
                       <button className="btn btn-danger" onClick={handleDelete}>Delete</button> 
 
@@ -151,6 +156,7 @@ const TaskList = ({ setConditionalComponent }) => {
 
                                 
                   </td>
+                  */}
                 </tr>
               ))}
             </tbody>
