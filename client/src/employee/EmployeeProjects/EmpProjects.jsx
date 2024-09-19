@@ -187,7 +187,7 @@ const EmpProjects = () => {
               <th>Project Name</th>
               <th>Team</th>
               <th>Spokesperson Name</th>
-              <th>Email</th>
+              <th>Spokesperson Email</th>
               <th>Phone Number</th>
               <th>Actions</th>
             </tr>
@@ -226,70 +226,73 @@ const EmpProjects = () => {
               
               <section>
 
-                <h2 className="text-center">Your Tasks</h2>
+                <h2 className="text-center">Your Tickiets</h2>
 
                 <main>
-                  {
-                    tasks?.map  && tasks?.map((task, index) => (
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th> Tickit Type</th>
+        <th> Tickit Id</th>
+        <th> Ticket Name</th>
+        <th>SAP Type</th>
+        <th>Assigned To</th>
+        <th>Priority</th>
+        <th>Status</th>
+        <th>Description</th>
+        <th>Document</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        tasks?.map && tasks?.map((task, index) => (
+          <tr key={index}>
+            {
+              task?.ticket 
+              ? (
+                <>
+                  <td>Client Ticket</td>
+                  <td>{task.ticket.ticketId}</td>
+                  <td>{task.ticket.ticketName}</td>
+                  <td>{task.ticket.saptype}</td>
+                  <td>{task.ticket.assignedByName}</td>
+                  <td>{task.ticket.priority}</td>
+                  <td>{task.ticket.status}</td>
+                  <td>{task.ticket.ticketDescription}</td>
+                  <td>
+                    <a href={task.ticket.ticketDocument} target='_blank' rel="noreferrer" className="btn btn-primary">view</a>
+                  </td>
+                  <td>
+                    <button className="btn btn-primary">Forward Ticket</button>
+                  </td>
+                </>
+              )
+              : (
+                <>
+                  <td>Team Lead Task</td>
+                  <td>{task.taskName}</td>
+                  <td>-</td>
+                  <td>{task.assignedTo}</td>
+                  <td>{task.priority}</td>
+                  <td>{task.status}</td>
+                  <td>{task.description}</td>
+                  <td>
+                    <a href={task.taskDocument} target='_blank' rel="noreferrer" className="btn btn-primary">Download Document</a>
+                  </td>
+                  <td>
+                    <button className="btn btn-primary">Forward Ticket</button>
+                  </td>
+                </>
+              )
+            }
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</main>
 
-                      <div key={index} className="card mb-3">
-
-                        { 
-                          task?.ticket 
-                          ?  
-                           /** Task from directly client  */
-                          <div className="card-body">
-                            <h3> Client Ticket </h3>
-                            <h5 className="card-title">{task.ticket.ticketName}</h5>
-                            <p className="card-text">{task.ticket.saptype}</p>
-                            <p className="card-text">Assigned To: {task.ticket.assignedByName}</p>
-                            <p className="card-text">Priority: {task.ticket.priority}</p>
-                            <p className="card-text">Status: {task.ticket.status}</p>
-                            
-                            <p className="card-text">Description: {task.ticket.ticketDescription}</p>
-
-
-                            <a href={task.ticket.ticketDocument} target='_blank' rel="noreferrer" className="btn btn-primary">Download Document</a>
-
-                            <button
-                              className="btn btn-primary"
-                            
-                            > 
-                              forward Ticket 
-                            </button>
-
-                          </div>
-
-                          : 
-                             /**   task from team lead */
-                          <div className="card-body">
-                            <h5 className="card-title">{task.taskName}</h5>
-                            <p className="card-text">{task.description}</p>
-                            <p className="card-text">Assigned To: {task.assignedTo}</p>
-                            <p className="card-text">Priority: {task.priority}</p>
-                            <p className="card-text">Status: {task.status}</p>
-                            
-                            <p className="card-text">Description: {task.description}</p>
-
-
-                            <a href={task.taskDocument} target='_blank' rel="noreferrer" className="btn btn-primary">Download Document</a>
-
-                            <button 
-                              className="btn btn-primary"
-                              
-                            >
-                              forward Ticket
-                            </button>
-                          </div>
-
-                        }
-
-                        
-                      </div>
-                    ))
-                  }
-                
-                </main>
                 
               
               </section>

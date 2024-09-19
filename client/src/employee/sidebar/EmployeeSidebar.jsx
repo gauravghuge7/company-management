@@ -50,7 +50,7 @@ const EmployeeSidebar = ({ setConditionalComponent, isTeamLead }) => {
           onClick={() => setConditionalComponent("TaskList")} 
           className="btn btn-dark mb-2 d-flex align-items-center"
         >
-          <i className="bi bi-list-task me-2"></i> Task
+          <i className="bi bi-list-task me-2"></i> Tickets
         </button>
         {teams?.length > 0 && 
           <button 

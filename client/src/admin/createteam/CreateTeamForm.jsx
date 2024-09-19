@@ -143,6 +143,7 @@ const CreateTeamForm = () => {
                                         style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
                                     >
                                         <option value="">Select Team Lead</option>
+
                                         {
                                             employees.map((employee, index) => (
                                                 <option key={index} value={employee}>{employee}</option>
@@ -157,7 +158,7 @@ const CreateTeamForm = () => {
                                     <Form.Label>Team Id</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        placeholder="Enter team lead name"
+                                        placeholder="Enter team lead Id"
                                         value={teamId}
                                         onChange={(e) => setTeamId(e.target.value)}
                                         required
@@ -169,7 +170,7 @@ const CreateTeamForm = () => {
                                     <Form.Label>Project Id</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        placeholder="Enter team lead name"
+                                        placeholder="Project Id"
                                         value={projectId}
                                         onChange={(e) => setProjectId(e.target.value)}
                                         required
@@ -215,7 +216,7 @@ const CreateTeamForm = () => {
                                     variant="primary"
                                     type="submit"
                                     style={{
-                                        background: 'linear-gradient(90deg, #28a745, #5bc85c)',
+                                        background: '#007BFF',
                                         border: 'none',
                                         borderRadius: '10px',
                                         padding: '10px 20px',

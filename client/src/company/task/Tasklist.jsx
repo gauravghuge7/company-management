@@ -142,7 +142,7 @@ const TaskList = ({ setConditionalComponent, projectId }) => {
           marginBottom: "25px",
         }}
       >
-        <h2 style={{ margin: 0, color: "#333", fontWeight: "bold" }}>Task List</h2>
+        <h2 style={{ margin: 0, color: "#333", fontWeight: "bold" }}>Tickes List</h2>
 
       </div>
 
@@ -182,6 +182,7 @@ const TaskList = ({ setConditionalComponent, projectId }) => {
                 <th>Assign BY Email</th>
 
                 <th>ticket Document</th>
+                <th>ticket 	Description</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -206,6 +207,8 @@ const TaskList = ({ setConditionalComponent, projectId }) => {
                       <button className="btn btn-primary">View</button>
                     </a>
                   </td>  
+                  
+                  <td>{task.ticketDescription}</td>
                   
                     <td>
                       <button 

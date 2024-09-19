@@ -70,6 +70,8 @@ const LeadTeam = ({setConditionalComponent, setTeamId}) => {
                                 >
                                     View this team Projects
                                 </button>
+                                
+                                
                             </div>
                         </div>
                     </div>

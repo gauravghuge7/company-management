@@ -60,7 +60,7 @@ function Sidebar({ setValue }) {
             onClick={() => setValue("task")}  
           >
             <i className="bi bi-person-lines-fill me-2"></i>
-            Assign task
+            Assign Ticket
           </button>
         </li>
         <hr className="bg-light" />
