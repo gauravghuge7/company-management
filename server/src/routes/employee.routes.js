@@ -8,6 +8,8 @@ import {
     getEmployeeDetails,
     getEmployeeProjects,
     
+    getTasksByProjectId,
+    
     getTeamLeadOrNot,
     getTeamLeadProjects,
     loginEmployee,
@@ -17,7 +19,7 @@ import {
 
 import {
     assignTasksToTeamMembers,
-    getTasksByProjectId,
+    getAllTasks,
     getTeamTasks,
 } from '../controller/teamLead.controller.js';
 
@@ -112,6 +114,13 @@ employeeRouter.route("/getTasksByProjectId/:projectId").get(
     
     verifyEmployee,
     getTasksByProjectId
+)
+
+
+employeeRouter.route("/getAllTasks/:projectId").get(
+    
+    verifyEmployee,
+    getAllTasks
 )
 
 

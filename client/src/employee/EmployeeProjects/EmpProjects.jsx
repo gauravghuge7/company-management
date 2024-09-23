@@ -1,6 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+  useEffect,
+  useState,
+} from 'react';
+
 import axios from 'axios';
-import { Container, Table, Button } from 'react-bootstrap';
+import {
+  Button,
+  Container,
+  Table,
+} from 'react-bootstrap';
 
 const EmpProjects = () => {
   const [projects, setProjects] = useState([]);
@@ -23,6 +31,10 @@ const EmpProjects = () => {
     try {
       const config = { headers: { "Content-Type": "application/json" }, withCredentials: true };
       const response = await axios.get(`/api/employee/getTasksByProjectId/${projectId}`, config);
+
+
+      console.log("response => ",response);
+
       if (response.data.success) {
         setTasks(response.data.data);
         setSelectedProjectId(projectId); // Set the selected project ID
@@ -137,11 +149,11 @@ const EmpProjects = () => {
                   <td>{task.ticket ? "Client Ticket" : "Team Lead Task"}</td>
                   <td>{task.ticket ? task.ticket.ticketId : "-"}</td>
                   <td>{task.ticket ? task.ticket.ticketName : task.taskName}</td>
-                  <td>{task.ticket ? task.ticket.saptype : task.taskName}</td>
+                  <td>{task.ticket ? task.ticket.saptype : ""}</td>
                   <td>{task.ticket ? task.ticket.assignedByName : task.teamLead}</td>
-                  <td>{task.priority}</td>
-                  <td>{task.status}</td>
-                  <td>{task.description}</td>
+                  <td>{task.priority ? task.priority : task.ticket.priority }</td>
+                  <td>{task.status ? task.status : task.ticket.status}</td>
+                  <td>{task.description ? task.description : task.ticket.description}</td>
                   <td>
                     <a href={task.ticket?.ticketDocument || task.taskDocument} target="_blank" rel="noreferrer">
                       <Button variant="primary">View</Button>

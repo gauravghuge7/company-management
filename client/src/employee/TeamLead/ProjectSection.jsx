@@ -7,6 +7,7 @@ import {
 } from 'react';
 
 import axios from 'axios';
+import { Button } from 'react-bootstrap';
 
 import AssignTask from './AssignTask';
 
@@ -126,7 +127,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
         withCredentials: true,
       };
 
-      const response = await axios.get(`/api/employee/getTasksByProjectId/${team._id}`, config);
+      const response = await axios.get(`/api/employee/getAllTasks/${projectId}`, config);
 
       console.log("response.data => ", response.data);
 
@@ -456,19 +457,26 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {tasks.map((task, index) => (
-                        <tr key={index}>
-                          <td className="border px-4 py-2">{task.taskName}</td>
-                      
-                          <td className="border px-4 py-2">{task.priority}</td>
-                          <td className="border px-4 py-2">{task.status}</td>
-                          <td className="border px-4 py-2">{task.assignedTo}</td>
-                          <td className="border px-4 py-2">{task.assignedByEmail}</td>
-                          <td className="border px-4 py-2">{task.assignedByName}</td>
-                          <td className="border px-4 py-2">{task.taskDescription}</td>
-                          <td className="border px-4 py-2">{task.taskDocument}</td>
-                        </tr>
-                      ))}
+                    {tasks.map((task, index) => (
+                      <tr key={index}>
+                        <td>{task.ticket ? "Client Ticket" : "Team Lead Task"}</td>
+                        <td>{task.ticket ? task.ticket.ticketId : "-"}</td>
+                        <td>{task.ticket ? task.ticket.ticketName : task.taskName}</td>
+                        <td>{task.ticket ? task.ticket.saptype : ""}</td>
+                        <td>{task.ticket ? task.ticket.assignedByName : task.teamLead}</td>
+                        <td>{task.priority ? task.priority : task.ticket.priority }</td>
+                        <td>{task.status ? task.status : task.ticket.status}</td>
+                        <td>{task.description ? task.description : task.ticket.description}</td>
+                        <td>
+                          <a href={task.ticket?.ticketDocument || task.taskDocument} target="_blank" rel="noreferrer">
+                            <Button variant="primary">View</Button>
+                          </a>
+                        </td>
+                        <td>
+                          <Button variant="primary">Forward Ticket</Button>
+                        </td>
+                      </tr>
+                    ))}
                     </tbody>
                   </table>
                 </div>

@@ -757,6 +757,112 @@ const fetchProjectByTeamId = asyncHandler (async (req, res) => {
 })
 
 
+const getTasksByProjectId = asyncHandler (async (req, res) => {
+
+    try {
+
+        const  { projectId } = req.params;
+
+        if(!projectId) {
+            throw new ApiError(400, "Please provide the project id");
+        }
+
+        const task = await Task.aggregate([
+
+            {
+                $match: {
+                    $and: [
+                        {
+                            project: new mongoose.Types.ObjectId(projectId)
+                        },
+                    ]
+                }
+            },
+
+            /*** tickets find ***/
+            {
+                $lookup: {
+                    from: "tickets",
+                    localField: "ticket",
+                    foreignField: "_id",
+                    as: "ticket"
+                }
+            },
+            {
+                $addFields: {
+                    ticket: { $arrayElemAt: ["$ticket", 0]}
+                }
+            },
+
+            /** teams Lead find and add to response **/
+            {
+                $lookup: {
+                    from: "teams",
+                    localField: "assignBy",
+                    foreignField: "_id",
+                    as: "assignBy",
+
+                    pipeline: [
+                        {
+                            $lookup: {
+                                from: "employees",
+                                localField: "employee",
+                                foreignField: "_id",
+                                as: "employeeDetails"
+                            }
+                        },
+                        {
+                            $addFields: {
+                                teamLead: "$employeeDetails.employeeName"
+                            }
+                        },
+                    
+                    ]
+                }
+            },
+
+            /** FIND THE DETAILS SUCCESSFULLY AND SEND TO THE CLIENT */
+            {
+                $project: {
+                    _id: 1,
+                    description: 1,
+                    taskDocument: 1,
+                    taskName: 1,
+                    assignBy: 1,
+                    dueDate: 1,
+
+                    status: 1,
+                    priority: 1,
+
+                    currentWork: 1,
+                    
+
+                    ticket: 1,
+                    teamLead: 1,
+
+
+                }
+            }
+            
+        ])
+
+
+
+
+        return res
+            .status(200)
+            .json(
+                new ApiResponse(200, "Task fetched successfully", task)
+            )
+        
+    } 
+    catch (error) {
+    
+        console.log(" Error => ", error.message)
+        throw new ApiError(400, error.message);
+    }
+})
+
 
 
 const forwardTicketsAndTasksToAnotherEmployee = asyncHandler(async(req, res) => {
@@ -895,7 +1001,7 @@ export {
     logoutEmployee,
     registerEmployee,
 
-
+    getTasksByProjectId,
     forwardTicketsAndTasksToAnotherEmployee,
 
     getEmployeeByTeam

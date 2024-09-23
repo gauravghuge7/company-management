@@ -19,6 +19,10 @@ const taskSchema = new Schema({
    }],
 
 
+   taskId: {
+      type: String,
+   },
+
    description: {
       type: String,
       required: true,

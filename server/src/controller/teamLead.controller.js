@@ -122,49 +122,76 @@ const getTeamTasks = asyncHandler(async (req, res) => {
 })
 
 
-const getTasksByProjectId = asyncHandler (async (req, res) => {
-      
+
+const getAllTasks = asyncHandler (async (req, res) => {
+
       try {
-      
-            const  { projectId } = req.params;
-      
-            if(!projectId) {
-                  throw new ApiError(400, "Please provide the project id");
-            }
 
-            console.log("req.params => ", req.params);
+            const { projectId } = req.params;
 
-            const viewAllTasks = await Task.find({})
 
-            console.log("viewAllTasks => ", viewAllTasks)
-      
-            // const task = await Task.aggregate([
-            //       {
-            //             $match: {
-            //                   project: new mongoose.Types.ObjectId(projectId)
-            //             }
-            //       }
-            // ]);
-            // console.log("task => ", task)
-      
-            
+            const tasks = await Task.aggregate([
 
-            const task = await Task.$where(function () {
-                  return this.project.toString() === projectId;
-            }); 
-      
+                  {
+                        $match: {
+                              project: new mongoose.Types.ObjectId(projectId)
+                        }
+                  },
+
+                  {
+                        $lookup: {
+                              from: "tickets",
+                              localField: "ticket",
+                              foreignField: "_id",
+                              as: "ticket"
+                        }
+                  },
+                  {
+                        $addFields: {
+                              ticket: { $arrayElemAt: ["$ticket", 0]}
+                        }
+                  },
+
+
+                  {
+                        $project: {
+
+                              _id: 1,
+                              description: 1,
+                              taskDocument: 1,
+                              taskName: 1,
+                              assignBy: 1,
+                              dueDate: 1,
+
+                              status: 1,
+                              priority: 1,
+
+                              currentWork: 1,
+                              
+
+                              ticket: 1,
+                              teamLead: 1,
+
+                        }
+                  }
+
+
+            ])
+
+
             return res
                   .status(200)
                   .json(
-                        new ApiResponse(200, "Task fetched successfully", task)
+                        new ApiResponse(200, "Task fetched successfully", tasks)
                   )
-            
+
       } 
       catch (error) {
-      
+            
             console.log(" Error => ", error.message)
             throw new ApiError(400, error.message);
       }
+
 })
 
 
@@ -174,5 +201,7 @@ export {
       assignTasksToTeamMembers,
       getTeamTasks,
 
-      getTasksByProjectId
+      getAllTasks,
+
+
 }
