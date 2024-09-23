@@ -1,17 +1,17 @@
 import React from 'react';
 import Componynavabar from '../navbar/Componynavabar';
 import MyCalendar from './MyCalendar';
-import Clock from './Watch';
+import Clock from './Clock';
 
 const Watch = () => {
     return (
-        <div className="container mt-12">
+        <div className="container mt-5">
             {/* Header Section */}
             <div className="row">
-                <div className="col-md-6">
-                    <div className="col">
+                <div className="col-md-12">
+                    <div className="row">
                         {/* Completed Tasks Card */}
-                        <div className="col-md-8 d-flex justify-content-center mb-4">
+                        <div className="col-md-4 mb-4">
                             <div className="card text-white bg-success" style={cardStyle}>
                                 <div className="card-header" style={headerStyle}>Completed Tasks</div>
                                 <div className="card-body">
@@ -22,7 +22,7 @@ const Watch = () => {
                         </div>
 
                         {/* Pending Tasks Card */}
-                        <div className="col-md-8 d-flex justify-content-center mb-4">
+                        <div className="col-md-4 mb-4">
                             <div className="card text-white bg-warning" style={cardStyle}>
                                 <div className="card-header" style={headerStyle}>Pending Tasks</div>
                                 <div className="card-body">
@@ -33,7 +33,7 @@ const Watch = () => {
                         </div>
 
                         {/* To-Do Tasks Card */}
-                        <div className="col-md-8 d-flex justify-content-center mb-4">
+                        <div className="col-md-4 mb-4">
                             <div className="card text-white bg-info" style={cardStyle}>
                                 <div className="card-header" style={headerStyle}>To-Do Tasks</div>
                                 <div className="card-body">
@@ -42,12 +42,16 @@ const Watch = () => {
                                 </div>
                             </div>
                         </div>
+                        <div className="col-md-12 d-flex  align-items-space-between">
+                   
+                        <MyCalendar />
+                        <Clock />
                     </div>
                 </div>
 
-                <div className="col-md-4 d-flex flex-column align-items-center m-4">
-                    <Clock />
-                    <MyCalendar />
+              
+                    
+                  
                 </div>
             </div>
         </div>

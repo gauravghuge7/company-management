@@ -5,6 +5,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const LeadProjects = ({ setConditionalComponent, teamId, setProjectId }) => {
     const [projects, setProjects] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const projectsPerPage = 10;
 
     const fetchProjects = async () => {
         try {
@@ -41,6 +45,16 @@ const LeadProjects = ({ setConditionalComponent, teamId, setProjectId }) => {
         // Implement the document view logic
     };
 
+    const filteredProjects = projects.filter(project =>
+        project.projectName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const indexOfLastProject = currentPage * projectsPerPage;
+    const indexOfFirstProject = indexOfLastProject - projectsPerPage;
+    const currentProjects = filteredProjects.slice(indexOfFirstProject, indexOfLastProject);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
     return (
         <div
             className="container mt-4"
@@ -54,8 +68,31 @@ const LeadProjects = ({ setConditionalComponent, teamId, setProjectId }) => {
                 marginTop: "30px",
             }}
         >
-            <h2 className="text-center mb-4" style={{ color: "#333" }}>Projects That You Are Leading</h2>
-
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: "25px",
+                }}
+            >
+                <h2 style={{ margin: 0, color: "#333", fontWeight: "bold" }}>Projects That You Are Leading</h2>
+                <input
+                    type="text"
+                    placeholder="Search by Project Name"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    style={{ maxWidth: "300px", marginBottom: "20px", padding: "10px", borderRadius: "8px", border: "1px solid #ccc" }}
+                />
+            </div>
+            {/* <h2 className="text-center mb-4" style={{ color: "#333" }}>Projects That You Are Leading</h2>
+            <input
+                type="text"
+                placeholder="Search by Project Name"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                style={{ maxWidth: "300px", marginBottom: "20px", padding: "10px", borderRadius: "8px", border: "1px solid #ccc" }}
+            /> */}
             <table
                 className="table table-striped table-bordered"
                 style={{
@@ -83,7 +120,7 @@ const LeadProjects = ({ setConditionalComponent, teamId, setProjectId }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {projects?.map((project, index) => (
+                    {currentProjects.map((project, index) => (
                         <tr key={index}>
                             <td>{project.clientName}</td>
                             <td>{project.projectName}</td>
@@ -131,6 +168,22 @@ const LeadProjects = ({ setConditionalComponent, teamId, setProjectId }) => {
                     ))}
                 </tbody>
             </table>
+            <div className="d-flex justify-content-between mt-3">
+                <button
+                    className="btn btn-primary"
+                    onClick={() => paginate(currentPage - 1)}
+                    disabled={currentPage === 1}
+                >
+                    Previous
+                </button>
+                <button
+                    className="btn btn-primary"
+                    onClick={() => paginate(currentPage + 1)}
+                    disabled={indexOfLastProject >= filteredProjects.length}
+                >
+                    Next
+                </button>
+            </div>
         </div>
     );
 };
