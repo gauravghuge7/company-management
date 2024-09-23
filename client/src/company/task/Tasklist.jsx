@@ -10,39 +10,18 @@ import {
   Container,
   Row,
   Table,
+  Form,
+  Button,
 } from 'react-bootstrap';
 
 import EditTask from './EditTask';
 
 const TaskList = ({ setConditionalComponent, projectId }) => {
-
-
-
   const editRef = useRef(null);
 
-  
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-
-  const [tasks, setTasks] = useState([
-  
-    { 
-      ticketName: "",
-      assignedByName: "ABC Company", 
-      priority: "High",
-      saptype: "SAP ABAP",    
-      status: "",
-      ticketCreateDate: "2022-01-01",
-      dueDate: "2022-01-01",
-      assignName: "John Doe",
-      assignedByEmail: "johndoe@gmail.com",
-      assignTeam: "ABC Team",
-      ticketDocument: "https://example.com/ticketDocument.pdf"  
-
-    },
-
-  ]);
-
+  const [tasks, setTasks] = useState([]);
   const [currentTask, setCurrentTask] = useState({
     ticketName: "",
     assignedByName: "ABC Company", 
@@ -55,72 +34,54 @@ const TaskList = ({ setConditionalComponent, projectId }) => {
     assignedByEmail: "johndoe@gmail.com",
     assignTeam: "ABC Team",  
     ticketDocument: "https://example.com/ticketDocument.pdf"  
-  })
+  });
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const tasksPerPage = 10;
 
   const handleEdit = (task) => {
-
-    
-
     setCurrentTask(task);
-    console.log(currentTask)
     setIsEditOpen(true);
-
   };
 
   const handleDelete = () => {
-
+    // Implement delete functionality
   };
 
-
-  // fetch the tasks from the server
-
   const fetchTasks = async () => {
-
     try {
-
-
       const response = await axios.get(`/api/client/fetchTasks/${projectId}`);
-      
-
-      console.log("response.data.data => ", response.data.data);
-
-      
-
       if(response.data.success) {
-        console.log("ok");
-
         setTasks(response.data.data);
-
       }
-      
-
-    } 
-    catch (error) {
+    } catch (error) {
       console.error('Error fetching tasks:', error);
     }
   };
 
-
-
-
   useEffect(() => {
     fetchTasks();
-  
   }, []);
 
+  const filteredTasks = tasks.filter(task =>
+    task.ticketName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-  /**  unComment this code after */
+  const indexOfLastTask = currentPage * tasksPerPage;
+  const indexOfFirstTask = indexOfLastTask - tasksPerPage;
+  const currentTasks = filteredTasks.slice(indexOfFirstTask, indexOfLastTask);
 
-  if(tasks && tasks?.length === 0) {
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  if(tasks && tasks.length === 0) {
     return (
       <div className="container mt-5">
         <h2 className="text-center">No Tickets found...</h2>
       </div>
     );
   }
-
-
 
   return (
     <Container
@@ -142,8 +103,14 @@ const TaskList = ({ setConditionalComponent, projectId }) => {
           marginBottom: "25px",
         }}
       >
-        <h2 style={{ margin: 0, color: "#333", fontWeight: "bold" }}>Tickes List</h2>
-
+        <h2 style={{ margin: 0, color: "#333", fontWeight: "bold" }}>Tickets List</h2>
+        <Form.Control
+          type="text"
+          placeholder="Search by Ticket Name"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          style={{ maxWidth: "300px" }}
+        />
       </div>
 
       <Row className="justify-content-md-center mt-5">
@@ -160,114 +127,92 @@ const TaskList = ({ setConditionalComponent, projectId }) => {
               boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
             }}
           >
-            {/*  create table header  */}
             <thead
               style={{
-                backgroundColor: "#343a40", // Darker gray header
+                backgroundColor: "#343a40",
                 color: "#fff",
-                textAlign: "center",  // Center align header text
+                textAlign: "center",
                 fontSize: "1.1rem",
               }}
             >
-              {/*  table row headings  */}
               <tr>
                 <th>#</th>
                 <th>Ticket Name</th>
                 <th>Priority</th>
                 <th>SAP Type</th>
-              
-                {/* <th>Due Date</th> */}
-              
                 <th>Ticket Status</th>
                 <th>Assign BY Email</th>
-
-                <th>ticket Document</th>
-                <th>ticket 	Description</th>
+               
+                <th>Ticket Description</th>
+                 <th>Ticket Document</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-
-              {tasks.map((task, index) => (
-                <tr key={index} style={{ textAlign: "center" }}> {/* Center align table text */}
-
-                  <td>{index + 1}</td>
+              {currentTasks.map((task, index) => (
+                <tr key={index} style={{ textAlign: "center" }}>
+                  <td>{indexOfFirstTask + index + 1}</td>
                   <td>{task.ticketName}</td>
                   <td>{task.priority}</td>
                   <td>{task.saptype}</td>
-                
-                  {/* <td>{task.dueDate}</td> */}
                   <td>{task.status}</td>
-                
-                  
                   <td>{task.assignedByEmail}</td>
-                  
-                  <td> 
-                    <a href={task.ticketDocument} target="_blank" rel="noreferrer">
-                      <button className="btn btn-primary">View</button>
-                    </a>
-                  </td>  
-                  
+                 
                   <td>{task.ticketDescription}</td>
-                  
-                    <td>
-                      <button 
-                        className="btn btn-primary me-2" 
-                        onClick={() => handleEdit(task)}
-                      >
-                        Edit
-                      </button>
-
-                      <button className="btn btn-danger" onClick={handleDelete}>Delete</button>
-
-
-
-                                  
-                    </td>
-                  </tr>
+                  <td>
+                    <a href={task.ticketDocument} target="_blank" rel="noreferrer">
+                      <Button variant="primary">View</Button>
+                    </a>
+                  </td>
+                  <td>
+                    <Button variant="primary" className="me-2" onClick={() => handleEdit(task)}>
+                      Edit
+                    </Button>
+                    <Button variant="danger" onClick={handleDelete}>Delete</Button>
+                  </td>
+                </tr>
               ))}
-
             </tbody>
           </Table>
+          <div className="d-flex justify-content-between">
+            <Button
+              variant="primary"
+              onClick={() => paginate(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="primary"
+              onClick={() => paginate(currentPage + 1)}
+              disabled={indexOfLastTask >= filteredTasks.length}
+            >
+              Next
+            </Button>
+          </div>
         </Col>
       </Row>
 
-      
-        <main>
-            { isEditOpen && 
+      {isEditOpen && (
+        <dialog
+          open={isEditOpen}
+          className='absolute inset-0 top-20 z-50 w-[70%] flex flex-col items-center justify-center bg-gray-50 bg-opacity-50 scroll-m-0'
+        >
+          <EditTask
+            currentTask={currentTask}
+            setIsEditOpen={setIsEditOpen}
+            setCurrentTask={setCurrentTask}
+          />
+        </dialog>
+      )}
 
-              <dialog 
-                open={isEditOpen} 
-                className='absolute inset-0 top-20 z-50 w-[70%] flex flex-col items-center justify-center bg-gray-50 bg-opacity-50 scroll-m-0'
-              >
-                
-        
-                <EditTask 
-                currentTask={currentTask}
-                setIsEditOpen={setIsEditOpen}
-                setCurrentTask={setCurrentTask}
-
-                />
-            
-              </dialog>
-            }
-        </main>
-
-
-      <section> 
-          <main> 
-              <dialog open={isDeleteOpen} onClick={handleDelete}>
-
-                  <h2>Are you sure you want to delete this ticket?</h2>
-                  <button>Yes</button>
-                  <button>No</button>
-
-              </dialog>
-          </main>
-      </section>
-
-
-
+      {isDeleteOpen && (
+        <dialog open={isDeleteOpen} onClick={handleDelete}>
+          <h2>Are you sure you want to delete this ticket?</h2>
+          <Button variant="danger">Yes</Button>
+          <Button variant="secondary">No</Button>
+        </dialog>
+      )}
     </Container>
   );
 };

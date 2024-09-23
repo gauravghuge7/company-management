@@ -273,7 +273,7 @@ const TaskForm = ({ currentProject, setConditionalComponent, onSave, setIsEditin
                                     variant="primary"
                                     type="submit"
                                     style={{
-                                        backgroundColor: '#17a2b8', // Teal color
+                                        backgroundColor: '#007BFF', // Teal color
                                         border: 'none',
                                         borderRadius: '12px',
                                         padding: '12px 24px',
@@ -284,11 +284,11 @@ const TaskForm = ({ currentProject, setConditionalComponent, onSave, setIsEditin
                                     }}
                                     className="w-100"
                                     onMouseEnter={(e) => {
-                                        e.target.style.backgroundColor = '#138496'; // Darker teal on hover
+                                        e.target.style.backgroundColor = '#007BFF'; // Darker teal on hover
                                         e.target.style.transform = 'scale(1.05)'; // Slight scale-up on hover
                                     }}
                                     onMouseLeave={(e) => {
-                                        e.target.style.backgroundColor = '#17a2b8'; // Original teal when not hovering
+                                        e.target.style.backgroundColor = '#007BFF'; // Original teal when not hovering
                                         e.target.style.transform = 'scale(1)'; // Reset scale when not hovering
                                     }}
                                 >
