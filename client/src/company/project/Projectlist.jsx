@@ -156,7 +156,7 @@ const ProjectList = ({ setConditionalComponent }) => {
                     <a href={data?.documents} target="_blank" rel="noreferrer">
                       <Button
                         style={{
-                          backgroundColor: "#4CAF50",
+                          backgroundColor: "#007BFF",
                           border: "none",
                           padding: "8px 16px",
                           borderRadius: "8px",
@@ -164,8 +164,8 @@ const ProjectList = ({ setConditionalComponent }) => {
                           fontWeight: "bold",
                           transition: "background-color 0.3s ease",
                         }}
-                        onMouseEnter={(e) => (e.target.style.backgroundColor = "#45a049")}
-                        onMouseLeave={(e) => (e.target.style.backgroundColor = "#4CAF50")}
+                        onMouseEnter={(e) => (e.target.style.backgroundColor = "#007BFF")}
+                        onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
                       >
                         View
                       </Button>
@@ -201,25 +201,42 @@ const ProjectList = ({ setConditionalComponent }) => {
           }
         </tbody>
       </Table>
-      <Pagination>
-        <Pagination.Prev 
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
+        <Button 
           onClick={() => handlePageChange(currentPage - 1)} 
           disabled={currentPage === 1}
-        />
-        {[...Array(totalPages)].map((_, index) => (
-          <Pagination.Item 
-            key={index} 
-            active={index + 1 === currentPage} 
-            onClick={() => handlePageChange(index + 1)}
-          >
-            {index + 1}
-          </Pagination.Item>
-        ))}
-        <Pagination.Next 
+          style={{
+            backgroundColor: "#007BFF",
+            border: "none",
+            padding: "8px 16px",
+            borderRadius: "8px",
+            color: "#fff",
+            fontWeight: "bold",
+            transition: "background-color 0.3s ease",
+          }}
+          onMouseEnter={(e) => (e.target.style.backgroundColor = "#0056b3")}
+          onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
+        >
+          Previous
+        </Button>
+        <Button 
           onClick={() => handlePageChange(currentPage + 1)} 
           disabled={currentPage === totalPages}
-        />
-      </Pagination>
+          style={{
+            backgroundColor: "#007BFF",
+            border: "none",
+            padding: "8px 16px",
+            borderRadius: "8px",
+            color: "#fff",
+            fontWeight: "bold",
+            transition: "background-color 0.3s ease",
+          }}
+          onMouseEnter={(e) => (e.target.style.backgroundColor = "#0056b3")}
+          onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
+        >
+          Next
+        </Button>
+      </div>
     </Container>
   );
 };

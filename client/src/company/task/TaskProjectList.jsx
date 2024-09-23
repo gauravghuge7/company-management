@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Table, Button } from 'react-bootstrap';
+import { Container, Table, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 
 const TaskProjectList = ({ setConditionalComponent, setProjectId }) => {
   const [projectData, setProjectData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const projectsPerPage = 10;
 
   const getProjects = async () => {
     try {
@@ -27,6 +31,16 @@ const TaskProjectList = ({ setConditionalComponent, setProjectId }) => {
     setConditionalComponent('tasklist');
   };
 
+  const filteredProjects = projectData.filter(project =>
+    project.projectName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const indexOfLastProject = currentPage * projectsPerPage;
+  const indexOfFirstProject = indexOfLastProject - projectsPerPage;
+  const currentProjects = filteredProjects.slice(indexOfFirstProject, indexOfLastProject);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <Container
       style={{
@@ -39,7 +53,15 @@ const TaskProjectList = ({ setConditionalComponent, setProjectId }) => {
         marginTop: "30px",
       }}
     >
-      <h2 className="mb-4 text-center" style={{ color: "#333" }}>Tickets List</h2>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "25px" }}>
+      <h2 style={{ margin: 0, color: "#333", fontWeight: "bold" }}>Projects List</h2>
+      <Form.Control
+        type="text"
+        placeholder="Search by Project Name"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        style={{ maxWidth: "300px", marginBottom: "20px" }}
+      /></div>
       <Table
         striped
         bordered
@@ -69,8 +91,8 @@ const TaskProjectList = ({ setConditionalComponent, setProjectId }) => {
           </tr>
         </thead>
         <tbody>
-          {projectData.length > 0 ? (
-            projectData.map((data, index) => (
+          {currentProjects.length > 0 ? (
+            currentProjects.map((data, index) => (
               <tr key={index}>
                 <td>{data.projectName}</td>
                 <td>{data.spokePersonEmail}</td>
@@ -105,6 +127,22 @@ const TaskProjectList = ({ setConditionalComponent, setProjectId }) => {
           )}
         </tbody>
       </Table>
+      <div className="d-flex justify-content-between mt-3">
+        <Button
+          variant="primary"
+          onClick={() => paginate(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </Button>
+        <Button
+          variant="primary"
+          onClick={() => paginate(currentPage + 1)}
+          disabled={indexOfLastProject >= filteredProjects.length}
+        >
+          Next
+        </Button>
+      </div>
     </Container>
   );
 };
