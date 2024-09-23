@@ -7,17 +7,21 @@ import {
     getEmployeeByTeam,
     getEmployeeDetails,
     getEmployeeProjects,
-    getTasksByProjectId,
+    
     getTeamLeadOrNot,
     getTeamLeadProjects,
     loginEmployee,
     logoutEmployee,
     registerEmployee,
 } from '../controller/employee.controller.js';
+
 import {
-  assignTasksToTeamMembers,
-  getTeamTasks,
+    assignTasksToTeamMembers,
+    getTasksByProjectId,
+    getTeamTasks,
 } from '../controller/teamLead.controller.js';
+
+
 import { verifyAdmin } from '../middleware/Admin.middleware.js';
 import { verifyEmployee } from '../middleware/Employee.middleware.js';
 import { upload } from '../middleware/multer.middleware.js';

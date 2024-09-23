@@ -53,7 +53,7 @@ const AssignTask = ({ teamLead, currentEmployee, projectId, tickets, setAssignTa
                         taskName: ticketDetails.ticketName,
                         priority: ticketDetails.priority,
                   
-                        
+                        dueDate: ticketDetails.dueDate,
                         employee: currentEmployee,
                         
                         description: ticketDetails.ticketDescription,

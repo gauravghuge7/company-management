@@ -3,10 +3,11 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import {uploadOnCloudinary} from "../helper/cloudinary.js"
+import mongoose from "mongoose";
 
 
 
-
+    // assign Tasks To TeamMembers
 const assignTasksToTeamMembers = asyncHandler(async (req, res) => {
 
       try {
@@ -19,14 +20,14 @@ const assignTasksToTeamMembers = asyncHandler(async (req, res) => {
                   tickets, 
                   taskName,
                   priority,
-
+                  dueDate
 
             } = req.body;
 
 
             console.log("req.body => ", req.body);
 
-            if(!project || !employee || !description || !assignBy ) {
+            if(!project || !employee || !description || !assignBy || !dueDate ) {
                   throw new ApiError(400, "Please provide all the required fields");
             }
 
@@ -54,7 +55,7 @@ const assignTasksToTeamMembers = asyncHandler(async (req, res) => {
                   employee,
                   description,
                   assignBy,
-      
+                  dueDate,
                   taskDocument: response?.url,
                   taskName,
                   priority,
@@ -121,10 +122,57 @@ const getTeamTasks = asyncHandler(async (req, res) => {
 })
 
 
+const getTasksByProjectId = asyncHandler (async (req, res) => {
+      
+      try {
+      
+            const  { projectId } = req.params;
+      
+            if(!projectId) {
+                  throw new ApiError(400, "Please provide the project id");
+            }
+
+            console.log("req.params => ", req.params);
+
+            const viewAllTasks = await Task.find({})
+
+            console.log("viewAllTasks => ", viewAllTasks)
+      
+            // const task = await Task.aggregate([
+            //       {
+            //             $match: {
+            //                   project: new mongoose.Types.ObjectId(projectId)
+            //             }
+            //       }
+            // ]);
+            // console.log("task => ", task)
+      
+            
+
+            const task = await Task.$where(function () {
+                  return this.project.toString() === projectId;
+            }); 
+      
+            return res
+                  .status(200)
+                  .json(
+                        new ApiResponse(200, "Task fetched successfully", task)
+                  )
+            
+      } 
+      catch (error) {
+      
+            console.log(" Error => ", error.message)
+            throw new ApiError(400, error.message);
+      }
+})
+
 
 
 
 export {
       assignTasksToTeamMembers,
-      getTeamTasks
+      getTeamTasks,
+
+      getTasksByProjectId
 }
