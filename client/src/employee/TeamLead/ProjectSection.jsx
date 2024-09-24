@@ -205,6 +205,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
           }}
         >
           <tr>
+            <th>#</th>
             <th>Ticket Name</th>
             <th>Ticket ID</th>
             <th>Priority</th>
@@ -220,6 +221,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
         <tbody>
           {tickets.map((ticket, index) => (
             <tr key={index}>
+              <td>{index + 1}</td>
               <td>{ticket.ticketName}</td>
               <td>{ticket._id}</td>
               <td>{ticket.priority}</td>
@@ -269,6 +271,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
               <div className="col-md-4 mb-3" key={index}>
                 <div className="card">
                   <div className="card-body">
+                    
                     <h5 className="card-title">{employee.employeeName}</h5>
                     <p className="card-text"><strong>Email:</strong> {employee.employeeEmail}</p>
                     <p className="card-text"><strong>Designation:</strong> {employee.designation}</p>
@@ -349,6 +352,8 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
               }}
             >
               <tr>
+                <th>#</th>
+                <th className="border px-4 py-2">Ticket Type</th>
                 <th className="border px-4 py-2">Tickets Name</th>
                 <th className="border px-4 py-2">Priority</th>
                 <th className="border px-4 py-2">SAP Type</th>
@@ -364,6 +369,8 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
             <tbody>
               {tasks.map((task, index) => (
                 <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td className="border px-4 py-2">{task.ticket ? "Client Ticket" : "Team Lead Task"}</td>
                   <td className="border px-4 py-2">{task.taskName}</td>
                   <td className="border px-4 py-2">{task.priority}</td>
                   <td className="border px-4 py-2">{task.saptype}</td>
