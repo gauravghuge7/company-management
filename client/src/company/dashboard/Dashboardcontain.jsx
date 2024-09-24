@@ -33,19 +33,19 @@ const Watch = () => {
                         </div>
 
                         {/* To-Do Tasks Card */}
-                        <div className="col-md-4 mb-4">
+                        <div className="col-md-4 ">
                             <div className="card text-white bg-info" style={cardStyle}>
                                 <div className="card-header" style={headerStyle}>To-Do Tasks</div>
                                 <div className="card-body">
                                     <h5 className="card-title" style={titleStyle}>8 Tasks</h5>
-                                    <p className="card-text" style={textStyle}>Tasks that are planned but not yet started.</p>
+                                    <p className="card-text" style={textStyle}>Tasks that are planned but not yet started. To-Do Tasks.</p>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-md-12 d-flex  align-items-space-between">
+                        <div className="col-md-12 d-flex  align-items-space-between ">
                    
-                        <MyCalendar />
-                        <Clock />
+                       <div className='col-md-9  me-2'> <MyCalendar /></div>
+                       <div className='col-md-3 d-flex justify-content-center align-items-center'> <Clock /></div>
                     </div>
                 </div>
 
