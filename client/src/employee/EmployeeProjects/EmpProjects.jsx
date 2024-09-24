@@ -1,6 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+  useEffect,
+  useState,
+} from 'react';
+
 import axios from 'axios';
-import { Button, Container, Table, Form } from 'react-bootstrap';
+import {
+  Button,
+  Container,
+  Form,
+  Table,
+} from 'react-bootstrap';
 
 const EmpProjects = () => {
   const [projects, setProjects] = useState([]);
@@ -27,11 +36,18 @@ const EmpProjects = () => {
     try {
       const config = { headers: { "Content-Type": "application/json" }, withCredentials: true };
       const response = await axios.get(`/api/employee/getTasksByProjectId/${projectId}`, config);
+
+      console.log(response.data.data);
+
+
       if (response.data.success) {
         setTasks(response.data.data);
         setSelectedProjectId(projectId);
       }
-    } catch (error) {
+
+
+    } 
+    catch (error) {
       console.log(error);
     }
   };
@@ -77,18 +93,18 @@ const EmpProjects = () => {
       }}
     >
   
-   
+  
       <div className='col-md-12'>
         <h2 className="text-center mt-5" style={{ fontWeight: "bold", color: "#333" }}>Your Projects</h2>
-         <Form.Control   
+        <Form.Control   
 
 
-type="text"
-placeholder="Search Projects"
-value={searchQuery}
-onChange={handleSearch}
-className="mb-4"
-/>
+          type="text"
+          placeholder="Search Projects"
+          value={searchQuery}
+          onChange={handleSearch}
+          className="mb-4"
+        />
       </div>
     
       <div className="table-responsive">
@@ -212,11 +228,11 @@ className="mb-4"
                   <td>{task.ticket ? task.ticket.ticketId : "-"}</td>
                   <td>{task.ticket ? task.ticket.ticketName : task.taskName}</td>
                   <td>{task.ticket ? task.ticket.saptype : ""}</td>
-                  <td>{task.duedate ? task.duedate : ""}</td>
+                  <td>{task.dueDate}</td>
                   <td>{task.ticket ? task.ticket.assignedByName : task.teamLead}</td>
                   <td>{task.priority ? task.priority : task.ticket.priority}</td>
-                  <td>{task.status ? task.status : task.ticket.status}</td>
-                  <td>{task.description ? task.description : task.ticket.description}</td>
+                  <td>{task.ticket ? task.ticket.status : task.status}</td>
+                  <td>{task.ticket ? task.ticket.ticketDescription : task.description}</td>
                   <td>
                     <a href={task.ticket?.ticketDocument || task.taskDocument} target="_blank" rel="noreferrer">
                       <Button variant="primary">View</Button>
