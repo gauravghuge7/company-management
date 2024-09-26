@@ -3,11 +3,11 @@ import mongoose from 'mongoose';
 
 import { Employee } from '../model/employee.model.js';
 import { Project } from '../model/project.model.js';
+import { Task } from '../model/Task.model.js';
 import { Team } from '../model/team.model.js';
 import { ApiError } from '../utils/ApiError.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
-import { Task } from '../model/Task.model.js';
 
 const createAccessAndRefreshToken = async (_id) => {
     
@@ -763,6 +763,8 @@ const getTasksByProjectId = asyncHandler (async (req, res) => {
 
         const  { projectId } = req.params;
 
+        console.log("req.params => ", req.params);
+
         if(!projectId) {
             throw new ApiError(400, "Please provide the project id");
         }
@@ -814,12 +816,15 @@ const getTasksByProjectId = asyncHandler (async (req, res) => {
                         {
                             $addFields: {
                                 teamLead: "$employeeDetails.employeeName"
+                            
                             }
                         },
                     
                     ]
                 }
             },
+
+
 
             /** FIND THE DETAILS SUCCESSFULLY AND SEND TO THE CLIENT */
             {
@@ -841,18 +846,63 @@ const getTasksByProjectId = asyncHandler (async (req, res) => {
                     teamLead: 1,
 
 
+
                 }
             }
             
         ])
 
+        // find  a project by the project id 
+        // pick the team _id from the project schema 
+        // find the team by the team id that we pick from the project schema 
+        // populate the all employees detail from the employees collection using agregate query 
+
+        
+        const project = await Project.findById(projectId);
+
+        if(!project) {
+            throw new ApiError(400, "Project does not exist");
+        }
+
+        
+        const team = await Team.aggregate([
+            {
+                $match: {
+                    _id : new mongoose.Types.ObjectId(project.team)
+                }
+            },
+
+            {
+                $lookup: {
+                    from: "employees",
+                    localField: "employee",  // assuming 'team.employee' stores employee 
+                    foreignField: "_id",
+                    as: "employeeDetails",
+                }
+            },
+            {
+                $addFields: {
+                    employeeDetails: "$employeeDetails",
+                }
+            },
+            {
+                $project: {  // Final projection to specify 
+                
+                    employeeDetails: 1,
+                    teamName: 1,
+                }
+            }
+        ])
+
+
+        console.log("team", team);
 
 
 
         return res
             .status(200)
             .json(
-                new ApiResponse(200, "Task fetched successfully", task)
+                new ApiResponse(200, "Task fetched successfully", task, team[0])
             )
         
     } 
@@ -876,7 +926,7 @@ const forwardTicketsAndTasksToAnotherEmployee = asyncHandler(async(req, res) => 
         }
 
 
-        const {employeeId} = req.body;
+        const {employeeId, taskId} = req.body;
 
         // get data from the frontend
         /**
@@ -905,7 +955,7 @@ const forwardTicketsAndTasksToAnotherEmployee = asyncHandler(async(req, res) => 
 
         // check the entry in tasks 
 
-        const task = await Task.findOne({employee: employee._id})
+        const task = await Task.findOne({employee: employee._id, taskId: taskId})
 
         if(!task) {
             throw new ApiError(400, "Employee does not exists in the task");
@@ -989,20 +1039,37 @@ const getEmployeeByTeam = asyncHandler(async(req, res) => {
 })
 
 
+const getEmployeeAllTasks = asyncHandler(async (req, res) => {
+    
+    try {
+        
+        const task = await Task.find({employee: new mongoose.Types.ObjectId(req.user._id)})
+        
+        return res
+            .status(200)
+            .json(
+                new ApiResponse(200, "Employee Tasks fetched successfully", task)
+            )
+    } 
+    catch (error) {
+        console.log(" Error => ", error.message)
+        throw new ApiError(400, error.message);
+    }
+})
+
 export {
-    fetchProjectById,
-    fetchProjectByTeamId,
-    getEmployeeDetails,
-    getEmployeePassword,
-    getEmployeeProjects,
-    getTeamLeadOrNot,
-    getTeamLeadProjects,
-    loginEmployee,
-    logoutEmployee,
-    registerEmployee,
-
-    getTasksByProjectId,
-    forwardTicketsAndTasksToAnotherEmployee,
-
-    getEmployeeByTeam
+  fetchProjectById,
+  fetchProjectByTeamId,
+  forwardTicketsAndTasksToAnotherEmployee,
+  getEmployeeAllTasks,
+  getEmployeeByTeam,
+  getEmployeeDetails,
+  getEmployeePassword,
+  getEmployeeProjects,
+  getTasksByProjectId,
+  getTeamLeadOrNot,
+  getTeamLeadProjects,
+  loginEmployee,
+  logoutEmployee,
+  registerEmployee,
 };

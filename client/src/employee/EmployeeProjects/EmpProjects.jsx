@@ -1,5 +1,6 @@
-import React, {
+import {
   useEffect,
+  useRef,
   useState,
 } from 'react';
 
@@ -12,8 +13,10 @@ import {
 } from 'react-bootstrap';
 
 const EmpProjects = () => {
+
   const [projects, setProjects] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const [team, setTeam] = useState({});
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [projectsPerPage] = useState(10);
@@ -24,6 +27,9 @@ const EmpProjects = () => {
     try {
       const config = { headers: { "Content-Type": "application/json" }, withCredentials: true };
       const response = await axios.get('/api/employee/getProjects', config);
+
+      console.log("response.data.data", response.data.data);
+
       if (response.data.success) {
         setProjects(response.data.data[0].project);
       }
@@ -32,16 +38,22 @@ const EmpProjects = () => {
     }
   };
 
+
+
+
   const viewOurWork = async (projectId) => {
     try {
       const config = { headers: { "Content-Type": "application/json" }, withCredentials: true };
       const response = await axios.get(`/api/employee/getTasksByProjectId/${projectId}`, config);
+
+      console.log("response.data", response.data);
 
       console.log(response.data.data);
 
 
       if (response.data.success) {
         setTasks(response.data.data);
+        setTeam(response.data.anythingElse)
         setSelectedProjectId(projectId);
       }
 
@@ -79,6 +91,70 @@ const EmpProjects = () => {
   const currentTasks = filteredTasks.slice(indexOfFirstTask, indexOfLastTask);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+
+  const forwardTicketRef = useRef(null);
+  const [currentTask, setCurrentTask] = useState(null);
+  const [forwardTicketOpen, setForwardTicketOpen] = useState(false);
+
+  
+  const openForwardTicketDialog = (taskId) => {
+
+    setCurrentTask(taskId);
+    
+
+
+    if (forwardTicketRef.current) {
+
+      forwardTicketRef.current.showModal();
+    }
+    setForwardTicketOpen(true);
+  };
+
+  const closeForwardTicketDialog = () => {
+
+    if (forwardTicketRef.current) {
+      forwardTicketRef.current.close();
+    }
+    setForwardTicketOpen(false);
+    setCurrentTask(null);
+  };
+
+
+  const [sendTask, setSendTask] = useState({
+    taskId: currentTask?._id,
+    employeeId: null,
+  });
+
+  const handleForwardTicket = async () => {
+    try {
+
+      const body = {
+        employeeId: sendTask.employeeId,
+        taskId: sendTask.taskId,
+      };
+
+      
+
+      const response = await axios.post('/api/employee/forwardTicketsAndTasksToAnotherEmployee', body)
+      
+      
+      console.log("response.data", response.data);
+
+      if (response.data.success) {  
+        setCurrentTask(null);
+        setForwardTicketOpen(false);
+
+      }
+
+    } 
+    catch (error) {
+      console.log(error);  
+    }
+  }
+
+
+
 
   return (
     <Container
@@ -239,7 +315,13 @@ const EmpProjects = () => {
                     </a>
                   </td>
                   <td>
-                    <Button variant="primary">Forward Ticket</Button>
+                    <Button 
+                      variant="primary"
+                      onClick={() => openForwardTicketDialog(task)}
+
+                    >
+                      Forward Ticket
+                    </Button>
                   </td>
                 </tr>
               ))}
@@ -263,6 +345,70 @@ const EmpProjects = () => {
           </div>
         </section>
       )}
+
+
+
+      <main>
+        <section className="d-flex justify-content-center align-items-center">
+        
+          <dialog
+          ref={forwardTicketRef}
+          className="p-6 rounded-lg shadow-lg bg-white"
+          style={{
+            width: '300px',
+            border: '1px solid #ccc',
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 1000,
+          }}
+        >
+          <h2 className="text-xl font-bold mb-4">Forward Ticket</h2>
+          <h2 className="text-xl mb-4">{currentTask?.taskName}</h2>
+          <form
+            onSubmit={handleForwardTicket}
+          >
+            <div className="mb-4">
+              <label htmlFor="employee" className="block mb-2">Select Employee</label>
+              <select
+                name="employee"
+                id="employee"
+                value={sendTask.employeeId}
+                onChange={(e) => setSendTask({...sendTask, employeeId: e.target.value})}
+                className="w-full p-2 border rounded"
+              >
+                <option value="">Select employee</option>
+                {team.employeeDetails && 
+                  team.employeeDetails.map((employee) => (
+                  <option key={employee._id} value={employee._id}>
+                    {employee.employeeName}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex justify-end space-x-2">
+              <button
+                type="submit"
+                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              >
+                Forward
+              </button>
+              <button
+                type="button"
+                onClick={closeForwardTicketDialog}
+                className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+          </dialog>
+        </section>
+
+      </main>
+
+
     </Container>
   );
 };
