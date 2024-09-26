@@ -1,13 +1,20 @@
-.nav-link {
-  color: #333;
-  font-size: 1.1rem;
+/* Custom styles for the sidebar */
+.sidebar {
+  box-shadow: 2px 0 5px rgba(167, 197, 235, 0.1);
 }
 
-.nav-link.active {
-  background-color: #0d6efd;
-  color: white;
+.offcanvas-style {
+  width: 250px;
+  transition: all 0.3s ease;
 }
 
-.nav-link:hover {
-  background-color: #e9ecef;
+/* Hover effect for sidebar items */
+.sidebar-item {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-item:hover {
+  background-color: #87b8e3; /* Light blue background on hover */
+  color: #007bff; /* Blue text color on hover */
+  box-shadow: 0 4px 8px rgba(155, 202, 238, 0.1); /* Slight shadow on hover */
 }

@@ -1,123 +1,108 @@
-
-
-// import { Link } from 'react-router-dom';
-
-// const Home = () => {
-
-  
-
-//   return (
-
-//     <div style={styles.container}>
-//       <h1>Welcome to GBIS Taskmangment Portal</h1>
-//       <div style={styles.linksContainer}>
-
-//         <Link to="/client/login" style={styles.link}>
-//           Client Login
-//         </Link>
-//         <Link to="/employee/login" style={styles.link}>
-//           Employee Login
-//         </Link>
-//         <Link to="/admin/login" style={styles.link}>
-//           Admin Login
-//         </Link>
-
-
-       
-
-//       </div>
-//     </div>
-//   );
-// };
-
-// const styles = {
-//   container: {
-//     display: 'flex',
-//     flexDirection: 'column',
-
-//   },
-//   linksContainer: {
-//     marginTop: '20px',
-
-//   },
-//   link: {
-//     padding: '10px 20px',
-   
-//   },
-// };
-
-// export default Home;
-
-
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap'; // Importing Bootstrap components
 
 const Home = () => {
+  const [hoveredButton, setHoveredButton] = useState(null);
+
   return (
-    <div style={styles.container}>
-      <img src="../../../public/accets/GBIS.png" alt="Task Management" style={styles.image} /> <br />
-      <h1 style={styles.title}  >Welcome to GBIS Ticketing Portal</h1>
-      <div style={styles.linksContainer}>
-      <Link to="/admin/login" style={styles.link} onMouseOver={handleHover} onMouseOut={handleHoverOut}>
-          Admin Login
-        </Link>
-       
-        <Link to="/employee/login" style={styles.link} onMouseOver={handleHover} onMouseOut={handleHoverOut}>
-          Employee Login
-        </Link>
-        <Link to="/client/login" style={styles.link} onMouseOver={handleHover} onMouseOut={handleHoverOut}>
-          Client Login
-        </Link>
-      
+    <div 
+      className="d-flex flex-column justify-content-center align-items-center vh-100 text-center bg-dark text-white"
+      style={{
+        backgroundImage: 'url("https://i.pinimg.com/564x/19/11/28/191128d4a7739dd00b4dac0ad4051025.jpg")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
+      }}
+    >
+      <div className="mb-4"> {/* Adjust margin-bottom for spacing */}
+        <img 
+          src="../../../public/accets/GBIS.png" 
+          alt="Task Management"
+          style={{
+            height: '150px', // Set a height for the image
+            width: 'auto', // Maintain aspect ratio
+            maxWidth: '100%', // Ensure it doesn't overflow
+            marginTop: '-60px', // Pull the image upwards
+          }} 
+        />
+      </div>
+      <h1 
+        className="display-4 mb-4 text-center"
+        style={{
+          fontFamily: '"Poppins", sans-serif',
+          fontWeight: 'bold',
+          color: '#0096FF',
+          fontSize: 'calc(1.5rem + 2vw)' // Responsive font size
+        }}
+      >
+        Welcome to GBIS Ticketing Portal
+      </h1>
+
+      <div className="row w-100 d-flex justify-content-center align-items-center gap-3">
+        {/* Buttons for Login with hover effects */}
+        <div className="col-12 col-md-3 text-center">
+          <Button 
+            as={Link} 
+            to="/admin/login" 
+            className="custom-button w-100"
+            style={hoveredButton === 'admin' ? buttonHoverStyle : buttonStyle}
+            onMouseEnter={() => setHoveredButton('admin')}
+            onMouseLeave={() => setHoveredButton(null)}
+          >
+            Admin Login
+          </Button>
+        </div>
+        <div className="col-12 col-md-3 text-center">
+          <Button 
+            as={Link} 
+            to="/employee/login" 
+            className="custom-button w-100"
+            style={hoveredButton === 'employee' ? buttonHoverStyle : buttonStyle}
+            onMouseEnter={() => setHoveredButton('employee')}
+            onMouseLeave={() => setHoveredButton(null)}
+          >
+            Employee Login
+          </Button>
+        </div>
+        <div className="col-12 col-md-3 text-center">
+          <Button 
+            as={Link} 
+            to="/client/login" 
+            className="custom-button w-100"
+            style={hoveredButton === 'client' ? buttonHoverStyle : buttonStyle}
+            onMouseEnter={() => setHoveredButton('client')}
+            onMouseLeave={() => setHoveredButton(null)}
+          >
+            Client Login
+          </Button>
+        </div>
       </div>
     </div>
   );
 };
 
-const handleHover = (e) => {
-  e.target.style.backgroundColor = '#007BFF';
-  e.target.style.color = '#fff';
-  e.target.style.transform = 'translateY(-3px)';
+// Inline styles for button default and hover effects
+const buttonStyle = {
+  backgroundColor: '#f0f8ff', // Light blue background
+  border: '1px solid #87cefa', // Light border
+  color: '#333', // Dark text color for contrast
+  transition: 'background-color 0.3s, border-color 0.3s, color 0.3s',
+  padding: '10px 20px',
+  fontSize: '1.2rem', // Smaller font size for buttons
+  borderRadius: '10px',
+  fontFamily: '"Poppins", sans-serif', 
+  fontWeight: 'bold',
 };
 
-const handleHoverOut = (e) => {
-  e.target.style.backgroundColor = '#fff';
-  e.target.style.color = '#007BFF';
-  e.target.style.transform = 'translateY(0)';
+const buttonHoverStyle = {
+  backgroundColor: '#87cefa', // Lighter blue on hover
+  borderColor: '#00bfff', // Brighter blue border on hover
+  color: '#333', // Keep text color on hover
+  fontFamily: '"Poppins", sans-serif',
+  fontWeight: 'bold',
 };
 
-const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100vh',
-    background: 'linear-gradient(135deg, #74ebd5, #ACB6E5)', // Gradient background
-    fontFamily: '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif',
-  },
-  title: {
-    fontSize: '2.5rem',
-    color: '#fff',
-    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)', // Soft shadow for text
-    marginBottom: '40px',
-    textAlign: 'center',
-  },
-  linksContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '20px', // Space between buttons
-  },
-  link: {
-    textDecoration: 'none',
-    padding: '15px 30px',
-    backgroundColor: '#fff',
-    color: '#007BFF',
-    borderRadius: '30px',
-    fontSize: '1.2rem',
-    textAlign: 'center',
-    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
-    transition: 'all 0.3s ease',
-  },
-};
-
+// Export the Home component
 export default Home;

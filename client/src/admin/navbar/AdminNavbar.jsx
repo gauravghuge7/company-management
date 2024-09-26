@@ -53,8 +53,8 @@ const AdminNavbar = () => {
           {/* Replace with your logo */}
           <img
             src="../../../public/accets/GBIS.png"
-            width="150"
-            height="150"
+            width="190"
+          
             className="d-inline-block align-top"
             alt="Logo"
      

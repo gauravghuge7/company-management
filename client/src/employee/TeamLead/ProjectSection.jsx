@@ -177,87 +177,85 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
 
       
       <details
-        className="card mb-3"
+    className="card mb-3"
+    style={{
+      background: "#f0f4f8",
+      borderRadius: "12px",
+      boxShadow: "0 6px 15px rgba(0, 0, 0, 0.2)",
+      color: "#333",
+    }}
+  >
+  <summary style={{ padding: "15px", cursor: "pointer", fontSize: "18px" }}> Client Ticket </summary>
+  <div className="card-body">
+    <legend style={{ marginBottom: "20px", fontSize: "24px" }}> Client Ticket </legend>
+    <div className="table-responsive">
+      <table
+        className="table table-bordered table-hover"
         style={{
-          background: "#f0f4f8",
+          backgroundColor: "#fff",
           borderRadius: "12px",
-          boxShadow: "0 6px 15px rgba(0, 0, 0, 0.2)",
-          color: "#333",
+          overflow: "hidden",
         }}
       >
-        <summary style={{ padding: "15px", cursor: "pointer", fontSize: "18px" }}> Client Ticket </summary>
-        <div className="card-body">
-          <legend style={{ marginBottom: "20px", fontSize: "24px" }}> Client Ticket </legend>
-          <div className="table-responsive">
-            <table
-              className="table table-bordered table-hover"
-              style={{
-                backgroundColor: "#fff",
-                borderRadius: "12px",
-                overflow: "hidden",
-              }}
-            >
-              <thead
-                className="thead-dark"
-                style={{
-                  backgroundColor: "#007BFF",
-                  color: "#fff",
-                }}
-              >
-                <tr>
-                  <th>#</th>
-                  <th>Ticket Name</th>
-                  <th>Ticket ID</th>
-                  <th>Priority</th>
-                  <th>SAP Type</th>
-                  <th>Assigned To</th>
-                  <th>Assigned By Email</th>
-                  <th>Assigned By Name</th>
-                  <th>Status</th>
-                  <th>Document</th>
-                  <th>Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                {tickets.map((ticket, index) => (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{ticket.ticketName}</td>
-                    <td>{ticket._id}</td>
-                    <td>{ticket.priority}</td>
-                    <td>{ticket.saptype}</td>
-                    <td>{ticket.assignedTo}</td>
-                    <td>{ticket.assignedByEmail}</td>
-                    <td>{ticket.assignedByName}</td>
-                    <td>{ticket.status}</td>
-                    <td>
-                      <a href={ticket ? ticket.ticketDocument : ""} target="_blank" rel="noreferrer">
-                        <button
-                          className="btn btn-primary"
-                          style={{
-                            backgroundColor: "#4CAF50",
-                            border: "none",
-                            padding: "8px 16px",
-                            borderRadius: "8px",
-                            color: "#fff",
-                            fontWeight: "bold",
-                            transition: "background-color 0.3s ease",
-                          }}
-                          onMouseEnter={(e) => (e.target.style.backgroundColor = "#45a049")}
-                          onMouseLeave={(e) => (e.target.style.backgroundColor = "#4CAF50")}
-                        >
-                          View
-                        </button>
-                      </a>
-                    </td>
-                    <td>{ticket.ticketDescription}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </details>
+        <thead
+          className="thead-dark"
+          style={{
+            backgroundColor: "#007BFF",
+            color: "#fff",
+          }}
+        >
+          <tr>
+            <th>Ticket Name</th>
+            <th>Ticket ID</th>
+            <th>Priority</th>
+            <th>SAP Type</th>
+            <th>Assigned To</th>
+            <th>Assigned By Email</th>
+            <th>Assigned By Name</th>
+            <th>Status</th>
+            <th>Document</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tickets.map((ticket, index) => (
+            <tr key={index}>
+              <td>{ticket.ticketName}</td>
+              <td>{ticket._id}</td>
+              <td>{ticket.priority}</td>
+              <td>{ticket.saptype}</td>
+              <td>{ticket.assignedTo}</td>
+              <td>{ticket.assignedByEmail}</td>
+              <td>{ticket.assignedByName}</td>
+              <td>{ticket.status}</td>
+              <td>
+                <a href={ticket ? ticket.ticketDocument : ""} target="_blank" rel="noreferrer">
+                  <button
+                    className="btn btn-primary"
+                    style={{
+                      backgroundColor: "#4CAF50",
+                      border: "none",
+                      padding: "8px 16px",
+                      borderRadius: "8px",
+                      color: "#fff",
+                      fontWeight: "bold",
+                      transition: "background-color 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => (e.target.style.backgroundColor = "#45a049")}
+                    onMouseLeave={(e) => (e.target.style.backgroundColor = "#4CAF50")}
+                  >
+                    View
+                  </button>
+                </a>
+              </td>
+              <td>{ticket.ticketDescription}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</details>
 
 
       {/**** Employee Details */}
@@ -271,7 +269,6 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
               <div className="col-md-4 mb-3" key={index}>
                 <div className="card">
                   <div className="card-body">
-                    
                     <h5 className="card-title">{employee.employeeName}</h5>
                     <p className="card-text"><strong>Email:</strong> {employee.employeeEmail}</p>
                     <p className="card-text"><strong>Designation:</strong> {employee.designation}</p>
@@ -369,19 +366,18 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
             <tbody>
               {tasks.map((task, index) => (
                 <tr key={index}>
-                  <td>{index + 1}</td>
                   <td className="border px-4 py-2">{task.ticket ? "Client Ticket" : "Team Lead Task"}</td>
-                  <td className="border px-4 py-2">{task.ticket ? task.ticket.ticketName : task.taskName}</td>
-                  <td className="border px-4 py-2">{task.ticket ? task.ticket.priority : task.priority}</td>
-                  <td className="border px-4 py-2">{task.ticket ? task.ticket.saptype : task.saptype}</td>
+                  <td className="border px-4 py-2">{task.taskName}</td>
+                  <td className="border px-4 py-2">{task.priority}</td>
+                  <td className="border px-4 py-2">{task.saptype}</td>
                   <td className="border px-4 py-2">{task.dueDate}</td>
-                  <td className="border px-4 py-2">{task.ticket ? task.ticket.status : task.status}</td>
-                  <td className="border px-4 py-2">{task.ticket ? task.ticket.assignedTo : task.assignedTo}</td>
-                  <td className="border px-4 py-2">{task.ticket ? task.ticket.assignedByEmail : task.assignedByEmail}</td>
-                  <td className="border px-4 py-2">{task.ticket ? task.ticket.assignedByName : task.assignedByName}</td>
-                  <td className="border px-4 py-2">{task.ticket ? task.ticket.ticketDescription : task.description}</td>
+                  <td className="border px-4 py-2">{task.status}</td>
+                  <td className="border px-4 py-2">{task.assignedTo}</td>
+                  <td className="border px-4 py-2">{task.assignedByEmail}</td>
+                  <td className="border px-4 py-2">{task.assignedByName}</td>
+                  <td className="border px-4 py-2">{task.taskDescription}</td>
                   <td className="border px-4 py-2">
-                    <a href={task.taskDocument || task.ticket.ticketDocument } target="_blank" rel="noreferrer">
+                    <a href={task.taskDocument} target="_blank" rel="noreferrer">
                       <button
                         className="btn"
                         style={{

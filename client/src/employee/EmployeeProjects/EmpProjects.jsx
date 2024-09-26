@@ -94,18 +94,20 @@ const EmpProjects = () => {
     >
   
   
-      <div className='col-md-12'>
-        <h2 className="text-center mt-5" style={{ fontWeight: "bold", color: "#333" }}>Your Projects</h2>
-        <Form.Control   
-
-
-          type="text"
-          placeholder="Search Projects"
-          value={searchQuery}
-          onChange={handleSearch}
-          className="mb-4"
-        />
-      </div>
+  <div className='col-md-12 d-flex justify-content-space-between align-items-center'>
+            <div className='col-md-8'>
+              <h2 className="text-center m-5" style={{ fontWeight: "bold", color: "#333" }}>Your working this projects</h2>
+            </div>
+            <br />
+            <div className='col-md-4 mt-4'>
+              <Form.Control
+                type="text"
+                placeholder="Search Tickets"
+                value={searchQuery}
+                onChange={handleSearch}
+              />  <br />
+            </div>
+          </div>
     
       <div className="table-responsive">
         <Table

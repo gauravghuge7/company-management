@@ -1,6 +1,5 @@
-import {  useState } from "react";
-
-import {useNavigate} from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Form, Button, Container, Row, Col, Image } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { message } from 'react-message-popup';
@@ -10,67 +9,54 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-
   const navigate = useNavigate();
 
-  const handleSubmit = async(event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle form submission logic here
-
     try {
-      
       const body = {
-        adminEmail: email, 
-        adminPassword: password
-      }
+        adminEmail: email,
+        adminPassword: password,
+      };
 
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",
         },
         withCredentials: true,
-      }
+      };
 
       const response = await axios.post("/api/admin/login", body, config);
+      console.log("response => ", response);
 
-
-      console.log("response => ",response);
-
-      if(response.data.success === true) {
+      if (response.data.success === true) {
         navigate("/admin/dashboard");
       }
-
-
-
-      
-    } 
-    catch (error) {
-    
+    } catch (error) {
       console.log(error);
       message.error(error.message);
-      
     }
-    
-    
   };
-
-
-
-
-
 
   return (
     <Container
       fluid
       className="d-flex justify-content-center align-items-center"
-      style={{ height: "100vh", backgroundColor: "#f8f9fa" }}
+      style={{
+        height: "100vh",
+        width: "100%",
+        backgroundImage: 'url("../../../public/accets/login bg.jpg")',
+        backgroundSize: "cover", // Cover the entire container
+        backgroundPosition: "center", // Center the image
+        backgroundRepeat: "no-repeat", // Do not repeat the image
+      }}
     >
       <Row
         className="shadow-lg"
         style={{
           maxWidth: "900px",
           width: "100%",
-          backgroundColor: "white",
+          backgroundColor: "rgba(255, 255, 255, 0.9)", // Slightly transparent white background
           borderRadius: "15px",
         }}
       >
@@ -87,10 +73,8 @@ const Login = () => {
             style={{
               height: "70%",
               width: "70%",
-              margin : "50px 50px 50px 50px",  
-              // objectFit: "cover",
+              margin: "50px 50px 50px 50px",
               borderRadius: "15px 0 0 15px",
-            
             }}
           />
         </Col>
@@ -151,8 +135,6 @@ const Login = () => {
         </Col>
       </Row>
     </Container>
-
-
   );
 };
 
