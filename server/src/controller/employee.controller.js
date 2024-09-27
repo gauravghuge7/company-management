@@ -969,6 +969,9 @@ const forwardTicketsAndTasksToAnotherEmployee = asyncHandler(async(req, res) => 
 
         await task.save({validateBeforeSave: false});
         
+
+        console.log("save task =>  ", task);
+
         
         return res.status(200).json(                                           // 
             new ApiResponse(200, "ticket forward successfully to another employee", employee)

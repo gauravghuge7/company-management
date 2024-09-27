@@ -1,7 +1,10 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Col, Container, Row, Table } from 'react-bootstrap';
+import { message } from 'react-message-popup';
 
 const TaskList = ({ setConditionalComponent }) => {
+
   const [tasks, setTasks] = useState([
     { 
       companyName: "ABC Company", 
@@ -15,30 +18,43 @@ const TaskList = ({ setConditionalComponent }) => {
       assignTeam: "ABC Team",
       document: "https://example.com/document.pdf"  
     },
-    {     
-      companyName: "XYZ Company",   
-      priority: "Medium",   
-      saptype: "SAP ABAP",    
-      taskDetail: "Task Detail",      
-      ticketCreateDate: "2022-01-01",
-      dueDate: "2022-01-01",
-      assignbyteam: "XYZ Team",
-      assignName: "John Doe",
-      assignEmail: "johndoe@gmail.com",
-      assignTeam: "ABC Team",
-      document: "https://example.com/document.pdf"
-    }
+
   ]);
 
   const [currentPage, setCurrentPage] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
 
+
+
+
+  const fetchTasks = async () => {
+    try {
+      const response = await axios.get('/api/employee/getEmployeeAllTasks');
+
+      console.log("response.data => ", response.data);
+
+      console.log("response.data.data => ", response.data.data);
+
+      if(response.data.success === true) {
+        message.success(response.data.message);
+        setTasks(response?.data?.data);
+      }
+      
+    } 
+    catch (error) {
+      message.error(error.message);
+    }
+  };
+
+ 
+
   useEffect(() => {
-    console.log('Task List Data Fetched:', tasks);
-  }, [tasks]);
+    fetchTasks();
+
+  }, [1]);
 
   const filteredTasks = tasks.filter((task) =>
-    task.companyName.toLowerCase().includes(searchTerm.toLowerCase())
+    task.companyName
   );
 
   const tasksPerPage = 10;

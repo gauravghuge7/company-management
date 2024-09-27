@@ -1,19 +1,19 @@
 import express from 'express';
 
 import {
-  fetchProjectById,
-  fetchProjectByTeamId,
-  forwardTicketsAndTasksToAnotherEmployee,
-  getEmployeeAllTasks,
-  getEmployeeByTeam,
-  getEmployeeDetails,
-  getEmployeeProjects,
-  getTasksByProjectId,
-  getTeamLeadOrNot,
-  getTeamLeadProjects,
-  loginEmployee,
-  logoutEmployee,
-  registerEmployee,
+    fetchProjectById,
+    fetchProjectByTeamId,
+    forwardTicketsAndTasksToAnotherEmployee,
+    getEmployeeAllTasks,
+    getEmployeeByTeam,
+    getEmployeeDetails,
+    getEmployeeProjects,
+    getTasksByProjectId,
+    getTeamLeadOrNot,
+    getTeamLeadProjects,
+    loginEmployee,
+    logoutEmployee,
+    registerEmployee,
 } from '../controller/employee.controller.js';
 import {
   assignTasksToTeamMembers,

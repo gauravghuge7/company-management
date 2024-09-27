@@ -115,7 +115,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
   }, []);
 
 
-
+  // fetch all tasks 
   const fetchTasks = async () => {
 
     try {

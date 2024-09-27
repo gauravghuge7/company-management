@@ -134,18 +134,21 @@ const EmpProjects = () => {
         taskId: sendTask.taskId,
       };
 
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      };
+
       
 
-      const response = await axios.post('/api/employee/forwardTicketsAndTasksToAnotherEmployee', body)
+      const response = await axios.post('/api/employee/forwardTicketsAndTasksToAnotherEmployee', body, config)
       
       
-      console.log("response.data", response.data);
+      console.log("response.data => ", response.data);
 
-      if (response.data.success) {  
-        setCurrentTask(null);
-        setForwardTicketOpen(false);
-
-      }
+      
 
     } 
     catch (error) {
@@ -367,7 +370,7 @@ const EmpProjects = () => {
           <h2 className="text-xl font-bold mb-4">Forward Ticket</h2>
           <h2 className="text-xl mb-4">{currentTask?.taskName}</h2>
           <form
-            onSubmit={handleForwardTicket}
+            onSubmit={() => handleForwardTicket()}
           >
             <div className="mb-4">
               <label htmlFor="employee" className="block mb-2">Select Employee</label>
@@ -394,6 +397,7 @@ const EmpProjects = () => {
               >
                 Forward
               </button>
+
               <button
                 type="button"
                 onClick={closeForwardTicketDialog}
