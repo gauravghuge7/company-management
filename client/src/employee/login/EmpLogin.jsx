@@ -25,11 +25,25 @@ const Login = () => {
 
       const response = await axios.post("/api/employee/login",body, config);
 
-      console.log(response.data);
+      console.log(response.data.data);
 
       if(response.data.success === true){
-        message.success("Employee Logged In Successfully");
-        window.location.href = "/employee/dashboard";
+
+        if(response.data.data.userType === "employee") {
+          message.success("Employee Logged In Successfully");
+          window.location.href = "/employee/dashboard";
+        }
+
+        else if(response.data.data.userType === "admin") {
+          message.success("Admin Logged In Successfully");
+          window.location.href = "/admin/dashboard";
+        }
+
+        else if(response.data.data.userType === "client") {
+          message.success("Client Logged In Successfully");
+          window.location.href = "/company/dashboard";
+        }
+
         
       }
     } 
@@ -83,7 +97,7 @@ const Login = () => {
           style={{ borderRadius: "0 15px 15px 0" }}
         >
           <h2 className="text-center mb-4" style={{ fontWeight: "bold" }}>
-            Employee Login
+            Login Here
           </h2>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formBasicEmail" className="mb-3">

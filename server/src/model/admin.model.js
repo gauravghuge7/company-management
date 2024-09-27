@@ -52,6 +52,12 @@ const adminSchema = new Schema({
    }],
 
 
+   userType: {
+      type: String,
+      enum:  ["Admin", "client", "Employee"],
+
+      default: "admin"
+   }
 
 }, {timestamps: true});
 

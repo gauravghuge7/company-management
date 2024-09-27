@@ -67,7 +67,7 @@ const taskSchema = new Schema({
 
       type: Schema.Types.ObjectId,
       ref: "Ticket",
-      required: false
+
    },
    
    dueDate: {

@@ -56,6 +56,14 @@ const EmployeeSchema = new Schema({
    }],
 
 
+   userType: {
+      type: String,
+      enum:  ["Admin", "client", "Employee"],
+
+      default: "employee"
+   }
+
+
 
 }, {timestamps: true});
 

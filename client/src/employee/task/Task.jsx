@@ -53,15 +53,16 @@ const TaskList = ({ setConditionalComponent }) => {
 
   }, [1]);
 
-  const filteredTasks = tasks.filter((task) =>
-    task.companyName
-  );
+  // const filteredTasks = tasks.filter((task) =>
+  //   task.companyName
+  // );
 
-  const tasksPerPage = 10;
-  const displayedTasks = filteredTasks.slice(
-    currentPage * tasksPerPage,
-    (currentPage + 1) * tasksPerPage
-  );
+  // const tasksPerPage = 10;
+
+  // const displayedTasks = filteredTasks.slice(
+  //   currentPage * tasksPerPage,
+  //   (currentPage + 1) * tasksPerPage
+  // );
 
   return (
     <Container
@@ -136,19 +137,19 @@ const TaskList = ({ setConditionalComponent }) => {
               </tr>
             </thead>
             <tbody>
-              {displayedTasks.map((task, index) => (
+              {tasks.map((task, index) => (
                 <tr key={index} style={{ textAlign: "center" }}> {/* Center align table text */}
-                  <td>{index + 1 + currentPage * tasksPerPage}</td>
-                  <td>{task.companyName}</td>
-                  <td>{task.priority}</td>
-                  <td>{task.saptype}</td>
+                  <td>{index + 1 }</td>
+                  <td>{task.taskName || task.ticket?.ticketName}</td>
+                  <td>{task.priority || task.ticket?.priority}</td>
+                  <td>{task.saptype || task.ticket?.saptype}</td>
                   <td>{task.dueDate}</td>
-                  <td>{task.assignTeam}</td>
-                  <td>{task.assignName}</td>
-                  <td>{task.assignEmail}</td>
-                  <td>{task.taskDetail}</td>
+                  <td>{task.assignedTo || task.ticket?.assignedTo}</td>
+                  <td>{task.assignedByName || task.ticket?.assignedByName}</td>
+                  <td>{task.assignedByEmail || task.ticket?.assignedByEmail}</td>
+                  <td>{task.description || task.ticket?.ticketDescription}</td>
                   <td> 
-                    <a href={task.document} target="_blank" rel="noreferrer">
+                    <a href={task.taskDocument || task.ticket?.ticketDocument} target="_blank" rel="noreferrer">
                       <button className="btn btn-primary">View</button>
                     </a>
                   </td>  
@@ -169,7 +170,7 @@ const TaskList = ({ setConditionalComponent }) => {
             </button>
             <button
               onClick={() => setCurrentPage(currentPage + 1)}
-              disabled={(currentPage + 1) * tasksPerPage >= filteredTasks.length}
+              disabled={(currentPage + 1)}
               className="btn btn-primary"
             >
               Next

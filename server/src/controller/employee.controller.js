@@ -777,6 +777,9 @@ const getTasksByProjectId = asyncHandler (async (req, res) => {
                         {
                             project: new mongoose.Types.ObjectId(projectId)
                         },
+                        {
+                            employee: new mongoose.Types.ObjectId(req.user._id)
+                        }
                     ]
                 }
             },
@@ -1045,8 +1048,56 @@ const getEmployeeByTeam = asyncHandler(async(req, res) => {
 const getEmployeeAllTasks = asyncHandler(async (req, res) => {
     
     try {
+
+
+        const task = await Task.aggregate([
+
+            {
+                $match: {employee: new mongoose.Types.ObjectId(req.user._id)}
+            },
+
+            {
+                $lookup: {
+                    from: "tickets",
+                    localField: "ticket",
+                    foreignField: "_id",
+                    as: "ticket"
+                }
+            },
+            {
+
+                $addFields: {
+                    ticket: {
+                        $arrayElemAt: ["$ticket", 0]
+                    }
+                }
+            },
+            {
+                $project: {
+                    _id: 1,
+                    ticket: 1,
+                    status: 1,
+                    description: 1,
+                    employee: 1,
+                    created_at: 1,
+                    priority: 1,
+                    taskDocument: 1,
+                    taskName: 1,
+                    assignBy: 1,
+                    dueDate: 1,
+                }
+            }
+
+
+        ])
+
+        const tempTask = await Task.find({});
+
+        console.log("tempTasks => ", tempTask);
+
+
         
-        const task = await Task.find({employee: new mongoose.Types.ObjectId(req.user._id)})
+        // const task = await Task.find({employee: new mongoose.Types.ObjectId(req.user._id)})
         
         return res
             .status(200)

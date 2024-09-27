@@ -23,6 +23,7 @@ import {
 import { verifyAdmin } from '../middleware/Admin.middleware.js';
 import { verifyEmployee } from '../middleware/Employee.middleware.js';
 import { upload } from '../middleware/multer.middleware.js';
+import { loginUser } from '../controller/common.login.controller.js';
 
 const employeeRouter = express.Router();
 
@@ -36,8 +37,13 @@ employeeRouter.route("/register").post(
 
 employeeRouter.route("/login").post(
     upload.none(),
-    loginEmployee
+    loginUser
 )
+
+// employeeRouter.route("/login").post(
+//     upload.none(),
+//     loginEmployee
+// )
 
 employeeRouter.route("/logout").post(
     

@@ -1,8 +1,9 @@
-import React from 'react';
-import { Navbar, Nav, Button, Container, NavDropdown } from 'react-bootstrap';
+
+import { Navbar, Nav, Button, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { useEffect, useState } from 'react';
+import { message } from 'react-message-popup';
 
 
 const Employeenavbar = () => {
@@ -12,14 +13,41 @@ const Employeenavbar = () => {
 
   const navigate = useNavigate();
 
+
+
+   
+  const getEmployeeDetails = async() => {
+    try {
+      const response = await axios.get('/api/employee/getEmployeeDetails');
+      console.log("response => ", response);
+
+      if(response.data.success === true) {
+        message.success(response.data.message);
+
+        setemployee(response.data.data);
+      }
+      
+    
+    } 
+    catch (error) {
+      message.error(error.message);  
+    }
+  }
+    
+  useEffect(() => {
+    getEmployeeDetails();
+  },[]) 
+
+
+
+
   const onLogout = async () => {  
     try {
       const response = await axios.post('/api/employee/logout');  // this is the api call we are useing the axios
       console.log("response => ", response);  // this is the api call we are useing the axios
       if(response.data.success === true) {
         window.location.href = '/';
-        
-
+        navigate('/login');
       }
 
 
@@ -27,25 +55,9 @@ const Employeenavbar = () => {
     catch (error) {
       console.log("error => ", error);
     } 
-    
-    // const fetchEmployee = async () => {
-    //   try {
-    //     const response = await axios.get('/api/employee/getEmployeeDetails');
-    //     console.log("response => ", response);
-    //     if(response.data.success === true) {
-    //       setemployee(response.data.data);
-    //     }
-    //   } 
-    //   catch (error) {
-    //     console.log("error => ", error);
-    //   }
-    // };
-    
-    // useEffect(() => {
-    //   fetchEmployee();
-    // },[]) 
-
   }
+
+
   return (
     <Navbar bg="light" variant="dark" expand="lg">
       <Container>
@@ -65,8 +77,8 @@ const Employeenavbar = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
             <Nav.Item className="d-flex align-items-center text-black">
-              {/* {employee?.employeeName} */}
-              Saurabh
+              {employee?.employeeName}
+             
             </Nav.Item>
             <Nav.Item>
               <Button variant="outline-dark" onClick={onLogout} className="ml-3">

@@ -222,7 +222,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
                 {tickets.map((ticket, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{ticket.ticketName}</td>
+                    <td>{ticket?.ticketName}</td>
                     <td>{ticket._id}</td>
                     <td>{ticket.priority}</td>
                     <td>{ticket.saptype}</td>
@@ -231,7 +231,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
                     <td>{ticket.assignedByName}</td>
                     <td>{ticket.status}</td>
                     <td>
-                      <a href={ticket ? ticket.ticketDocument : ""} target="_blank" rel="noreferrer">
+                      <a href={ticket ? ticket?.ticketDocument : ""} target="_blank" rel="noreferrer">
                         <button
                           className="btn btn-primary"
                           style={{
@@ -250,7 +250,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
                         </button>
                       </a>
                     </td>
-                    <td>{ticket.ticketDescription}</td>
+                    <td>{ticket?.ticketDescription}</td>
                   </tr>
                 ))}
               </tbody>
@@ -381,7 +381,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
                   <td className="border px-4 py-2">{task.ticket ? task.ticket.assignedByName : task.assignedByName}</td>
                   <td className="border px-4 py-2">{task.ticket ? task.ticket.ticketDescription : task.description}</td>
                   <td className="border px-4 py-2">
-                    <a href={task.taskDocument || task.ticket.ticketDocument } target="_blank" rel="noreferrer">
+                    <a href={task?.taskDocument || task?.ticket?.ticketDocument } target="_blank" rel="noreferrer">
                       <button
                         className="btn"
                         style={{
