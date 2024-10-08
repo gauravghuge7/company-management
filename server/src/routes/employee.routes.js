@@ -1,33 +1,28 @@
 import express from 'express';
 
 import {
-    fetchProjectById,
-    fetchProjectByTeamId,
-    forwardTicketsAndTasksToAnotherEmployee,
-    getEmployeeByTeam,
-    getEmployeeDetails,
-    getEmployeeProjects,
-    
-    getTasksByProjectId,
-    
-    getTeamLeadOrNot,
-    getTeamLeadProjects,
-    loginEmployee,
-    logoutEmployee,
-    registerEmployee,
+  fetchProjectById,
+  fetchProjectByTeamId,
+  forwardTicketsAndTasksToAnotherEmployee,
+  getEmployeeAllTasks,
+  getEmployeeByTeam,
+  getEmployeeDetails,
+  getEmployeeProjects,
+  getTasksByProjectId,
+  getTeamLeadOrNot,
+  getTeamLeadProjects,
+  loginEmployee,
+  logoutEmployee,
+  registerEmployee,
 } from '../controller/employee.controller.js';
-
 import {
-    assignTasksToTeamMembers,
-    getAllTasks,
-    getTeamTasks,
+  assignTasksToTeamMembers,
+  getAllTasks,
+  getTeamTasks,
 } from '../controller/teamLead.controller.js';
-
-
 import { verifyAdmin } from '../middleware/Admin.middleware.js';
 import { verifyEmployee } from '../middleware/Employee.middleware.js';
 import { upload } from '../middleware/multer.middleware.js';
-import { get } from 'mongoose';
 
 const employeeRouter = express.Router();
 
@@ -134,9 +129,15 @@ employeeRouter.route("/forwardTicketsAndTasksToAnotherEmployee").post(
 
 
 employeeRouter.route("/getEmployeeByTeam/:teamId").get(
-    
+
     verifyEmployee,
     getEmployeeByTeam
+)
+
+
+employeeRouter.route("/getEmployeeAllTasks").get(
+    verifyEmployee,
+    getEmployeeAllTasks
 )
 
 

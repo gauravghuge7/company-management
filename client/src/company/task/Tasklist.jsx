@@ -161,14 +161,15 @@ const TaskList = ({ setConditionalComponent, projectId }) => {
                   <td>{task.ticketDescription}</td>
                   <td>
                     <a href={task.ticketDocument} target="_blank" rel="noreferrer">
-                      <Button variant="primary">View</Button>
+                      <Button variant=""    style={{ color:"#007BFF"  }}>  <i class="bi bi-eye-fill"></i></Button>
                     </a>
                   </td>
                   <td>
-                    <Button variant="primary" className="me-2" onClick={() => handleEdit(task)}>
-                      Edit
+                   <div className='d-flex'> <Button variant=""    style={{ color:"#007BFF"  }} className="me-2" onClick={() => handleEdit(task)}>
+                    <i class="bi bi-pencil-square"></i>
                     </Button>
-                    <Button variant="danger" onClick={handleDelete}>Delete</Button>
+                    <Button variant="" onClick={handleDelete}
+                     style={{ color:"red"  }}><i class="bi bi-trash"></i></Button></div>
                   </td>
                 </tr>
               ))}
@@ -180,14 +181,14 @@ const TaskList = ({ setConditionalComponent, projectId }) => {
               onClick={() => paginate(currentPage - 1)}
               disabled={currentPage === 1}
             >
-              Previous
+             <i class="bi bi-arrow-left"></i>
             </Button>
             <Button
               variant="primary"
               onClick={() => paginate(currentPage + 1)}
               disabled={indexOfLastTask >= filteredTasks.length}
             >
-              Next
+              <i class="bi bi-arrow-right"></i>
             </Button>
           </div>
         </Col>

@@ -14,10 +14,10 @@ const Componysidebar = ({ setConditionalComponent }) => {
 
   return (
     <div
-      className={`d-flex flex-column p-3 bg-dark text-white`}
+      className={`d-flex flex-column p-3  text-white`}
       style={{
         width: isCollapsed ? '80px' : '250px', 
-        backgroundColor: '#212529', // Darker background for better contrast
+    
         boxShadow: '2px 0 5px rgba(0, 0, 0, 0.5)', // Add subtle shadow for depth
         borderRight: '1px solid #343a40', // Border to separate sidebar from content
         height: 'auto',
@@ -31,9 +31,9 @@ const Componysidebar = ({ setConditionalComponent }) => {
         style={{ cursor: 'pointer', alignSelf: 'center', marginBottom: '10px' }}
       >
         {isCollapsed ? (
-          <BiChevronRight size={20} color="white" />
+          <BiChevronRight size={20} color="#1C75BB" />
         ) : (
-          <BiChevronLeft size={20} color="white" />
+          <BiChevronLeft size={20} color="#1C75BB" />
         )}
       </div>
 
@@ -41,7 +41,7 @@ const Componysidebar = ({ setConditionalComponent }) => {
         <li className="nav-item">
           <button
             onClick={() => setConditionalComponent('CompanyDashboard')}
-            className="nav-link text-white"
+            className="nav-link text-#1C75BB"
             style={navButtonStyle}
           >
             <AiOutlineDashboard size={20} className="me-2" />
@@ -52,8 +52,9 @@ const Componysidebar = ({ setConditionalComponent }) => {
           <button
             id="project-button"
             onClick={() => setConditionalComponent('Projectlist')}
-            className="nav-link text-white"
+            className="nav-link text-#1C75BB"
             style={navButtonStyle}
+            color="#1C75BB"
           >
             <FaRegBuilding size={20} className="me-2" />
             {!isCollapsed && 'Projects'} {/* Show text only when expanded */}
@@ -63,7 +64,7 @@ const Componysidebar = ({ setConditionalComponent }) => {
           <button
             id="tasks-button"
             onClick={() => setConditionalComponent('CompanyTasks')}
-            className="nav-link text-white"
+            className="nav-link text-blue"
             style={navButtonStyle}
           >
             <FiList size={20} className="me-2" />
@@ -77,17 +78,21 @@ const Componysidebar = ({ setConditionalComponent }) => {
 
 // Custom styles for the nav buttons
 const navButtonStyle = {
-  backgroundColor: '#1C75BB', // Darker background for buttons
-  border: 'none',
+  backgroundColor: '#fff', // Darker background for buttons
+  border: '1px solid #007BFF',
+  color: '#007BFF',
   padding: '10px 15px',
   borderRadius: '8px',
+  borderColor: '#007BFF',
   transition: 'background-color 0.3s ease, transform 0.3s ease',
   textAlign: 'left',
   marginBottom: '15px',
   display: 'flex',
   alignItems: 'center',
   width: '100%',
+  boxShadow: '0 4px 8px  #000', // Added border shadow
 };
+
 
 // Hover effect for buttons
 const navButtonHoverStyle = {

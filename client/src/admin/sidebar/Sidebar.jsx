@@ -36,7 +36,7 @@ const Sidebar = ({ setValue, setConditionalComponent }) => {
 
   return (
     <div
-      className={`d-flex flex-column p-3 bg-dark text-light`}
+      className={`d-flex flex-column p-3  text-light`}
       style={{
         width: isCollapsed ? '80px' : '250px', 
         height: 'auto',

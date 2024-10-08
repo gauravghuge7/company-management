@@ -12,21 +12,17 @@ class ApiResponse {
       this.anythingElse = anythingElse;
 
 
-
    }
 }
 
-export {
-   ApiResponse
-}
-
+export { ApiResponse };
 
 /* 
 
-  .json(
-  
-     new ApiResponse(200, "employee registered successfully", employee)
-  )
+   .json(
+   
+      new ApiResponse(200, "employee registered successfully", employee)
+   )
 
 
 */

@@ -92,7 +92,7 @@ const TaskList = ({ setConditionalComponent }) => {
           value={searchTerm}
           onChange={handleSearch}
           style={{ maxWidth: "300px" }}
-        />
+        /> 
       </div>
 
       <Row className="justify-content-md-center mt-5">

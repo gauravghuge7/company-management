@@ -597,8 +597,13 @@ const createProject = asyncHandler(async (req, res) => {
             admin: req?.user?._id
 
         })
-
         await project.save();
+
+
+        const findTeam = await Team.findById(team);
+
+        team.project.push(project._id);
+        await findTeam.save({validateBeforeSave: false});
 
         return res  
             .status(200)
@@ -712,12 +717,6 @@ const getAllProjects = asyncHandler(async(req, res) => {
     }
 
 })
-
-
-
-
-
-
 
 export {
   createProject,

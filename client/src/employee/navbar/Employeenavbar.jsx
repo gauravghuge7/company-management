@@ -49,11 +49,11 @@ const Employeenavbar = () => {
   return (
     <Navbar bg="light" variant="dark" expand="lg">
       <Container>
-        <Navbar.Brand href="#home">
+        <Navbar.Brand href="#home" style={{ marginLeft:-80, padding: 0 }}>
           {/* Replace with your logo */}
           <img
             src="../../../public/accets/GBIS.png"
-            width="150"
+            width="190"
             height="150"
             className="d-inline-block align-top"
             alt="Logo"

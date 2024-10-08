@@ -156,38 +156,38 @@ const ProjectList = ({ setConditionalComponent }) => {
                     <a href={data?.documents} target="_blank" rel="noreferrer">
                       <Button
                         style={{
-                          backgroundColor: "#007BFF",
+                          backgroundColor: "#fff",
                           border: "none",
                           padding: "8px 16px",
                           borderRadius: "8px",
-                          color: "#fff",
+                          color: "#007BFF",
                           fontWeight: "bold",
                           transition: "background-color 0.3s ease",
                         }}
-                        onMouseEnter={(e) => (e.target.style.backgroundColor = "#007BFF")}
-                        onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
+                       
                       >
-                        View
+                      <i class="bi bi-eye-fill"></i>
                       </Button>
                     </a>
                   </td>
                   <td>
                     <Button 
                       style={{
-                        backgroundColor: "#007BFF",
-                        border: "none",
+                        backgroundColor: "#fff",
+                        border: "#007BFF",
                         padding: "8px 16px",
+                        Size: "large",
+                        backgraound : "transparent",
                         borderRadius: "8px",
-                        color: "#fff",
+                        color: "#007BFF",
                         fontWeight: "bold",
                         transition: "background-color 0.3s ease",
                         marginRight: "10px"
                       }}
-                      onMouseEnter={(e) => (e.target.style.backgroundColor = "#0056b3")}
-                      onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
+                     
                       onClick={() => handleAddTask(data)}
                     >
-                      Add Ticket
+                      <i class="bi bi-plus"></i>
                     </Button>
                     {/* <Button className="btn btn-danger" onClick={handleDelete}>Delete</Button> */}
                   </td>
@@ -217,7 +217,7 @@ const ProjectList = ({ setConditionalComponent }) => {
           onMouseEnter={(e) => (e.target.style.backgroundColor = "#0056b3")}
           onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
         >
-          Previous
+        <i class="bi bi-arrow-left"></i>
         </Button>
         <Button 
           onClick={() => handlePageChange(currentPage + 1)} 
@@ -225,6 +225,7 @@ const ProjectList = ({ setConditionalComponent }) => {
           style={{
             backgroundColor: "#007BFF",
             border: "none",
+          
             padding: "8px 16px",
             borderRadius: "8px",
             color: "#fff",
@@ -234,7 +235,7 @@ const ProjectList = ({ setConditionalComponent }) => {
           onMouseEnter={(e) => (e.target.style.backgroundColor = "#0056b3")}
           onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
         >
-          Next
+        <i class="bi bi-arrow-right"></i>
         </Button>
       </div>
     </Container>

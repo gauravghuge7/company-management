@@ -90,7 +90,7 @@ function Componynavabar() {
       <Navbar bg="light" expand="lg" className="flex flex-row w-full h-20">
         <Container className="flex flex-row justify-center align-items-center">
           {/* Logo */}
-          <Navbar.Brand href="#" className="mb-3">
+          <Navbar.Brand href="#" className="mb-3" style={{ marginLeft:-80, padding: 0 }}>
             <img
               src="../../../public/accets/GBIS.png"
               alt="Logo"

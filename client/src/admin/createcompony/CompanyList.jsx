@@ -63,13 +63,16 @@ const CompanyList = ({ setValue, setClientId, setClientName }) => {
             >
                 <h2 style={{ margin: 0, color: "#333" }}>Client List</h2>
                 <div style={{ display: "flex", alignItems: "center" }}>
-                    <InputGroup style={{  maxWidth: "50%", marginRight: "10px" }}>
-                        <FormControl
-                            placeholder="Search Clients"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                    </InputGroup>
+                <InputGroup style={{ maxWidth: "50%", marginRight: "10px" }}>
+    
+    <FormControl
+        placeholder="Search Clients"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+    /><InputGroup.Text>
+    <i className="bi bi-search"></i>
+</InputGroup.Text>
+</InputGroup>
                     <Button
                         style={{
                             backgroundColor: "#007BFF",

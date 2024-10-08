@@ -34,11 +34,12 @@ const EmployeeSidebar = ({ setConditionalComponent }) => {
 
   return (
     <div
-      className={`d-flex flex-column p-3 bg-dark text-light`}
+      className={`d-flex flex-column p-3 bg-light text-white`}
       style={{
         width: isCollapsed ? '80px' : '250px', 
         height: 'auto',
         minHeight: '100vh',
+        buttonShadow: '2px 0 5px rgba(0, 0, 0, 0.5)', // Add subtle shadow for depth
         background: '#000000',
         boxShadow: '2px 0px 15px rgba(0, 0, 0, 0.3)',
         transition: 'width 0.3s ease',
@@ -47,12 +48,12 @@ const EmployeeSidebar = ({ setConditionalComponent }) => {
       {/* Arrow Button */}
       <div
         onClick={toggleSidebar}
-        style={{ cursor: 'pointer', alignSelf: 'center' }}
+        style={{ cursor: 'pointer', alignSelf: 'center', color: "#007BFF" }}
       >
         {isCollapsed ? (
-          <BiChevronRight size={30} color="white" />
+          <BiChevronRight size={30} color="#007BFF" />
         ) : (
-          <BiChevronLeft size={30} color="white" />
+          <BiChevronLeft size={30} color="#007BFF" />
         )}
       </div>
 
@@ -126,14 +127,15 @@ const SidebarButton = ({ onClick, isCollapsed, icon, text }) => {
 
 const buttonStyle = {
   borderRadius: '5px',
-  backgroundColor: '#1C75BB',
-  border: 'none',
-  color: '#ffffff',
-  paddingleft: '10px',
- 
+  backgroundColor: '#fff',
+  border: '1px solid #007BFF',
+  color: '#007BFF',
+  paddingLeft: '10px',
   fontSize: '16px',
   width: '100%',
   textAlign: 'left',
+  boxShadow: '0 4px 8px #000', // Added shadow
 };
+
 
 export default EmployeeSidebar;

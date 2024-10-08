@@ -1,5 +1,7 @@
-import {Schema, model} from 'mongoose';
-
+import {
+  model,
+  Schema,
+} from 'mongoose';
 
 const teamSchema = new Schema( {
 
@@ -39,7 +41,6 @@ const teamSchema = new Schema( {
       type: Schema.Types.ObjectId,
       ref: "Employee"
    }],
-
 
 
 }, {timestamps: true});

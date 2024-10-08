@@ -110,7 +110,7 @@ const TaskForm = ({ currentProject, setConditionalComponent, onSave, setIsEditin
 
             <button onClick={() => setIsEditing(false)}
                   className="btn btn-primary btn-lg px- py-2">
-                Back
+                <i class="bi bi-arrow-left"></i>
             </button>
             <Row className="justify-content-md-center">
                 <Col md={8}>

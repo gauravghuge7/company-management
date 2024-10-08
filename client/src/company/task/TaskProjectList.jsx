@@ -103,19 +103,18 @@ const TaskProjectList = ({ setConditionalComponent, setProjectId }) => {
                 <td>
                   <Button
                     style={{
-                      backgroundColor: "#007BFF",
+                      backgroundColor: "#fff",
                       border: "none",
                       padding: "8px 16px",
                       borderRadius: "8px",
-                      color: "#fff",
+                      color: "#007BFF",
                       fontWeight: "bold",
                       transition: "background-color 0.3s ease",
                     }}
-                    onMouseEnter={(e) => (e.target.style.backgroundColor = "#0056b3")}
-                    onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
+                  
                     onClick={() => sendProjectId(data._id)}
                   >
-                    View Tickets
+                   Tickets
                   </Button>
                 </td>
               </tr>
@@ -133,14 +132,14 @@ const TaskProjectList = ({ setConditionalComponent, setProjectId }) => {
           onClick={() => paginate(currentPage - 1)}
           disabled={currentPage === 1}
         >
-          Previous
+        <i class="bi bi-arrow-left"></i>
         </Button>
         <Button
           variant="primary"
           onClick={() => paginate(currentPage + 1)}
           disabled={indexOfLastProject >= filteredProjects.length}
         >
-          Next
+         <i class="bi bi-arrow-right"></i>
         </Button>
       </div>
     </Container>

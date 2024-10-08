@@ -12,7 +12,7 @@ const Watch = () => {
                     <div className="row">
                         {/* Completed Tasks Card */}
                         <div className="col-md-4 mb-4">
-                            <div className="card text-white bg-success" style={cardStyle} 
+                            <div className="card text-white " style={cardStyle} 
                                  onMouseEnter={(e) => { e.currentTarget.style.boxShadow = hoverStyle.boxShadow; }}
                                  onMouseLeave={(e) => { e.currentTarget.style.boxShadow = cardStyle.boxShadow; }}>
                                 <div className="card-header d-flex justify-content-center" style={headerStyle}>Completed Tasks</div>
@@ -25,7 +25,7 @@ const Watch = () => {
 
                         {/* Pending Tasks Card */}
                         <div className="col-md-4 mb-4">
-                            <div className="card text-white bg-warning" style={cardStyle} 
+                            <div className="card text-white " style={cardStyle} 
                                  onMouseEnter={(e) => { e.currentTarget.style.boxShadow = hoverStyle.boxShadow; }}
                                  onMouseLeave={(e) => { e.currentTarget.style.boxShadow = cardStyle.boxShadow; }}>
                                 <div className="card-header d-flex justify-content-center" style={headerStyle}>Pending Tasks</div>
@@ -38,7 +38,7 @@ const Watch = () => {
 
                         {/* To-Do Tasks Card */}
                         <div className="col-md-4 mb-4">
-                            <div className="card text-white bg-info" style={cardStyle} 
+                            <div className="card text-white " style={cardStyle} 
                                  onMouseEnter={(e) => { e.currentTarget.style.boxShadow = hoverStyle.boxShadow; }}
                                  onMouseLeave={(e) => { e.currentTarget.style.boxShadow = cardStyle.boxShadow; }}>
                                 <div className="card-header d-flex justify-content-center" style={headerStyle}>To-Do Tasks</div>
@@ -69,6 +69,7 @@ const cardStyle = {
     cursor: 'pointer',
     width: '100%', 
     maxWidth: '400px', 
+    backgroundColor: "#77AFDC",
 };
 
 const hoverStyle = {

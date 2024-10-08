@@ -12,7 +12,7 @@ const Employeecontain = () => {
                     <div className="row">
                         {/* Completed Tasks Card */}
                         <div className="col-md-4 mb-4">
-                            <div className="card text-white bg-success" style={cardStyle} 
+                            <div className="card text-white bg-info" style={cardStyle} 
                                  onMouseEnter={(e) => { e.currentTarget.style.boxShadow = hoverStyle.boxShadow; }}
                                  onMouseLeave={(e) => { e.currentTarget.style.boxShadow = cardStyle.boxShadow; }}>
                                 <div className="card-header d-flex justify-content-center" style={headerStyle}>Completed Tasks</div>
@@ -25,7 +25,7 @@ const Employeecontain = () => {
 
                         {/* Pending Tasks Card */}
                         <div className="col-md-4 mb-4">
-                            <div className="card text-white bg-warning" style={cardStyle} 
+                            <div className="card text-white bg-info" style={cardStyle} 
                                  onMouseEnter={(e) => { e.currentTarget.style.boxShadow = hoverStyle.boxShadow; }}
                                  onMouseLeave={(e) => { e.currentTarget.style.boxShadow = cardStyle.boxShadow; }}>
                                 <div className="card-header d-flex justify-content-center" style={headerStyle}>Pending Tasks</div>
