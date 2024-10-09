@@ -111,7 +111,9 @@ const EmpProjects = () => {
     setForwardTicketOpen(true);
   };
 
-  const closeForwardTicketDialog = () => {
+  const closeForwardTicketDialog = (e) => {
+
+    console.log(e);
 
     if (forwardTicketRef.current) {
       forwardTicketRef.current.close();

@@ -1,8 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\client"
+    "\\client",
+    "\\client\\src",
+    "\\client\\src\\admin",
+    "\\client\\src\\employee",
+    "\\client\\src\\employee\\EmployeeProjects"
   ],
-  "SelectedNode": "\\client\\vite.config.js",
+  "SelectedNode": "\\client\\src\\employee\\EmployeeProjects\\EmpProjects.jsx",
   "PreviewInSolutionExplorer": false
 }

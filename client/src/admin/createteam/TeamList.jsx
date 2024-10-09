@@ -87,8 +87,7 @@ const TeamList = ({ setValue }) => {
                             marginRight: '10px',
                             marginTop: '5px',
                           maxWidth: "100%",
-                         marginRight: "10px"
-                            
+                        
                         }}
                     />
                     <Button
