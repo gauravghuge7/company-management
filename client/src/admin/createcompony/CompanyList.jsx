@@ -7,6 +7,7 @@ const CompanyList = ({ setValue, setClientId, setClientName }) => {
     const [companies, setCompanies] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
+    const [editCompany, setEditCompany] = useState(null); // New state for edit
 
     const fetchCompanies = async () => {
         try {
@@ -18,6 +19,15 @@ const CompanyList = ({ setValue, setClientId, setClientName }) => {
         } catch (error) {
             message.error(error.message);
         }
+    };
+
+    const handleDelete = () => {
+        // Implement delete functionality
+    };
+
+    const handleEdit = (company) => {
+        setEditCompany(company); // Set the company to be edited
+        setValue("editcompany"); // Assuming "editcompany" is the route to edit the company
     };
 
     const setDetails = (clientId, clientName) => {
@@ -53,45 +63,30 @@ const CompanyList = ({ setValue, setClientId, setClientName }) => {
                 marginTop: "30px",
             }}
         >
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginBottom: "25px",
-                }}
-            >
-                <h2 style={{ margin: 0, color: "#333" }}>Client List</h2>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "25px" }}>
+                <h2 style={{ margin: 0, color: "#333", fontWeight: "bold" }}>Client List</h2>
                 <div style={{ display: "flex", alignItems: "center" }}>
-                    <InputGroup style={{  maxWidth: "50%", marginRight: "10px" }}>
+                    <InputGroup style={{ maxWidth: "300px", marginRight: "10px" }}>
                         <FormControl
-                            placeholder="Search Clients"
+                            placeholder="Search Client"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
+                        <InputGroup.Text>
+                            <i className="bi bi-search"></i>
+                        </InputGroup.Text>
                     </InputGroup>
                     <Button
-                        style={{
-                            backgroundColor: "#007BFF",
-                            border: "none",
-                            padding: "12px 24px",
-                            borderRadius: "8px",
-                            color: "#fff",
-                            fontWeight: "bold",
-                            transition: "background-color 0.3s ease",
-                        }}
-                        onMouseEnter={(e) =>
-                            (e.target.style.backgroundColor = "#007BFF")
-                        }
-                        onMouseLeave={(e) =>
-                            (e.target.style.backgroundColor = "#007BFF")
-                        }
+                        style={{ backgroundColor: "#007BFF", border: "none", whiteSpace: "nowrap", borderRadius: "8px", color: "#fff", fontWeight: "bold", transition: "background-color 0.3s ease", }}
+                        onMouseEnter={(e) => (e.target.style.backgroundColor = "#0056b3")}
+                        onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
                         onClick={() => setValue("createcompany")}
                     >
-                        Add Client
+                        Add New Client
                     </Button>
                 </div>
             </div>
+
             <Row className="justify-content-md-center">
                 <Col md={12}>
                     {currentCompanies.length > 0 ? (
@@ -116,8 +111,9 @@ const CompanyList = ({ setValue, setClientId, setClientName }) => {
                                     <th>#</th>
                                     <th>Client Name</th>
                                     <th>Client Email</th>
-                                    <th>Password</th>
-                                    <th>Action</th>
+                                    <th style={{ width: "150px" }}>Password</th>
+                                    <th style={{ textAlign: "center" }}>Add Project</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -126,29 +122,23 @@ const CompanyList = ({ setValue, setClientId, setClientName }) => {
                                         <td>{indexOfFirstCompany + index + 1}</td>
                                         <td>{company.clientName}</td>
                                         <td>{company.clientEmail}</td>
-                                        <td>{company.clientPassword}</td>
-                                        <td>
-                                            <Button
-                                                style={{
-                                                    backgroundColor: "#007BFF",
-                                                    border: "none",
-                                                    padding: "12px 24px",
-                                                    borderRadius: "8px",
-                                                    color: "#fff",
-                                                    fontWeight: "bold",
-                                                    transition: "background-color 0.3s ease",
-                                                }}
-                                                onMouseEnter={(e) =>
-                                                    (e.target.style.backgroundColor = "#007BFF")
-                                                }
-                                                onMouseLeave={(e) =>
-                                                    (e.target.style.backgroundColor = "#007BFF")
-                                                }
-                                                onClick={() => setDetails(company._id, company.clientName)}
-                                            >
-                                                Add Project
+                                        <td style={{ maxWidth: "150px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                                            {company.clientPassword}
+                                        </td>
+                                        <td style={{ textAlign: "center" }}>
+                                            <Button style={{ background: "transparent", border: "none", textAlign: "center" }} onClick={() => setDetails(company._id, company.clientName)}>
+                                                <i className="bi bi-plus-square-fill" style={{ fontSize: "16px", color: "#007BFF" }}></i>
                                             </Button>
                                         </td>
+
+                                        <div className='d-flex'>
+                                            <Button variant="" style={{ color: "#007BFF" }} className="me-2" onClick={() => handleEdit(company)}>
+                                                <i className="bi bi-pencil-square"></i>
+                                            </Button>
+                                            <Button variant="" onClick={handleDelete} style={{ color: "red" }}>
+                                                <i className="bi bi-trash-fill"></i>
+                                            </Button>
+                                        </div>
                                     </tr>
                                 ))}
                             </tbody>
@@ -158,19 +148,21 @@ const CompanyList = ({ setValue, setClientId, setClientName }) => {
                     )}
                 </Col>
             </Row>
-            <div  style={{ display: "flex", justifyContent: "space-between", marginTop: "20px" }}>
+
+            <div className="d-flex justify-content-between mt-3">
                 <Button
-                    style={{ marginRight: "10px" }}
+                    variant="primary"
                     onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                     disabled={currentPage === 1}
                 >
-                    Previous
+                    <i className="bi bi-arrow-left"></i>
                 </Button>
                 <Button
+                    variant="primary"
                     onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                     disabled={currentPage === totalPages}
                 >
-                    Next 
+                    <i className="bi bi-arrow-right"></i>
                 </Button>
             </div>
         </Container>

@@ -58,7 +58,7 @@ const Login = () => {
     <Container
       fluid
       className="d-flex justify-content-center align-items-center"
-      style={{ height: "100vh", backgroundColor: "#f8f9fa" }}
+      style={{ height: "100vh", maxWidth: "1800px",  backgroundColor: "#E3F2FD" }}
     >
       <Row
         className="shadow-lg"

@@ -103,7 +103,7 @@ const CreatePresentation = ({data}) => {
             {editingText ? 'Save Text' : 'Add Text'}
             </button>
             <button onClick={() => setEditingImage(!editingImage)} className="px-4 py-2 hover:bg-gray-700">
-            {editingImage ? 'Save Dacument' : 'Add Dacument'}
+            {editingImage ? 'Save Document' : 'Add Document'}
             </button>
             <button onClick={addSlide} className="px-4 py-2 hover:bg-gray-700">Add Slide</button>
             <button onClick={deleteSlide} className="px-4 py-2 hover:bg-gray-700" disabled={slides.length === 1}>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Table, Button, Form } from 'react-bootstrap';
+import { Container, Row, Col, Table, Button, InputGroup, FormControl } from 'react-bootstrap';
 
 const TaskList = ({ setConditionalComponent }) => {
   const [tasks, setTasks] = useState([
@@ -48,10 +48,6 @@ const TaskList = ({ setConditionalComponent }) => {
     console.log('Task deleted');
   };
 
-  const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
   const filteredTasks = tasks.filter(task =>
     task.companyName.toLowerCase().includes(searchTerm.toLowerCase()) ||
     task.priority.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -86,13 +82,16 @@ const TaskList = ({ setConditionalComponent }) => {
         }}
       >
         <h2 style={{ margin: 0, color: "#333", fontWeight: "bold" }}>Task List</h2>
-        <Form.Control
-          type="text"
-          placeholder="Search"
-          value={searchTerm}
-          onChange={handleSearch}
-          style={{ maxWidth: "300px" }}
-        />
+        <InputGroup style={{ maxWidth: "30%", marginRight: "10px" }}>
+          <FormControl
+            placeholder="Search Tasks"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <InputGroup.Text>
+            <i className="bi bi-search"></i>
+          </InputGroup.Text>
+        </InputGroup>
       </div>
 
       <Row className="justify-content-md-center mt-5">
@@ -145,29 +144,40 @@ const TaskList = ({ setConditionalComponent }) => {
                   <td>{task.taskDetail}</td>
                   <td> 
                     <a href={task.document} target="_blank" rel="noreferrer">
-                      <button className="btn btn-primary">View</button>
+                      <i className="bi bi-eye-fill" style={{ fontSize: "16px" }}></i> {/* View icon */}
                     </a>
-                  </td>  
+                  </td>
                   <td>
-                    <button className="btn btn-primary me-2" onClick={handleEdit}>Edit</button>
-                    <button className="btn btn-danger" onClick={handleDelete}>Delete</button> 
+                    <i
+                      className="bi bi-pencil-square me-2"
+                      style={{ fontSize: "16px", cursor: "pointer", color: "blue" }} 
+                      onClick={() => handleEdit(task)}
+                    ></i> {/* Edit icon */}
+                    <i
+                      className="bi bi-trash3-fill"
+                      style={{ fontSize: "16px", cursor: "pointer", color: "red" }} 
+                      onClick={() => handleDelete(task)}
+                    ></i> {/* Delete icon */}
                   </td>
                 </tr>
               ))}
             </tbody>
           </Table>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
+
+          <div className="d-flex justify-content-between mt-3">
             <Button
+              variant="primary"
               onClick={() => setCurrentPage(currentPage - 1)}
               disabled={currentPage === 1}
             >
-              Previous
+              <i className="bi bi-arrow-left"></i>
             </Button>
             <Button
+              variant="primary"
               onClick={() => setCurrentPage(currentPage + 1)}
               disabled={indexOfLastTask >= filteredTasks.length}
             >
-              Next
+              <i className="bi bi-arrow-right"></i>
             </Button>
           </div>
         </Col>

@@ -37,10 +37,8 @@ const EditTask = ({ currentTask, setIsEditOpen, setCurrentTask }) => {
       <div className='w-[100%] h-[100%] overflow-x-scroll'>
       <button 
          onClick={handlePopupClose}
-         className='absolute top-20 right-20 p-2 m-2 text-white bg-red-500 rounded-full'
-         >
+         className='absolute top-20 right-20 p-2 m-2 text-white bg-red-500 rounded-full'>
          Cancel
-         
       </button>
       <Container className="mt-5">
       <Row className="justify-content-md-center overflow-scroll">
@@ -151,7 +149,7 @@ const EditTask = ({ currentTask, setIsEditOpen, setCurrentTask }) => {
                                  e.target.style.transform = 'scale(1)'; // Reset scale when not hovering
                            }}
                         >
-                           Submit Ticket
+                           Submit Task
                         </Button>
                      </Form>
                   </Card.Body>

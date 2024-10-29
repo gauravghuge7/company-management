@@ -45,7 +45,7 @@ function Componynavabar() {
       
     }
   } ;
- useEffect(() => {
+useEffect(() => {
     fetchClient();
   }, []);
 
@@ -67,23 +67,6 @@ function Componynavabar() {
 
   // };
 
- 
-
-  
-  
-
-    
-
-
-
-
-
-
-
-
-  
-
-
 
   return (
     <div className="d-flex">
@@ -102,11 +85,11 @@ function Componynavabar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <Nav.Item className="d-flex align-items-center text-black">
+            <Nav.Item className="d-flex align-items-center text-black color-red">
               {client.clientName}
             </Nav.Item>
             <Nav.Item>
-              <Button variant="outline-dark" onClick={onLogout} className="ml-3">
+              <Button variant="outline-danger" onClick={onLogout} className="ml-3">
                 Logout
               </Button>
             </Nav.Item>
@@ -114,8 +97,6 @@ function Componynavabar() {
         </Navbar.Collapse>
       </Container>
       </Navbar>
-
-
     </div>
   );
 };

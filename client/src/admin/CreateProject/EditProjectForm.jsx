@@ -1,25 +1,50 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import JoditEditor from 'jodit-react';
 import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
+import axios from 'axios';  // Import axios for making API calls
 
 const TaskForm = () => {
     const editor = useRef(null);
     const [content, setContent] = useState('');
 
+    // State to store form data
     const [formData, setFormData] = useState({
-        companyName: '',
+        taskName: '',
         priority: '',
-        taskDetail: '',
-        ticketCreateDate: '',
+        saptype: '',
+        assignteam: '',
         dueDate: '',
         assignName: '',
+        assignEmail: '',
+        description: ''
     });
 
+    // State to store teams fetched from API
+    const [teams, setTeams] = useState([]);
+
+    // Fetch teams from API when component mounts
+    useEffect(() => {
+        const fetchTeams = async () => {
+            try {
+                const response = await axios.get('/api/admin/getAllTeams');  // Adjust the endpoint URL
+                if (response.data.success) {
+                    setTeams(response.data.data.team); // Store teams in state
+                }
+            } catch (error) {
+                console.error('Error fetching teams:', error);
+            }
+        };
+
+        fetchTeams();
+    }, []);
+
+    // Config for JoditEditor
     const config = {
         readonly: false,
         placeholder: 'Start typing your task details...',
     };
 
+    // Handle input changes for form fields
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -28,6 +53,7 @@ const TaskForm = () => {
         });
     };
 
+    // Handle Jodit editor changes
     const handleJoditChange = (newContent) => {
         setContent(newContent);
         setFormData({
@@ -36,6 +62,7 @@ const TaskForm = () => {
         });
     };
 
+    // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form Data Submitted:', formData);
@@ -50,11 +77,11 @@ const TaskForm = () => {
                         <Card.Body>
                             <h2 className="text-center mb-4" style={{ fontWeight: 'bold' }}>Create New Task</h2>
                             <Form onSubmit={handleSubmit}>
-                                <Form.Group controlId="companyName" className="mb-3">
+                                <Form.Group controlId="taskName" className="mb-3">
                                     <Form.Label>Task Name</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        name="companyName"
+                                        name="taskName"
                                         value={formData.taskName}
                                         onChange={handleChange}
                                         required
@@ -79,7 +106,7 @@ const TaskForm = () => {
                                     </Form.Control>
                                 </Form.Group>
 
-                                <Form.Group controlId="priority" className="mb-3">
+                                <Form.Group controlId="saptype" className="mb-3">
                                     <Form.Label>SAP Type</Form.Label>
                                     <Form.Control
                                         as="select"
@@ -89,7 +116,7 @@ const TaskForm = () => {
                                         required
                                         style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
                                     >
-                                        <option value="">Select Priority</option>
+                                        <option value="">Select SAP Type</option>
                                         <option value="sapabap">SAP ABAP</option>
                                         <option value="sapmm">SAP MM</option>
                                         <option value="sappp">SAP PP</option>
@@ -98,18 +125,25 @@ const TaskForm = () => {
                                     </Form.Control>
                                 </Form.Group>
 
-                                <Form.Group controlId="assignName" className="mb-3">
+                                {/* Dynamic Assign To Team Dropdown */}
+                                <Form.Group controlId="assignteam" className="mb-3">
                                     <Form.Label>Assign To Team</Form.Label>
                                     <Form.Control
-                                        type="text"
-                                        name="assignName"
+                                        as="select"
+                                        name="assignteam"
                                         value={formData.assignteam}
                                         onChange={handleChange}
                                         required
                                         style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
-                                    />
+                                    >
+                                        <option value="">Select Team</option>
+                                        {teams.map((team) => (
+                                            <option key={team._id} value={team.teamName}>
+                                                {team.teamName}
+                                            </option>
+                                        ))}
+                                    </Form.Control>
                                 </Form.Group>
-                             
 
                                 <Form.Group controlId="dueDate" className="mb-3">
                                     <Form.Label>Due Date</Form.Label>
@@ -176,7 +210,7 @@ const TaskForm = () => {
                                     variant="primary"
                                     type="submit"
                                     style={{
-                                        backgroundColor: '#17a2b8', // Teal color
+                                        backgroundColor: 'primary', // Teal color
                                         border: 'none',
                                         borderRadius: '12px',
                                         padding: '12px 24px',
@@ -187,11 +221,11 @@ const TaskForm = () => {
                                     }}
                                     className="w-100"
                                     onMouseEnter={(e) => {
-                                        e.target.style.backgroundColor = '#138496'; // Darker teal on hover
+                                        e.target.style.backgroundColor = ''; // Darker teal on hover
                                         e.target.style.transform = 'scale(1.05)'; // Slight scale-up on hover
                                     }}
                                     onMouseLeave={(e) => {
-                                        e.target.style.backgroundColor = '#17a2b8'; // Original teal when not hovering
+                                        e.target.style.backgroundColor = ''; // Original teal when not hovering
                                         e.target.style.transform = 'scale(1)'; // Reset scale when not hovering
                                     }}
                                 >

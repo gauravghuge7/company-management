@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Table, Button, InputGroup } from 'react-bootstrap';
+import { Container, Row, Col, Table, Button, InputGroup, FormControl, Modal, Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { message } from "react-message-popup";
 import axios from "axios";
@@ -8,6 +8,8 @@ const TeamList = ({ setValue }) => {
     const [teams, setTeams] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchQuery, setSearchQuery] = useState("");
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [selectedTeam, setSelectedTeam] = useState(null);
     const teamsPerPage = 10;
 
     const dispatch = useDispatch();
@@ -15,8 +17,6 @@ const TeamList = ({ setValue }) => {
     const fetchTeams = async () => {
         try {
             const response = await axios.get('/api/admin/getAllTeams');
-            console.log("response => ", response);
-
             if (response.data.success) {
                 setTeams(response.data.data.team);
                 message.success('Teams fetched successfully');
@@ -50,6 +50,35 @@ const TeamList = ({ setValue }) => {
         }
     };
 
+    const handleEdit = (team) => {
+        setSelectedTeam(team);
+        setShowEditModal(true);
+    };
+
+    const handleEditSubmit = async () => {
+        if (!selectedTeam) return;
+
+        try {
+            const response = await axios.put(`/api/admin/updateTeam/${selectedTeam._id}`, selectedTeam);
+            if (response.data.success) {
+                setTeams((prevTeams) =>
+                    prevTeams.map((team) =>
+                        team._id === selectedTeam._id ? selectedTeam : team
+                    )
+                );
+                message.success('Team updated successfully');
+                setShowEditModal(false);
+            }
+        } catch (error) {
+            message.error(error.message);
+        }
+    };
+
+    const handleDelete = (id) => {
+        // Implement delete functionality (optional)
+        console.log(`Delete team with id: ${id}`);
+    };
+
     return (
         <Container
             style={{
@@ -60,6 +89,23 @@ const TeamList = ({ setValue }) => {
                 color: "#333",
                 maxWidth: "100%",
                 marginTop: "30px",
+
+            }}>
+            
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "25px" }}>
+                <h2 style={{ margin: 0, color: "#333", fontWeight: "bold" }}>Team List</h2>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                    <InputGroup style={{ maxWidth: "300px", marginRight: "10px" }}>
+                        <FormControl
+                            placeholder="Search Teams"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                        <InputGroup.Text>
+                            <i className="bi bi-search"></i>
+                        </InputGroup.Text>
+                    </InputGroup>
+
             }}
         >
             <div
@@ -90,25 +136,26 @@ const TeamList = ({ setValue }) => {
                         
                         }}
                     />
+
                     <Button
                         style={{
                             backgroundColor: "#007BFF",
                             border: "none",
-                            padding: "12px 24px",
+                            whiteSpace: "nowrap",
                             borderRadius: "8px",
                             color: "#fff",
-                            maxWidth: "50%",
                             fontWeight: "bold",
                             transition: "background-color 0.3s ease",
                         }}
-                        onMouseEnter={(e) => (e.target.style.backgroundColor = "#007BFF")}
+                        onMouseEnter={(e) => (e.target.style.backgroundColor = "#0056b3")}
                         onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
                         onClick={() => setValue("createteam")}
                     >
-                        Add New Team
+                        Create New Team
                     </Button>
-                </InputGroup>
+                </div>
             </div>
+
             <Row className="justify-content-md-center">
                 <Col md={12}>
                     {currentTeams.length > 0 ? (
@@ -136,6 +183,7 @@ const TeamList = ({ setValue }) => {
                                         <th>Team Name</th>
                                         <th>Team Lead</th>
                                         <th>Team Members</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -149,42 +197,43 @@ const TeamList = ({ setValue }) => {
                                                     <p key={idx}>{member}</p>
                                                 ))}
                                             </td>
+                                            <td>
+                                                <div className='d-flex'>
+                                                    <Button
+                                                        variant=""
+                                                        style={{ color: "#007BFF" }}
+                                                        className="me-2"
+                                                        onClick={() => handleEdit(team)}
+                                                    >
+                                                        <i className="bi bi-pencil-square"></i>
+                                                    </Button>
+                                                    <Button
+                                                        variant=""
+                                                        onClick={() => handleDelete(team._id)}
+                                                        style={{ color: "red" }}
+                                                    >
+                                                        <i className="bi bi-trash-fill"></i>
+                                                    </Button>
+                                                </div>
+                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </Table>
                             <div className="d-flex justify-content-between mt-3">
                                 <Button
-                                    style={{
-                                        backgroundColor: "#007BFF",
-                                        border: "none",
-                                        borderRadius: "8px",
-                                        padding: "10px 20px",
-                                        fontWeight: "bold",
-                                        transition: "background-color 0.3s ease",
-                                    }}
-                                    onMouseEnter={(e) => (e.target.style.backgroundColor = "#007BFF")}
-                                    onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
+                                    variant="primary"
                                     onClick={prevPage}
                                     disabled={currentPage === 1}
                                 >
-                                    Previous
+                                    <i className="bi bi-arrow-left"></i>
                                 </Button>
                                 <Button
-                                    style={{
-                                        backgroundColor: "#007BFF",
-                                        border: "none",
-                                        borderRadius: "8px",
-                                        padding: "10px 20px",
-                                        fontWeight: "bold",
-                                        transition: "background-color 0.3s ease",
-                                    }}
-                                    onMouseEnter={(e) => (e.target.style.backgroundColor = "#007BFF")}
-                                    onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
+                                    variant="primary"
                                     onClick={nextPage}
                                     disabled={currentPage === Math.ceil(filteredTeams.length / teamsPerPage)}
                                 >
-                                    Next
+                                    <i className="bi bi-arrow-right"></i>
                                 </Button>
                             </div>
                         </>
@@ -193,6 +242,54 @@ const TeamList = ({ setValue }) => {
                     )}
                 </Col>
             </Row>
+
+            {/* Edit Modal */}
+            <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Edit Team</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {selectedTeam && (
+                        <Form>
+                            <Form.Group controlId="formTeamName">
+                                <Form.Label>Team Name</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Enter team name"
+                                    value={selectedTeam.teamName}
+                                    onChange={(e) => setSelectedTeam({ ...selectedTeam, teamName: e.target.value })}
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="formTeamLead">
+                                <Form.Label>Team Lead</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Enter team lead"
+                                    value={selectedTeam.teamLead}
+                                    onChange={(e) => setSelectedTeam({ ...selectedTeam, teamLead: e.target.value })}
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="formTeamMembers">
+                                <Form.Label>Team Members</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Enter team members (comma separated)"
+                                    value={selectedTeam.employee.join(", ")}
+                                    onChange={(e) => setSelectedTeam({ ...selectedTeam, employee: e.target.value.split(",") })}
+                                />
+                            </Form.Group>
+                        </Form>
+                    )}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowEditModal(false)}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleEditSubmit}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </Container>
     );
 };

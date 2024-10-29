@@ -1,191 +1,184 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { InputGroup, FormControl } from "react-bootstrap";
 import { message } from "react-message-popup";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const LeadProjects = ({ setConditionalComponent, teamId, setProjectId }) => {
-    const [projects, setProjects] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [searchTerm, setSearchTerm] = useState("");
+  const [projects, setProjects] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
 
-    const projectsPerPage = 10;
+  const projectsPerPage = 10;
 
-    const fetchProjects = async () => {
-        try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                withCredentials: true,
-            };
+  const fetchProjects = async () => {
+    try {
+      const response = await axios.get(`/api/employee/fetchProjectByTeamId/${teamId}`);
+      
+      // Log the data to ensure it's coming through correctly
+      console.log("Fetched Projects: ", response.data);
 
-            const response = await axios.get(`/api/employee/fetchProjectByTeamId/${teamId}`, config);
+      // Set projects if response is successful and has data
+      setProjects(response?.data?.data || []);
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+      message.error("Failed to fetch projects.");
+    }
+  };
 
-            console.log("response.data => ", response.data);
+  useEffect(() => {
+    fetchProjects();
+  }, [teamId]);
 
-            setProjects(response?.data?.data);
-        } catch (error) {
-            console.log(error);
-            message.error(error?.message);
-        }
-    };
+  const handleProject = (projectId) => {
+    setConditionalComponent("viewTeamLeadProject");
+    setProjectId(projectId);
+  };
 
-    useEffect(() => {
-        fetchProjects();
-    }, []);
+  const handleDocumentView = (projectId) => {
+    console.log("View document for project:", projectId);
+    // Implement document view logic if needed
+  };
 
-    const handleProject = (projectId) => {
-        setConditionalComponent("viewTeamLeadProject");
-        console.log("projectId => ", projectId);
-        setProjectId(projectId);
-    };
+  const filteredProjects = projects.filter(project =>
+    project.projectName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-    const handleDocumentView = (projectId) => {
-        console.log("View document for project:", projectId);
-        // Implement the document view logic
-    };
+  const indexOfLastProject = currentPage * projectsPerPage;
+  const indexOfFirstProject = indexOfLastProject - projectsPerPage;
+  const currentProjects = filteredProjects.slice(indexOfFirstProject, indexOfLastProject);
 
-    const filteredProjects = projects.filter(project =>
-        project.projectName.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-    const indexOfLastProject = currentPage * projectsPerPage;
-    const indexOfFirstProject = indexOfLastProject - projectsPerPage;
-    const currentProjects = filteredProjects.slice(indexOfFirstProject, indexOfLastProject);
+  return (
+    <div
+      className="container mt-4"
+      style={{
+        background: "#f0f4f8",
+        padding: "40px",
+        borderRadius: "12px",
+        boxShadow: "0 6px 15px rgba(0, 0, 0, 0.2)",
+        color: "#333",
+        maxWidth: "95%",
+        marginTop: "30px",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "25px",
+        }}
+      >
+        <h2 style={{ margin: 0, color: "#333", fontWeight: "bold" }}>
+          Projects That You Are Leading
+        </h2>
+        <InputGroup style={{ maxWidth: "30%" }}>
+          <FormControl
+            placeholder="Search Project Name"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <InputGroup.Text>
+            <i className="bi bi-search"></i>
+          </InputGroup.Text>
+        </InputGroup>
+      </div>
 
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-    return (
-        <div
-            className="container mt-4"
-            style={{
-                background: "#f0f4f8",
-                padding: "40px",
-                borderRadius: "12px",
-                boxShadow: "0 6px 15px rgba(0, 0, 0, 0.2)",
-                color: "#333",
-                maxWidth: "95%",
-                marginTop: "30px",
-            }}
-        >
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginBottom: "25px",
-                }}
-            >
-                <h2 style={{ margin: 0, color: "#333", fontWeight: "bold" }}>Projects That You Are Leading</h2>
-                <input
-                    type="text"
-                    placeholder="Search by Project Name"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    style={{ maxWidth: "300px", marginBottom: "20px", padding: "10px", borderRadius: "8px", border: "1px solid #ccc" }}
-                />
-            </div>
-            {/* <h2 className="text-center mb-4" style={{ color: "#333" }}>Projects That You Are Leading</h2>
-            <input
-                type="text"
-                placeholder="Search by Project Name"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                style={{ maxWidth: "300px", marginBottom: "20px", padding: "10px", borderRadius: "8px", border: "1px solid #ccc" }}
-            /> */}
-            <table
-                className="table table-striped table-bordered"
-                style={{
-                    backgroundColor: "#fff",
-                    color: "#333",
-                    borderRadius: "12px",
-                    overflow: "hidden",
-                }}
-            >
-                <thead
-                    style={{
-                        backgroundColor: "#007BFF",
-                        color: "#fff",
+      <table
+        className="table table-striped table-bordered"
+        style={{
+          backgroundColor: "#fff",
+          color: "#333",
+          borderRadius: "12px",
+          overflow: "hidden",
+        }}
+      >
+        <thead style={{ backgroundColor: "#007BFF", color: "#fff" }}>
+          <tr>
+            <th scope="col">Client Name</th>
+            <th scope="col">Project Name</th>
+            <th scope="col">Spokesperson Name</th>
+            <th scope="col">Spokesperson Email</th>
+            <th scope="col">Spokesperson Number</th>
+            <th scope="col">Description</th>
+            <th scope="col">Document</th>
+            <th scope="col">View Work</th>
+          </tr>
+        </thead>
+        <tbody>
+          {currentProjects.length > 0 ? (
+            currentProjects.map((project, index) => (
+              <tr key={index}>
+                <td>{project.clientName}</td>
+                <td>{project.projectName}</td>
+                <td>{project.spokePersonName}</td>
+                <td>{project.spokePersonEmail}</td>
+                <td>{project.spokePersonNumber}</td>
+                <td>{project.description}</td>
+                <td>
+                  <button
+                  style={{
+                    backgroundColor: "transparent",
+                    border: "none",
+                    padding: "8px 16px",
+                    borderRadius: "8px",
+                    color: "#007BFF",
+                    fontWeight: "bold",
+                    transition: "background-color 0.3s ease",
+                  }}
+                    onClick={() => handleDocumentView(project._id)}
+                    className=""
+                  >
+                  View </button>
+                </td>
+                <td>
+                  <button style={{
+                      backgroundColor: "transparent",
+                      border: "none",
+                      padding: "8px 16px",
+                      borderRadius: "8px",
+                      color: "#007BFF",
+                      fontWeight: "bold",
+                      transition: "background-color 0.3s ease",
                     }}
-                >
-                    <tr>
-                        <th scope="col">Client Name</th>
-                        <th scope="col">Project Name</th>
-                        <th scope="col">Spokesperson Name</th>
-                        <th scope="col">Spokesperson Email</th>
-                        <th scope="col">Spokesperson Number</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Document</th>
-                        <th scope="col">View Work</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {currentProjects.map((project, index) => (
-                        <tr key={index}>
-                            <td>{project.clientName}</td>
-                            <td>{project.projectName}</td>
-                            <td>{project.spokePersonName}</td>
-                            <td>{project.spokePersonEmail}</td>
-                            <td>{project.spokePersonNumber}</td>
-                            <td>{project.description}</td>
-                            <td>
-                                <button
-                                    style={{
-                                        backgroundColor: "#4CAF50",
-                                        border: "none",
-                                        padding: "8px 16px",
-                                        borderRadius: "8px",
-                                        color: "#fff",
-                                        fontWeight: "bold",
-                                        transition: "background-color 0.3s ease",
-                                    }}
-                                    onMouseEnter={(e) => (e.target.style.backgroundColor = "#45a049")}
-                                    onMouseLeave={(e) => (e.target.style.backgroundColor = "#4CAF50")}
-                                    onClick={() => handleDocumentView(project._id)}
-                                >
-                                    View
-                                </button>
-                            </td>
-                            <td>
-                                <button
-                                    style={{
-                                        backgroundColor: "#007BFF",
-                                        border: "none",
-                                        padding: "8px 16px",
-                                        borderRadius: "8px",
-                                        color: "#fff",
-                                        fontWeight: "bold",
-                                        transition: "background-color 0.3s ease",
-                                    }}
-                                    onMouseEnter={(e) => (e.target.style.backgroundColor = "#0056b3")}
-                                    onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
-                                    onClick={() => handleProject(project._id)}
-                                >
-                                    View Your Work
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            <div className="d-flex justify-content-between mt-3">
-                <button
-                    className="btn btn-primary"
-                    onClick={() => paginate(currentPage - 1)}
-                    disabled={currentPage === 1}
-                >
-                    Previous
-                </button>
-                <button
-                    className="btn btn-primary"
-                    onClick={() => paginate(currentPage + 1)}
-                    disabled={indexOfLastProject >= filteredProjects.length}
-                >
-                    Next
-                </button>
-            </div>
-        </div>
-    );
+                    onClick={() => handleProject(project._id)}
+                    className=""
+                  >
+                    
+                  You're Work</button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="8" className="text-center">
+                No projects found.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+
+      <div className="d-flex justify-content-between mt-3">
+        <button
+          className="btn btn-primary"
+          onClick={() => paginate(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          <i className="bi bi-arrow-left"></i>
+        </button>
+        <button
+          className="btn btn-primary"
+          onClick={() => paginate(currentPage + 1)}
+          disabled={indexOfLastProject >= filteredProjects.length}
+        >
+          <i className="bi bi-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default LeadProjects;

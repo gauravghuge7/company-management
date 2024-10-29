@@ -3,9 +3,9 @@
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import { BrowserRouter, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { store } from './redux/store.js'
+import { store } from './redux/Store.js';
 import { Provider } from 'react-redux';
 
 
