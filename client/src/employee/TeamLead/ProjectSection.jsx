@@ -187,7 +187,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
       >
         <summary style={{ padding: "15px", cursor: "pointer", fontSize: "18px" }}> Client Ticket </summary>
         <div className="card-body">
-          <legend style={{ marginBottom: "20px", fontSize: "24px" }}> Client Ticket </legend>
+          <legend style={{ marginBottom: "20px", fontSize: "24px", fontWeight: "bold" }}> Client Ticket </legend>
           <div className="table-responsive">
             <table
               className="table table-bordered table-hover"
@@ -235,18 +235,17 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
                         <button
                           className="btn btn-primary"
                           style={{
-                            backgroundColor: "#4CAF50",
+                            backgroundColor: "transparent",
                             border: "none",
                             padding: "8px 16px",
                             borderRadius: "8px",
-                            color: "#fff",
+                            color: "#007BFF",
                             fontWeight: "bold",
-                            transition: "background-color 0.3s ease",
+                            
                           }}
-                          onMouseEnter={(e) => (e.target.style.backgroundColor = "#45a049")}
-                          onMouseLeave={(e) => (e.target.style.backgroundColor = "#4CAF50")}
+                          
                         >
-                          View
+                          <i className='bi bi-eye-fill'></i>
                         </button>
                       </a>
                     </td>
@@ -261,31 +260,35 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
 
 
       {/**** Employee Details */}
-      <details className="card">
-        <summary> Employee Details </summary>
+      <details  className="card mb-3"
+        style={{
+          background: "#f0f4f8",
+          borderRadius: "12px",
+          boxShadow: "0 6px 15px rgba(0, 0, 0, 0.2)",
+          color: "#333",
+        }}>
+        <summary style={{ padding: "15px", cursor: "pointer", fontSize: "18px" }}> Employee Details </summary>
         <div className="card-body">
-          <legend>Employee Details</legend>
+          <legend style={{ marginBottom: "20px", fontSize: "24px", fontWeight: "bold" }}>Employee Details</legend>
         
-          <div className="row">
+          <div className="row" style={{
+                backgroundColor: "#fff",
+                borderRadius: "12px",
+                overflow: "hidden",
+              }}>
             {employeeDetails.map((employee, index) => (
               <div className="col-md-4 mb-3" key={index}>
                 <div className="card">
                   <div className="card-body">
                     
-                    <h5 className="card-title">{employee.employeeName}</h5>
+                    <h5 className="card-title" style={{fontWeight: "bold"}}>{employee.employeeName}</h5>
                     <p className="card-text"><strong>Email:</strong> {employee.employeeEmail}</p>
                     <p className="card-text"><strong>Designation:</strong> {employee.designation}</p>
                     <div className="row mb-3">
-            <div className="col-md-6">
-              <button 
-                className="btn btn-primary"
-              
-              >
-                
-                View Tickets List
-              </button>
+            <div className="col-md-12">
+             
             </div>
-            <div className="col-md-6 text-end">
+            <div className="col-md-12 text-end">
               <button 
                 className="btn btn-success"
                 onClick={() => assignTaskToEmployee(employee._id)}
@@ -303,7 +306,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
         </div>
       </details>
 
-      <br/>
+      
 
       { /**  Task List of Employees */}
     <details
@@ -316,7 +319,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
         color: "#333",
       }}
     >
-    <legend style={{ margin: "20px", fontSize: "24px" }}> Employees Ticket </legend>
+    <legend style={{ margin: "20px", fontSize: "24px", fontWeight: "bold" }}> Employees Ticket </legend>
       <summary
         style={{
           padding: "15px",
@@ -369,12 +372,12 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
             <tbody>
               {tasks.map((task, index) => (
                 <tr key={index}>
-                  <td>{index + 1}</td>
+                  <td className="border px-4 py-2">{index + 1}</td>
                   <td className="border px-4 py-2">{task.ticket ? "Client Ticket" : "Team Lead Task"}</td>
                   <td className="border px-4 py-2">{task.ticket ? task.ticket.ticketName : task.taskName}</td>
                   <td className="border px-4 py-2">{task.ticket ? task.ticket.priority : task.priority}</td>
                   <td className="border px-4 py-2">{task.ticket ? task.ticket.saptype : task.saptype}</td>
-                  <td className="border px-4 py-2">{task.dueDate}</td>
+                  <td className="border px-4 py-2">{new Date(task.dueDate).toLocaleDateString()}</td>
                   <td className="border px-4 py-2">{task.ticket ? task.ticket.status : task.status}</td>
                   <td className="border px-4 py-2">{task.ticket ? task.ticket.assignedTo : task.assignedTo}</td>
                   <td className="border px-4 py-2">{task.ticket ? task.ticket.assignedByEmail : task.assignedByEmail}</td>
@@ -385,18 +388,14 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
                       <button
                         className="btn"
                         style={{
-                          backgroundColor: "#4CAF50",
+                          backgroundColor: "transparent",
                           border: "none",
                           padding: "8px 16px",
                           borderRadius: "8px",
-                          color: "#fff",
+                          color: "#007BFF",
                           fontWeight: "bold",
-                          transition: "background-color 0.3s ease",
-                        }}
-                        onMouseEnter={(e) => (e.target.style.backgroundColor = "#45a049")}
-                        onMouseLeave={(e) => (e.target.style.backgroundColor = "#4CAF50")}
-                      >
-                        View
+                        }}>
+                        <i className='bi bi-eye-fill'></i>
                       </button>
                     </a>
                   </td>

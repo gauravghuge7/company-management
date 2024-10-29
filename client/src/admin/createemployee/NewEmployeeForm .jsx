@@ -11,6 +11,7 @@ const NewEmployeeForm = ({ fetchEmployees }) => {
     password: "",
     confirmPassword: "",
     designation: "",
+    
   });
 
   const handleChange = (e) => {

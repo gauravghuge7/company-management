@@ -1,19 +1,14 @@
-
 import { Navbar, Nav, Button, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { useEffect, useState } from 'react';
 import { message } from 'react-message-popup';
 
-
 const Employeenavbar = () => {
-
   
   const [employee, setemployee] = useState('');
 
   const navigate = useNavigate();
-
-
 
    
   const getEmployeeDetails = async() => {
@@ -26,8 +21,7 @@ const Employeenavbar = () => {
 
         setemployee(response.data.data);
       }
-      
-    
+
     } 
     catch (error) {
       message.error(error.message);  
@@ -38,18 +32,14 @@ const Employeenavbar = () => {
     getEmployeeDetails();
   },[]) 
 
-
-
-
   const onLogout = async () => {  
     try {
-      const response = await axios.post('/api/employee/logout');  // this is the api call we are useing the axios
-      console.log("response => ", response);  // this is the api call we are useing the axios
+      const response = await axios.post('/api/employee/logout');  // this is the api call we are using the axios
+      console.log("response => ", response);  // this is the api call we are using the axios
       if(response.data.success === true) {
         window.location.href = '/';
         navigate('/login');
       }
-
 
     } 
     catch (error) {
@@ -57,19 +47,18 @@ const Employeenavbar = () => {
     } 
   }
 
-
   return (
     <Navbar bg="light" variant="dark" expand="lg">
       <Container>
-        <Navbar.Brand href="#home">
+        <Navbar.Brand href="#home" style={{ marginLeft:-80, padding: 0 }}>
           {/* Replace with your logo */}
           <img
             src="../../../public/accets/GBIS.png"
-            width="150"
+            width="190"
             height="150"
             className="d-inline-block align-top"
             alt="Logo"
-     
+       
           />
         </Navbar.Brand>
 
@@ -81,7 +70,7 @@ const Employeenavbar = () => {
              
             </Nav.Item>
             <Nav.Item>
-              <Button variant="outline-dark" onClick={onLogout} className="ml-3">
+              <Button variant="outline-danger" onClick={onLogout} className="ml-3">
                 Logout
               </Button>
             </Nav.Item>

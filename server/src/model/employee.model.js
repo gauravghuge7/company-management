@@ -60,7 +60,7 @@ const EmployeeSchema = new Schema({
       type: String,
       enum:  ["admin", "client", "employee"],
 
-      default: "employee"
+      default: "Employee"
    }
 
 

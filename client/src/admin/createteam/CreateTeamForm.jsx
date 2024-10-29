@@ -177,38 +177,32 @@ const CreateTeamForm = () => {
                                         style={{ borderRadius: '10px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}
                                     />
                                 </Form.Group>
-
                                 <Form.Group
-                                controlId="numberOfMembers"
-                                className="mb-3"
-                                style={{ borderRadius: '10px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}
-                                >
-                                    <Form.Label id="members">Select Employees for Team</Form.Label>
-                                    <br/>
-                                    {
-                                        employees.map((employee, index) => (
+    controlId="numberOfMembers"
+    className="mb-3"
+    style={{ borderRadius: '10px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}
+>
+    <Form.Label id="members">Select Employees for Team</Form.Label>
+    <br/>
+    <div style={{ maxHeight: '200px', overflowY: 'auto', borderRadius: '10px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
+        {
+            employees.map((employee, index) => (
+                <div key={index}>
+                    <input 
+                        type="checkbox" 
+                        className='mr-2'
+                        value={employee}
+                        name='employee'
+                        onChange={handleMemberChange}
+                        style={{ borderRadius: '10px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}
+                    />
+                    <label id='employee'>{employee}</label>
+                </div>
+            ))
+        }
+    </div>
+</Form.Group>
 
-                                            <div key={index}>
-
-                                                <input 
-                                                    type="checkbox" 
-                                                    key={index} 
-                                                    className='mr-2'
-                                                    value={employee}
-                                                    name='employee'
-                                                    onChange={handleMemberChange}
-                                                    style={{ borderRadius: '10px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}
-                                                />
-
-                                                <label id='employee'>{employee}</label>
-
-                                                
-                                            </div>
-                                            
-                                        ))
-                                    }
-
-                                </Form.Group>
 
 
 

@@ -51,7 +51,7 @@ const CreateCompanyForm = () => {
                 <Col md={8}>
                     <Card className="p-4 border-0" style={{ borderRadius: '15px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                         <Card.Body>
-                            <h3 className="text-center mb-4" style={{ fontWeight: '600' }}>Create Company</h3>
+                            <h3 className="text-center mb-4" style={{ fontWeight: '600' }}>Create Client</h3>
                             <Form onSubmit={handleSubmit}>
                                 <Form.Group controlId="companyName" className="mb-3">
                                     <Form.Label>Client Name</Form.Label>
@@ -113,7 +113,7 @@ const CreateCompanyForm = () => {
                                     }}
                                     className="w-100"
                                 >
-                                    Create Company
+                                    Create Client
                                 </Button>
                             </Form>
                         </Card.Body>

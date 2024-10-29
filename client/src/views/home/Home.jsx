@@ -1,73 +1,14 @@
-
-
-// import { Link } from 'react-router-dom';
-
-// const Home = () => {
-
-  
-
-//   return (
-
-//     <div style={styles.container}>
-//       <h1>Welcome to GBIS Taskmangment Portal</h1>
-//       <div style={styles.linksContainer}>
-
-//         <Link to="/client/login" style={styles.link}>
-//           Client Login
-//         </Link>
-//         <Link to="/employee/login" style={styles.link}>
-//           Employee Login
-//         </Link>
-//         <Link to="/admin/login" style={styles.link}>
-//           Admin Login
-//         </Link>
-
-
-       
-
-//       </div>
-//     </div>
-//   );
-// };
-
-// const styles = {
-//   container: {
-//     display: 'flex',
-//     flexDirection: 'column',
-
-//   },
-//   linksContainer: {
-//     marginTop: '20px',
-
-//   },
-//   link: {
-//     padding: '10px 20px',
-   
-//   },
-// };
-
-// export default Home;
-
-
 import { Link } from 'react-router-dom';
 
 const Home = () => {
   return (
     <div style={styles.container}>
       <img src="../../../public/accets/GBIS.png" alt="Task Management" style={styles.image} /> <br />
-      <h1 style={styles.title}  >Welcome to GBIS Ticketing Portal</h1>
+      <h1 style={styles.title}>Welcome to GBIS Ticketing Portal</h1>
       <div style={styles.linksContainer}>
-      {/* <Link to="/admin/login" style={styles.link} onMouseOver={handleHover} onMouseOut={handleHoverOut}>
-          Admin Login
-        </Link> */}
-       
         <Link to="/employee/login" style={styles.link} onMouseOver={handleHover} onMouseOut={handleHoverOut}>
           Login
         </Link>
-        {/* <Link to="/client/login" style={styles.link} onMouseOver={handleHover} onMouseOut={handleHoverOut}>
-          Client Login
-        </Link> */}
-      
       </div>
     </div>
   );
@@ -92,30 +33,39 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     height: '100vh',
-    background: 'linear-gradient(135deg, #74ebd5, #ACB6E5)', // Gradient background
-    fontFamily: '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif',
+    background: 'linear-gradient(135deg, #E0F7FA, #87CEFA, #F0FFFF)', // Light blue, sky blue, and white gradient
+    fontFamily: "'Poppins', sans-serif",
+  },
+  image: {
+    width: '400px',
+    height: 'auto',
+    marginBottom: '30px',
   },
   title: {
-    fontSize: '2.5rem',
-    color: '#fff',
-    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)', // Soft shadow for text
+    fontSize: '3rem',
+    fontWeight: '700',
+    color: 'white',
+    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',
     marginBottom: '40px',
     textAlign: 'center',
   },
+  
   linksContainer: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '20px', // Space between buttons
+    gap: '20px',
   },
   link: {
     textDecoration: 'none',
-    padding: '15px 30px',
-    backgroundColor: '#fff',
-    color: '#007BFF',
+    padding: '15px 80px',
+    backgroundColor: '#007BFF',
+    color: '#fff',
     borderRadius: '30px',
     fontSize: '1.2rem',
     textAlign: 'center',
     boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+    fontWeight: '700',
+    fontFamily: "'Poppins', sans-serif",
     transition: 'all 0.3s ease',
   },
 };
