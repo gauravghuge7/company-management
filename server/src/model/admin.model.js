@@ -54,7 +54,7 @@ const adminSchema = new Schema({
 
    userType: {
       type: String,
-      enum:  ["Admin", "client", "Employee"],
+      enum:  ["admin", "client", "Employee"],
 
       default: "admin"
    }
