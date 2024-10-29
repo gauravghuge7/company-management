@@ -19,7 +19,7 @@ const createAccessAndRefreshToken = async (_id) => {
 
     const admin = await Admin.findById(_id)
 
-     // this token is used for the Access Token
+    // this token is used for the Access Token
 
     const adminAccessToken = admin.generateAdminAccessToken();
     const adminRefreshToken = admin.generateAdminRefreshToken();
@@ -29,7 +29,7 @@ const createAccessAndRefreshToken = async (_id) => {
     await admin.save({validateBeforeSave: false});
 
 
-     // return the response  for frontend 
+    // return the response  for frontend 
     return {
         adminAccessToken,
         adminRefreshToken
@@ -719,14 +719,14 @@ const getAllProjects = asyncHandler(async(req, res) => {
 })
 
 export {
-  createProject,
-  createTeams,
-  getAdmin,
-  getAllClients,
-  getAllProjects,
-  getAllTeams,
-  getTotalEmployeeDetails,
-  loginAdmin,
-  logoutAdmin,
-  registerAdmin,
+    createProject,
+    createTeams,
+    getAdmin,
+    getAllClients,
+    getAllProjects,
+    getAllTeams,
+    getTotalEmployeeDetails,
+    loginAdmin,
+    logoutAdmin,
+    registerAdmin,
 };

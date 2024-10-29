@@ -26,9 +26,24 @@ const EmployeeList = ({ setValue }) => {
   const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
   const currentEmployees = filteredEmployees.slice(indexOfFirstEmployee, indexOfLastEmployee);
 
-  const handleDelete = (id) => {
+  const handleDelete = async(id) => {
     // Implement delete functionality
     console.log(`Delete employee with id: ${id}`);
+
+    try {
+      const response = await axios.delete(`/api/admin/deleteEmployee/${id}`);
+      console.log("API Response:", response.data);
+
+      if (response.data.success) {
+        setEmployees((prevEmployees) => prevEmployees.filter((emp) => emp._id !== id));
+        alert("Employee deleted successfully!");
+      }
+
+    } 
+    catch (error) {
+      console.error("Error deleting employee:", error);
+    }
+
   };
 
   const handleEdit = (employee) => {
@@ -37,12 +52,13 @@ const EmployeeList = ({ setValue }) => {
   };
 
   const handleEditSubmit = async () => {
+
     if (!selectedEmployee) return;
 
     console.log("Submitting edit for:", selectedEmployee);
 
     try {
-      const response = await axios.put(`/api/employees/updateEmployee/${selectedEmployee._id}`, selectedEmployee);
+      const response = await axios.put(`/api/admin/updateEmployee/${selectedEmployee._id}`, selectedEmployee);
       console.log("API Response:", response.data);
 
       if (response.data.success) {
@@ -54,7 +70,8 @@ const EmployeeList = ({ setValue }) => {
         alert("Employee updated successfully!");
         setShowEditModal(false);
       }
-    } catch (error) {
+    } 
+    catch (error) {
       console.error("Error updating employee:", error);
     }
   };
