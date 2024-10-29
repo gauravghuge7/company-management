@@ -108,9 +108,11 @@ const TaskForm = ({ currentProject, setConditionalComponent, onSave, setIsEditin
     return (
         <Container className="mt-5">
 
-            <button onClick={() => setIsEditing(false)}
-                  className="btn btn-primary btn-lg px- py-2">
-                <i class="bi bi-arrow-left"></i>
+            <button style={{ padding: "8px 16px",
+            borderRadius: "8px",
+            color: "#fff"}} onClick={() => setIsEditing(false)}
+                    className="btn btn-primary btn-lg px- py-2">
+                <i className='bi bi-arrow-left'></i>
             </button>
             <Row className="justify-content-md-center">
                 <Col md={8}>

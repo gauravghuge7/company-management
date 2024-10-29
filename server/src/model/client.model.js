@@ -34,6 +34,12 @@ const clientSchema = new Schema({
       type: String,
    },
    
+   userType: {
+      type: String,
+      enum:  ["Admin", "client", "Employee"],
+
+      default: "client"
+   }
 
 
 

@@ -1,19 +1,19 @@
 import express from 'express';
 
 import {
-  fetchProjectById,
-  fetchProjectByTeamId,
-  forwardTicketsAndTasksToAnotherEmployee,
-  getEmployeeAllTasks,
-  getEmployeeByTeam,
-  getEmployeeDetails,
-  getEmployeeProjects,
-  getTasksByProjectId,
-  getTeamLeadOrNot,
-  getTeamLeadProjects,
-  loginEmployee,
-  logoutEmployee,
-  registerEmployee,
+    fetchProjectById,
+    fetchProjectByTeamId,
+    forwardTicketsAndTasksToAnotherEmployee,
+    getEmployeeAllTasks,
+    getEmployeeByTeam,
+    getEmployeeDetails,
+    getEmployeeProjects,
+    getTasksByProjectId,
+    getTeamLeadOrNot,
+    getTeamLeadProjects,
+    loginEmployee,
+    logoutEmployee,
+    registerEmployee,
 } from '../controller/employee.controller.js';
 import {
   assignTasksToTeamMembers,
@@ -23,6 +23,7 @@ import {
 import { verifyAdmin } from '../middleware/Admin.middleware.js';
 import { verifyEmployee } from '../middleware/Employee.middleware.js';
 import { upload } from '../middleware/multer.middleware.js';
+import { loginUser } from '../controller/common.login.controller.js';
 
 const employeeRouter = express.Router();
 
@@ -36,8 +37,13 @@ employeeRouter.route("/register").post(
 
 employeeRouter.route("/login").post(
     upload.none(),
-    loginEmployee
+    loginUser
 )
+
+// employeeRouter.route("/login").post(
+//     upload.none(),
+//     loginEmployee
+// )
 
 employeeRouter.route("/logout").post(
     

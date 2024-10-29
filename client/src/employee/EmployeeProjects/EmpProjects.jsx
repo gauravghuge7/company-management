@@ -9,7 +9,7 @@ import {
   Button,
   Container,
   Form,
-  Table,
+  Table, FormControl, InputGroup
 } from 'react-bootstrap';
 
 const EmpProjects = () => {
@@ -134,18 +134,21 @@ const EmpProjects = () => {
         taskId: sendTask.taskId,
       };
 
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      };
+
       
 
-      const response = await axios.post('/api/employee/forwardTicketsAndTasksToAnotherEmployee', body)
+      const response = await axios.post('/api/employee/forwardTicketsAndTasksToAnotherEmployee', body, config)
       
       
-      console.log("response.data", response.data);
+      console.log("response.data => ", response.data);
 
-      if (response.data.success) {  
-        setCurrentTask(null);
-        setForwardTicketOpen(false);
-
-      }
+      
 
     } 
     catch (error) {
@@ -160,7 +163,7 @@ const EmpProjects = () => {
     <Container
       style={{
         background: "#f0f4f8",
-        padding: "40px",
+        padding: "80px",
         borderRadius: "12px",
         boxShadow: "0 6px 15px rgba(0, 0, 0, 0.2)",
         color: "#333",
@@ -170,19 +173,19 @@ const EmpProjects = () => {
     >
   
   
-  <div className='col-md-12 d-flex justify-content-space-between align-items-center'>
-            <div className='col-md-8'>
-              <h2 className="text-center m-5" style={{ fontWeight: "bold", color: "#333" }}>Your working this projects</h2>
-            </div>
-            <br />
-            <div className='col-md-4 mt-4'>
-              <Form.Control
-                type="text"
-                placeholder="Search Tickets"
-                value={searchQuery}
-                onChange={handleSearch}
-              />  <br />
-            </div>
+  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "25px" }}>
+            
+<h2 style={{ margin: 0, color: "#333", fontWeight: "bold" }}>You're working on this project</h2>
+                <InputGroup style={{ maxWidth: "30%" }}>
+                    <FormControl
+                        placeholder="Search Tickets"
+                        value={searchQuery}
+                        onChange={(e) => handleSearch(e.target.value)}
+                    />
+                    <InputGroup.Text>
+                        <i className="bi bi-search"></i>
+                    </InputGroup.Text>
+                </InputGroup>
           </div>
     
       <div className="table-responsive">
@@ -226,63 +229,86 @@ const EmpProjects = () => {
                 <td>{project.spokePersonEmail}</td>
                 <td>{project.spokePersonNumber}</td>
                 <td>
-                  <Button variant="primary" onClick={() => viewOurWork(project._id)}>View Your Work</Button>
+                  <Button style={{ background: "transparent", border: "none" }}  onClick={() => viewOurWork(project._id)}>
+                    <i className="bi bi-plus-square-fill" style={{ fontSize: "16px", color: "#007BFF" }}></i>
+                  </Button>
                 </td>
               </tr>
             ))}
           </tbody>
         </Table>
       </div>
-      <div className="d-flex justify-content-between mt-4">
+      <div className="d-flex justify-content-between mt-3">
         <Button
           variant="primary"
           onClick={() => paginate(currentPage - 1)}
           disabled={currentPage === 1}
         >
-          Previous
+        <i className="bi bi-arrow-left"></i>
         </Button>
         <Button
           variant="primary"
           onClick={() => paginate(currentPage + 1)}
           disabled={indexOfLastProject >= filteredProjects.length}
         >
-          Next
+         <i className="bi bi-arrow-right"></i>
         </Button>
       </div>
       <hr />
       {tasks.length > 0 && selectedProjectId && (
         <section>
-          <div className='col-md-12 d-flex justify-content-space-between align-items-center'>
+          {/* <div className='col-md-12 d-flex justify-content-space-between align-items-center'>
             <div className='col-md-8'>
               <h2 className="text-center mt-5" style={{ fontWeight: "bold", color: "#333" }}>Your Tickets for Project</h2>
             </div>
-            <div className='col-md-4 mt-4'>
-              <Form.Control
-                type="text"
-                placeholder="Search Tickets"
-                value={searchQuery}
-                onChange={handleSearch}
-              />
-            </div>
+            <h2 style={{ margin: 0, color: "#333", fontWeight: "bold" }}></h2>
+                <InputGroup style={{ maxWidth: "30%" }}>
+                    <FormControl
+                        placeholder="Search Ticket Name"
+                        value={searchQuery}
+                        onChange={(e) => handleSearch(e.target.value)}
+                    />
+                    <InputGroup.Text>
+                        <i className="bi bi-search"></i>
+                    </InputGroup.Text>
+                </InputGroup>
+          </div> */}
+
+
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "25px" }}>
+            
+<h2 style={{ margin: 0, color: "#333", fontWeight: "bold" }}>Your Tickets for Project</h2>
+                <InputGroup style={{ maxWidth: "30%" }}>
+                    <FormControl
+                        placeholder="Search Ticket Name"
+                        value={searchQuery}
+                        onChange={(e) => handleSearch(e.target.value)}
+                    />
+                    <InputGroup.Text>
+                        <i className="bi bi-search"></i>
+                    </InputGroup.Text>
+                </InputGroup>
           </div>
+
+
           <Table
-            striped
-            bordered
-            hover
-            className="text-center mt-4"
+          striped
+          bordered
+          hover
+          className="text-center"
+          style={{
+            borderRadius: "12px",
+            overflow: "hidden",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          <thead
             style={{
-              borderRadius: "12px",
-              overflow: "hidden",
-              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+              backgroundColor: "#343a40",
+              color: "#fff",
+              fontSize: "1.1rem",
             }}
           >
-            <thead
-              style={{
-                backgroundColor: "#343a40",
-                color: "#fff",
-                fontSize: "1.1rem",
-              }}
-            >
               <tr>
                 <th>#</th>
                 <th>Ticket Type</th>
@@ -295,7 +321,7 @@ const EmpProjects = () => {
                 <th>Status</th>
                 <th>Description</th>
                 <th>Document</th>
-                <th>Action</th>
+                <th>Ticket</th>
               </tr>
             </thead>
             <tbody>
@@ -306,45 +332,63 @@ const EmpProjects = () => {
                   <td>{task.ticket ? task.ticket.ticketId : "-"}</td>
                   <td>{task.ticket ? task.ticket.ticketName : task.taskName}</td>
                   <td>{task.ticket ? task.ticket.saptype : ""}</td>
-                  <td>{task.dueDate}</td>
+                  <td>{new Date(task.dueDate).toISOString().split('T')[0]}</td>
                   <td>{task.ticket ? task.ticket.assignedByName : task.teamLead}</td>
                   <td>{task.priority ? task.priority : task.ticket.priority}</td>
                   <td>{task.ticket ? task.ticket.status : task.status}</td>
                   <td>{task.ticket ? task.ticket.ticketDescription : task.description}</td>
                   <td>
                     <a href={task.ticket?.ticketDocument || task.taskDocument} target="_blank" rel="noreferrer">
-                      <Button variant="primary">View</Button>
+                      <Button  style={{
+                      backgroundColor: "transparent",
+                      border: "none",
+                      padding: "8px 16px",
+                      borderRadius: "8px",
+                      color: "#007BFF",
+                      fontWeight: "bold",
+                      transition: "background-color 0.3s ease",
+                    }}variant="primary"><i className="bi bi-eye-fill" ></i></Button>
                     </a>
                   </td>
                   <td>
-                    <Button 
+                    <Button style={{
+                      backgroundColor: "transparent",
+                      border: "none",
+                      padding: "8px 16px",
+                      borderRadius: "5px",
+                      color: "#007BFF",
+                      fontWeight: "bold",
+                      transition: "background-color 0.3s ease",
+                    }}
                       variant="primary"
                       onClick={() => openForwardTicketDialog(task)}
 
                     >
-                      Forward Ticket
+                      Forward 
                     </Button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </Table>
-          <div className="d-flex justify-content-between mt-4">
-            <Button
-              variant="primary"
-              onClick={() => paginate(currentPage - 1)}
-              disabled={currentPage === 1}
-            >
-              Previous
-            </Button>
-            <Button
-              variant="primary"
-              onClick={() => paginate(currentPage + 1)}
-              disabled={indexOfLastTask >= filteredTasks.length}
-            >
-              Next
-            </Button>
-          </div>
+          
+
+          <div className="d-flex justify-content-between mt-3">
+        <Button
+          variant="primary"
+          onClick={() => paginate(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+        <i className="bi bi-arrow-left"></i>
+        </Button>
+        <Button
+          variant="primary"
+          onClick={() => paginate(currentPage + 1)}
+          disabled={indexOfLastTask >= filteredTasks.length}
+        >
+         <i className="bi bi-arrow-right"></i>
+        </Button>
+      </div>
         </section>
       )}
 
@@ -369,7 +413,7 @@ const EmpProjects = () => {
           <h2 className="text-xl font-bold mb-4">Forward Ticket</h2>
           <h2 className="text-xl mb-4">{currentTask?.taskName}</h2>
           <form
-            onSubmit={handleForwardTicket}
+            onSubmit={() => handleForwardTicket()}
           >
             <div className="mb-4">
               <label htmlFor="employee" className="block mb-2">Select Employee</label>
@@ -399,15 +443,13 @@ const EmpProjects = () => {
               <button
                 type="button"
                 onClick={closeForwardTicketDialog}
-                className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
-              >
+                className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">
                 Cancel
               </button>
             </div>
           </form>
           </dialog>
         </section>
-
       </main>
 
 

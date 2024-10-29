@@ -52,6 +52,12 @@ const adminSchema = new Schema({
    }],
 
 
+   userType: {
+      type: String,
+      enum:  ["Admin", "client", "Employee"],
+
+      default: "admin"
+   }
 
 }, {timestamps: true});
 
@@ -116,6 +122,10 @@ adminSchema.pre('save', async function() {
       this.adminPassword = await bcrypt.hash(this.adminPassword, 10)
    }
 })
+
+
+
+
 
 
 

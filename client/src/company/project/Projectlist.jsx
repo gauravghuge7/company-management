@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Table, Button, InputGroup, Pagination } from 'react-bootstrap';
+import { Container, Table, Button, InputGroup, Pagination,FormControl } from 'react-bootstrap';
 import axios from 'axios';
 import EditProjectForm from './EditProjectForm';
 
@@ -92,8 +92,7 @@ const ProjectList = ({ setConditionalComponent }) => {
           marginBottom: "25px",
         }}
       >
-        <h2 style={{ margin: 0, color: "#333" }}>Project List</h2>
-        
+        {/* <h2 style={{ margin: 0, color: "#333" }}>Project List</h2>
         <InputGroup className="w-60" style={{ maxWidth: "25%" }}>
           <input
             type="text"
@@ -110,7 +109,21 @@ const ProjectList = ({ setConditionalComponent }) => {
               maxWidth: "100%",
             }}
           />
-        </InputGroup>
+        </InputGroup> */}
+
+
+        <h2 style={{ margin: 0, color: "#333", fontWeight: "bold" }}>Project List</h2>
+                <InputGroup style={{ maxWidth: "30%" }}>
+                    <FormControl
+                        placeholder="Search Project"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                    <InputGroup.Text>
+                        <i className="bi bi-search"></i>
+                    </InputGroup.Text>
+                </InputGroup>
+
       </div>
       <Table
         striped
@@ -138,7 +151,7 @@ const ProjectList = ({ setConditionalComponent }) => {
             <th>Team Lead</th>
             <th>Description</th>
             <th>Document</th>
-            <th>Actions</th>
+            <th>Add Ticket</th>
           </tr>
         </thead>
         <tbody>
@@ -156,7 +169,7 @@ const ProjectList = ({ setConditionalComponent }) => {
                     <a href={data?.documents} target="_blank" rel="noreferrer">
                       <Button
                         style={{
-                          backgroundColor: "#fff",
+                          backgroundColor: "transparent",
                           border: "none",
                           padding: "8px 16px",
                           borderRadius: "8px",
@@ -166,18 +179,18 @@ const ProjectList = ({ setConditionalComponent }) => {
                         }}
                        
                       >
-                      <i class="bi bi-eye-fill"></i>
+                      <i className="bi bi-eye-fill"></i>
                       </Button>
                     </a>
                   </td>
                   <td>
                     <Button 
                       style={{
-                        backgroundColor: "#fff",
+                        backgroundColor: "transparent",
                         border: "#007BFF",
                         padding: "8px 16px",
                         Size: "large",
-                        backgraound : "transparent",
+                        
                         borderRadius: "8px",
                         color: "#007BFF",
                         fontWeight: "bold",
@@ -187,7 +200,7 @@ const ProjectList = ({ setConditionalComponent }) => {
                      
                       onClick={() => handleAddTask(data)}
                     >
-                      <i class="bi bi-plus"></i>
+                      <i className="bi bi-plus-square-fill"></i>
                     </Button>
                     {/* <Button className="btn btn-danger" onClick={handleDelete}>Delete</Button> */}
                   </td>
@@ -217,7 +230,7 @@ const ProjectList = ({ setConditionalComponent }) => {
           onMouseEnter={(e) => (e.target.style.backgroundColor = "#0056b3")}
           onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
         >
-        <i class="bi bi-arrow-left"></i>
+        <i className="bi bi-arrow-left"></i>
         </Button>
         <Button 
           onClick={() => handlePageChange(currentPage + 1)} 
@@ -235,7 +248,7 @@ const ProjectList = ({ setConditionalComponent }) => {
           onMouseEnter={(e) => (e.target.style.backgroundColor = "#0056b3")}
           onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
         >
-        <i class="bi bi-arrow-right"></i>
+        <i className="bi bi-arrow-right"></i>
         </Button>
       </div>
     </Container>

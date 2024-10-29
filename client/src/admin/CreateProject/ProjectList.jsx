@@ -47,7 +47,6 @@ const ProjectList = () => {
     };
 
     const handleDelete = () => {
-        // Handle delete logic here (e.g., API call)
         console.log('Project deleted');
     };
 
@@ -88,21 +87,34 @@ const ProjectList = () => {
         >
             <Row className="mb-4">
                 <Col>
-                    <h2 style={{ margin: 0, color: "#333" }}>Project List</h2>
+                <h2 style={{ margin: 0, color: "#333", fontWeight: "bold" }}>Project List</h2>
                 </Col>
                 <Col></Col>
-                <Col>   </Col>
-                <Col >
-                    <InputGroup>
+                <Col></Col>
+                <Col>
+                    {/* <InputGroup>
                         <FormControl
                             placeholder="Search Projects"
                             aria-label="Search Projects"
                             aria-describedby="basic-addon2"
                             value={searchTerm}
                             onChange={handleSearch}
-                            style={{ borderRadius: "8px" , maxWidth: "100%", marginRight: "10px" }}
+                            style={{ borderRadius: "8px", maxWidth: "100%", marginRight: "10px" }}
                         />
-                    </InputGroup>
+                    </InputGroup> */}
+
+
+                    
+                <InputGroup style={{ maxWidth: "100%" }}>
+                    <FormControl
+                        placeholder="Search Projects"
+                        value={searchTerm}
+                        onChange={(e) => handleSearch(e.target.value)}
+                    />
+                    <InputGroup.Text>
+                        <i className="bi bi-search"></i>
+                    </InputGroup.Text>
+                </InputGroup>
                 </Col>
             </Row>
             <table className="table table-striped table-bordered" style={{ backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden" }}>
@@ -134,71 +146,26 @@ const ProjectList = () => {
                             <td>{data.description}</td>
                             <td>
                                 <a href={data.documents} target="_blank" rel="noreferrer">
-                                    <Button
-                                        style={{
-                                            backgroundColor: "#007BFF",
-                                            border: "none",
-                                            borderRadius: "8px",
-                                            color: "#fff",
-                                            fontWeight: "bold",
-                                            transition: "background-color 0.3s ease",
-                                        }}
-                                        onMouseEnter={(e) => (e.target.style.backgroundColor = "#0056b3")}
-                                        onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
-                                    >
-                                        View
+                                    <Button style={{ background: "transparent", border: "none" }}>
+                                        <i className="bi bi-eye-fill" style={{ fontSize: "16px", color: "#007BFF" }}></i>
                                     </Button>
                                 </a>
                             </td>
                             <td>
-                                <Button
-                                    style={{
-                                        backgroundColor: "#007BFF",
-                                        border: "none",
-                                        borderRadius: "8px",
-                                        marginBottom: "10px",
-                                        color: "#fff",
-                                        fontWeight: "bold",
-                                        marginRight: "10px",
-                                        transition: "background-color 0.3s ease",
-                                    }}
-                                    onMouseEnter={(e) => (e.target.style.backgroundColor = "#007BFF")}
-                                    onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
-                                    onClick={handleEdit}
-                                >
-                                    Edit
-                                </Button>
-                                <Button
-                                    style={{
-                                        backgroundColor: "#007BFF",
-                                        border: "none",
-                                        borderRadius: "8px",
-                                        color: "#fff",
-                                        fontWeight: "bold",
-                                        transition: "background-color 0.3s ease",
-                                    }}
-                                    onMouseEnter={(e) => (e.target.style.backgroundColor = "#007BFF")}
-                                    onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
-                                    onClick={handleDelete}
-                                >
-                                    Delete
-                                </Button>
-                            </td>
+    <div style={{ display: 'flex', alignItems: 'center' }}>
+        <Button style={{ background: "transparent", border: "none" }} onClick={handleEdit}>
+            <i className="bi bi-pencil-square" style={{ fontSize: "16px", color: "blue", cursor: "pointer" }}></i>
+        </Button>
+        <Button style={{ background: "transparent", border: "none" }} onClick={handleDelete}>
+            <i className="bi bi-trash-fill" style={{ fontSize: "16px", color: "red", cursor: "pointer" }}></i>
+        </Button>
+    </div>
+</td>
+
+
                             <td>
-                                <Button
-                                    style={{
-                                        backgroundColor: "#007BFF",
-                                        border: "none",
-                                        borderRadius: "8px",
-                                        color: "#fff",
-                                        fontWeight: "bold",
-                                        transition: "background-color 0.3s ease",
-                                    }}
-                                    onMouseEnter={(e) => (e.target.style.backgroundColor = "#0056b3")}
-                                    onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
-                                    onClick={handleAddTask}
-                                >
-                                    Add Ticket
+                                <Button style={{ background: "transparent", border: "none" }} onClick={handleAddTask}>
+                                    <i className="bi bi-plus-square-fill" style={{ fontSize: "16px", color: "#007BFF" }}></i>
                                 </Button>
                             </td>
                         </tr>
@@ -208,35 +175,29 @@ const ProjectList = () => {
             <div className="d-flex justify-content-between mt-3">
                 <Button
                     style={{
-                        backgroundColor: "#007BFF",
+                        backgroundColor: "primary",
                         border: "none",
-                        borderRadius: "8px",
-                        padding: "10px 20px",
-                        fontWeight: "bold",
-                        transition: "background-color 0.3s ease",
+                        color: "white",
                     }}
-                    onMouseEnter={(e) => (e.target.style.backgroundColor = "#0056b3")}
-                    onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
+                    onMouseEnter={(e) => (e.target.style.backgroundColor = "primary")}
+                    onMouseLeave={(e) => (e.target.style.backgroundColor = "primary")}
                     onClick={() => paginate(currentPage - 1)}
                     disabled={currentPage === 1}
                 >
-                    Previous
+                    <i className="bi bi-arrow-left" style={{ fontSize: "16px", color: "white" }}></i>
                 </Button>
                 <Button
                     style={{
-                        backgroundColor: "#007BFF",
+                        backgroundColor: "primary",
                         border: "none",
-                        borderRadius: "8px",
-                        padding: "10px 20px",
-                        fontWeight: "bold",
-                        transition: "background-color 0.3s ease",
+                        color: "white",
                     }}
-                    onMouseEnter={(e) => (e.target.style.backgroundColor = "#0056b3")}
-                    onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
+                    onMouseEnter={(e) => (e.target.style.backgroundColor = "primary")}
+                    onMouseLeave={(e) => (e.target.style.backgroundColor = "primary")}
                     onClick={() => paginate(currentPage + 1)}
                     disabled={indexOfLastProject >= filteredProjects.length}
                 >
-                    Next
+                    <i className="bi bi-arrow-right" style={{ fontSize: "16px", color: "white" }}></i>
                 </Button>
             </div>
         </div>

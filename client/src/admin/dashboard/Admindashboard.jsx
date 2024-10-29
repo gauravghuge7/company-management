@@ -14,10 +14,10 @@ import TaskList from '../assigntask/TaskList'
 import { message } from 'react-message-popup'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
-import { addEmployee } from '../../redux/reducers'
+import { addEmployee } from '../../Redux/reducers'
 import ProjectList from '../CreateProject/ProjectList'
-import { addTeam } from '../../redux/team.reducer'
-import { addClient } from '../../redux/client.reducer'
+import { addTeam } from '../../Redux/team.reducer'
+import { addClient } from '../../Redux/client.reducer'
 import CreateProjectForm from '../createcompony/CreateProjectForm'
 
 function Admindashboard() {
@@ -159,5 +159,5 @@ function Admindashboard() {
   )
 }
 
-export default Admindashboard
+export default Admindashboard;
 

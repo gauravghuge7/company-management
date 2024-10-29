@@ -2,6 +2,7 @@ import bcrypt
   from 'bcrypt';                 // this is the password bcrypt library for hashung the password
 import mongoose from 'mongoose';
 
+import { uploadOnCloudinary } from '../helper/cloudinary.js';
 import {
   Client,
 } from '../model/client.model.js';    // modeler client import here
@@ -10,8 +11,6 @@ import { Ticket } from '../model/ticket.project.model.js';
 import { ApiError } from '../utils/ApiError.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
-import {uploadOnCloudinary} from "../helper/cloudinary.js"
-
 
 const createAccessAndRefreshToken = async(clientId) => {            
 
@@ -423,13 +422,12 @@ const createTicket = asyncHandler(async (req, res) => {
     
 })
 
-
 export {
-    createProject,
-    createTicket,
-    fetchProjects,
-    fetchTasks,
-    loginClient,
-    logoutClient,
-    registerClient,
+  createProject,
+  createTicket,
+  fetchProjects,
+  fetchTasks,
+  loginClient,
+  logoutClient,
+  registerClient,
 };

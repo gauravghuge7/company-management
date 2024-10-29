@@ -9,127 +9,134 @@ const Admincontain = () => {
   const client = useSelector((state) => state.clientReducer?.client.clientList);
 
   const cardStyle = {
-    borderRadius: '10px',
-    boxShadow: '4px 4px 15px rgba(0, 0, 0, 0.3), 8px 8px 25px rgba(0, 0, 0, 0.2)',
-    transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+    borderRadius: '12px',
+    boxShadow: '2px 2px 8px rgba(0, 0, 0, 0.2), 4px 4px 12px rgba(0, 0, 0, 0.1)',
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
     cursor: 'pointer',
     width: '100%',
-    maxWidth: '400px',
+    maxWidth: '350px',
   };
 
   const hoverStyle = {
-    boxShadow: '6px 6px 30px rgba(0, 0, 0, 0.5), 12px 12px 40px rgba(0, 0, 0, 0.3)',
+    boxShadow: '4px 4px 16px rgba(0, 0, 0, 0.3), 8px 8px 24px rgba(0, 0, 0, 0.2)',
+    transform: 'translateY(-10px)',
   };
 
   const headerStyle = {
-    fontSize: '1.25rem',
+    fontSize: '1.2rem',
     fontWeight: 'bold',
+    color: '#555',
   };
 
   const titleStyle = {
-    fontSize: '1.5rem',
+    fontSize: '1.6rem',
     fontWeight: 'bold',
+    color: '#333',
   };
 
   const textStyle = {
     fontSize: '1rem',
+    color: '#777',
   };
 
   return (
     <Container fluid className="p-4">
-      <Row>
+      <Row className="justify-content-center">
         <Col md={4} className="mb-4">
           <Card
-            style={cardStyle}
-            className="text-white bg-primary"
+            style={{ ...cardStyle, backgroundColor: '#e3f2fd' }} // Light blue for Employees
             onMouseEnter={(e) => {
               e.currentTarget.style.boxShadow = hoverStyle.boxShadow;
+              e.currentTarget.style.transform = hoverStyle.transform;
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.boxShadow = cardStyle.boxShadow;
+              e.currentTarget.style.transform = 'translateY(0)';
             }}
           >
-            <div className="card-header d-flex justify-content-center" style={headerStyle}>Employees</div>
+            <div className="card-header text-center" style={headerStyle}>Employees</div>
             <Card.Body>
-              <div className="d-flex justify-content-center mb-4">
-                <FaUserPlus size={50} className="text-white mb-3" />
+              <div className="d-flex justify-content-center mb-3">
+                <FaUserPlus size={50} className="text-primary mb-2" />
               </div>
-              <div  className='d-flex justify-content-center '>  <h5 className="card-title" style={titleStyle}>{employee.length}</h5></div>
-              <div className='d-flex justify-content-center'>
-           
-             <div><p className="card-text" style={textStyle}>Total number of employees.</p></div> </div>
+              <h5 className="card-title text-center" style={titleStyle}>{employee.length}</h5>
+              <p className="card-text text-center" style={textStyle}>Total number of employees.</p>
             </Card.Body>
           </Card>
         </Col>
 
         <Col md={4} className="mb-4">
           <Card
-            style={cardStyle}
-            className="text-white bg-success"
+            style={{ ...cardStyle, backgroundColor: '#e8f5e9' }} // Light green for Teams
             onMouseEnter={(e) => {
               e.currentTarget.style.boxShadow = hoverStyle.boxShadow;
+              e.currentTarget.style.transform = hoverStyle.transform;
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.boxShadow = cardStyle.boxShadow;
+              e.currentTarget.style.transform = 'translateY(0)';
             }}
           >
-            <div className="card-header d-flex justify-content-center" style={headerStyle}>Teams</div>
+            <div className="card-header text-center" style={headerStyle}>Teams</div>
             <Card.Body>
-              <div className="d-flex justify-content-center mb-4">
-                <FaUsers size={50} className="text-white mb-3" />
+              <div className="d-flex justify-content-center mb-3">
+                <FaUsers size={50} className="text-success mb-2" />
               </div>
-              <h5 className="card-title d-flex justify-content-center" style={titleStyle}>{teams.length}</h5>
-              <p className="card-text d-flex justify-content-center" style={textStyle}>Total number of teams.</p>
+              <h5 className="card-title text-center" style={titleStyle}>{teams.length}</h5>
+              <p className="card-text text-center" style={textStyle}>Total number of teams.</p>
             </Card.Body>
           </Card>
         </Col>
 
         <Col md={4} className="mb-4">
           <Card
-            style={cardStyle}
-            className="text-white bg-warning"
+            style={{ ...cardStyle, backgroundColor: '#fff3e0' }} // Light orange for Clients
             onMouseEnter={(e) => {
               e.currentTarget.style.boxShadow = hoverStyle.boxShadow;
+              e.currentTarget.style.transform = hoverStyle.transform;
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.boxShadow = cardStyle.boxShadow;
+              e.currentTarget.style.transform = 'translateY(0)';
             }}
           >
-            <div className="card-header  d-flex justify-content-center" style={headerStyle}>Clients</div>
+            <div className="card-header text-center" style={headerStyle}>Clients</div>
             <Card.Body>
-              <div className="d-flex justify-content-center mb-4">
-                <FaBuilding size={50} className="text-white mb-3" />
+              <div className="d-flex justify-content-center mb-3">
+                <FaBuilding size={50} className="text-warning mb-2" />
               </div>
-              <h5 className="card-title d-flex justify-content-center" style={titleStyle}>{client?.length}</h5>
-              <p className="card-text d-flex justify-content-center" style={textStyle}>Total number of clients.</p>
+              <h5 className="card-title text-center" style={titleStyle}>{client?.length}</h5>
+              <p className="card-text text-center" style={textStyle}>Total number of clients.</p>
             </Card.Body>
           </Card>
         </Col>
       </Row>
 
-      <Row>
+      <Row className="justify-content-center">
         <Col md={4} className="mb-4">
           <Card
-            style={cardStyle}
-            className="text-white bg-info"
+            style={{ ...cardStyle, backgroundColor: '#e0f7fa' }} // Light teal for Projects
             onMouseEnter={(e) => {
               e.currentTarget.style.boxShadow = hoverStyle.boxShadow;
+              e.currentTarget.style.transform = hoverStyle.transform;
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.boxShadow = cardStyle.boxShadow;
-            }}
-          >
-            <div className="card-header d-flex justify-content-center" style={headerStyle}>Projects</div>
+              e.currentTarget.style.transform = 'translateY(0)';
+            }}>
+            <div className="card-header text-center" style={headerStyle}>Projects</div>
             <Card.Body>
-              <div className="d-flex justify-content-center mb-4">
-                <FaProjectDiagram size={50} className="text-white mb-3" />
+              <div className="d-flex justify-content-center mb-3">
+                <FaProjectDiagram size={50} className="text-info mb-2" />
               </div>
-              <h5 className="card-title d-flex justify-content-center" style={titleStyle}>10</h5>
-              <p className="card-text d-flex justify-content-center" style={textStyle}>Total number of projects.</p>
+              <h5 className="card-title text-center" style={titleStyle}>10</h5>
+              <p className="card-text text-center" style={textStyle}>Total number of projects.</p>
             </Card.Body>
           </Card>
         </Col>
       </Row>
+   
+
     </Container>
   );
 };

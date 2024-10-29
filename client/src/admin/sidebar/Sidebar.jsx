@@ -41,20 +41,20 @@ const Sidebar = ({ setValue, setConditionalComponent }) => {
         width: isCollapsed ? '80px' : '250px', 
         height: 'auto',
         minHeight: '100vh',
-        background: '#000000',
+        buttonShadow: '2px 0 5px rgba(0, 0, 0, 0.5)', // Add subtle shadow for depth
+        background: '#fff',
         boxShadow: '2px 0px 15px rgba(0, 0, 0, 0.3)',
         transition: 'width 0.3s ease',
-      }}
-    >
+      }}>
       {/* Arrow Button */}
       <div
         onClick={toggleSidebar}
-        style={{ cursor: 'pointer', alignSelf: 'center' }}
+        style={{ cursor: 'pointer', alignSelf: 'center', color: "#007BFF" }}
       >
         {isCollapsed ? (
-          <BiChevronRight size={30} color="white" />
+          <BiChevronRight size={30} color= "#007BFF" />
         ) : (
-          <BiChevronLeft size={30} color="white" />
+          <BiChevronLeft size={30} color= "#007BFF" />
         )}
       </div>
 
@@ -74,8 +74,6 @@ const Sidebar = ({ setValue, setConditionalComponent }) => {
           icon={<AiOutlineDashboard size={20} />} 
           text="Dashboard" 
         />
-
-    
         
         {/* Additional Buttons with Icons */}
         <SidebarButton 
@@ -143,13 +141,15 @@ const SidebarButton = ({ onClick, isCollapsed, icon, text }) => {
 
 const buttonStyle = {
   borderRadius: '5px',
-  backgroundColor: '#1C75BB',
-  border: 'none',
-  color: '#ffffff',
+  backgroundColor: '#fff',
+  border: '1px solid #007BFF',
+  color: '#007BFF',
   paddingLeft: '10px',
-  fontSize: '16px',
+  fontSize: '18px',
   width: '100%',
+  height: '40px',
   textAlign: 'left',
+  boxShadow: '0 4px 8px #000', 
 };
 
 export default Sidebar;

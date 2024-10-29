@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Table, Button, Form } from 'react-bootstrap';
+import { Container, Table, Button, Form, InputGroup, FormControl } from 'react-bootstrap';
 import axios from 'axios';
 
 const TaskProjectList = ({ setConditionalComponent, setProjectId }) => {
@@ -54,14 +54,19 @@ const TaskProjectList = ({ setConditionalComponent, setProjectId }) => {
       }}
     >
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "25px" }}>
-      <h2 style={{ margin: 0, color: "#333", fontWeight: "bold" }}>Projects List</h2>
-      <Form.Control
-        type="text"
-        placeholder="Search by Project Name"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        style={{ maxWidth: "300px", marginBottom: "20px" }}
-      /></div>
+      <h2 style={{ margin: 0, color: "#333", fontWeight: "bold" }}>Ticket List</h2>
+                <InputGroup style={{ maxWidth: "30%" }}>
+                    <FormControl
+                        placeholder="Search Project Name"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <InputGroup.Text>
+                        <i className="bi bi-search"></i>
+                    </InputGroup.Text>
+                </InputGroup>
+      
+      </div>
       <Table
         striped
         bordered
@@ -103,7 +108,7 @@ const TaskProjectList = ({ setConditionalComponent, setProjectId }) => {
                 <td>
                   <Button
                     style={{
-                      backgroundColor: "#fff",
+                      backgroundColor: "transparent",
                       border: "none",
                       padding: "8px 16px",
                       borderRadius: "8px",
@@ -132,14 +137,14 @@ const TaskProjectList = ({ setConditionalComponent, setProjectId }) => {
           onClick={() => paginate(currentPage - 1)}
           disabled={currentPage === 1}
         >
-        <i class="bi bi-arrow-left"></i>
+        <i className="bi bi-arrow-left"></i>
         </Button>
         <Button
           variant="primary"
           onClick={() => paginate(currentPage + 1)}
           disabled={indexOfLastProject >= filteredProjects.length}
         >
-         <i class="bi bi-arrow-right"></i>
+        <i className="bi bi-arrow-right"></i>
         </Button>
       </div>
     </Container>
