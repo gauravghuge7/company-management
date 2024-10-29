@@ -89,6 +89,7 @@ const TeamList = ({ setValue }) => {
                 color: "#333",
                 maxWidth: "100%",
                 marginTop: "30px",
+
             }}>
             
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "25px" }}>
@@ -104,6 +105,38 @@ const TeamList = ({ setValue }) => {
                             <i className="bi bi-search"></i>
                         </InputGroup.Text>
                     </InputGroup>
+
+            }}
+        >
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: "25px",
+                }}
+            >
+                <h2 style={{ margin: 0, color: "#333" }}>Teams List</h2>
+                <InputGroup className="w-50">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Search Teams"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                      
+                        style={{ 
+                            borderRadius: '8px', 
+                            padding: '15px', 
+                            border: '1px solid #ced4da',
+                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                            marginRight: '10px',
+                            marginTop: '5px',
+                          maxWidth: "100%",
+                        
+                        }}
+                    />
+
                     <Button
                         style={{
                             backgroundColor: "#007BFF",
