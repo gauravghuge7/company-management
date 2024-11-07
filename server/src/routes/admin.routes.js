@@ -1,21 +1,18 @@
 import express from 'express';
-import { 
-    createProject,
-    createTeams, 
-    getAdmin, 
-    getAllClients, 
-    getAllProjects, 
-    getAllTeams, 
-    getTotalEmployeeDetails, 
-    loginAdmin, 
-    logoutAdmin, 
-    registerAdmin 
-} from '../controller/admin.controller.js';
+
 
 import { upload } from '../middleware/multer.middleware.js';
 import { verifyAdmin } from '../middleware/Admin.middleware.js';
-import { getEmployeeDetails } from '../controller/admin.pipeline.controller.js';
-import { deleteEmployee, editEmployee } from '../controller/employee.manage.controller.js';
+
+import { getAdmin, loginAdmin, logoutAdmin, registerAdmin } from '../controller/Admin/admin.controller.js';
+
+
+import { getTotalEmployeeDetails } from '../controller/Admin/employee.controller.js';
+
+import { getAllClients } from '../controller/Admin/client.controller.js';
+import { createTeams, getAllTeams } from '../controller/Admin/team.controller.js';
+import { createProject, getAllProjects } from '../controller/Admin/project.controller.js';
+import { deleteEmployee, editEmployee } from '../controller/Employee/employee.manage.controller.js';
 
 const adminRouter = express.Router();
 
@@ -24,7 +21,7 @@ const adminRouter = express.Router();
 adminRouter.route("/register").post(
 
     upload.none(),
-    registerAdmin  
+    registerAdmin
 )
 
 // login the admin 
