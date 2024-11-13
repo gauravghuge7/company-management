@@ -17,7 +17,7 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 
 
 
-
+ // edit the employee
 const editEmployee = asyncHandler(async(req, res) => {
    
    try {
@@ -61,6 +61,7 @@ const editEmployee = asyncHandler(async(req, res) => {
 
 
 
+    // delete the employee
 
 const deleteEmployee = asyncHandler(async(req, res) => {
    
@@ -77,7 +78,7 @@ const deleteEmployee = asyncHandler(async(req, res) => {
 
       // find the entry in the database
       
-      const employee = await Employee.findById(employeeId);
+      const employee = await Employee.findById(employeeId)
       
       if(!employee) {
          throw new ApiError(400, "Employee does not exist");

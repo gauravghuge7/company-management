@@ -7,7 +7,7 @@ const CompanyList = ({ setValue, setClientId, setClientName }) => {
     const [companies, setCompanies] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
-    const [editCompany, setEditCompany] = useState(null); // New state for edit
+    const [editClient, setEditClient] = useState(null); // New state for edit
 
     const fetchCompanies = async () => {
         try {
@@ -23,13 +23,23 @@ const CompanyList = ({ setValue, setClientId, setClientName }) => {
 
     const handleDelete = () => {
         // Implement delete functionality
+        setValue("deleteClient");
+        setClientId(client._id);
+        setClientName(client.clientName);
+    }
+
+    const handleEdit = (client) => {            
+        setEditClient(client);
+        setValue("editClient");
+        setClientId(client._id);
+        setClientName(client.clientName);
+        
+
+
+        // Implement delete functionality
     };
 
-    const handleEdit = (company) => {
-        setEditCompany(company); // Set the company to be edited
-        setValue("editcompany"); // Assuming "editcompany" is the route to edit the company
-    };
-
+    
     const setDetails = (clientId, clientName) => {
         setValue("addproject");
         setClientId(clientId);
@@ -132,7 +142,7 @@ const CompanyList = ({ setValue, setClientId, setClientName }) => {
                                         </td>
 
                                         <div className='d-flex'>
-                                            <Button variant="" style={{ color: "#007BFF" }} className="me-2" onClick={() => handleEdit(company)}>
+                                            <Button variant="" onClick={handleEdit} style={{ color: "#007BFF" }} className="me-2" onClick={() => handleEdit(company)}>
                                                 <i className="bi bi-pencil-square"></i>
                                             </Button>
                                             <Button variant="" onClick={handleDelete} style={{ color: "red" }}>

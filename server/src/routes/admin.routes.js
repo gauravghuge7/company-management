@@ -16,6 +16,7 @@ import { upload } from '../middleware/multer.middleware.js';
 import { verifyAdmin } from '../middleware/Admin.middleware.js';
 import { getEmployeeDetails } from '../controller/admin.pipeline.controller.js';
 import { deleteEmployee, editEmployee } from '../controller/employee.manage.controller.js';
+import { deleteClient, editClient } from '../controller/client.manage.controller.js';
 
 const adminRouter = express.Router();
 
@@ -97,11 +98,22 @@ adminRouter.route(`/updateEmployee/:employeeId`).put(
     upload.none(),
     editEmployee
 )
+adminRouter.route(`/editClient/:clientId`).put(
+    verifyAdmin,
+    upload.none(),
+    editClient
+)
 
 adminRouter.route(`/deleteEmployee/:employeeId`).delete(
     verifyAdmin,
     deleteEmployee
 )
+
+adminRouter.route(`/deleteClient/:clientId`).delete(
+    verifyAdmin,
+    deleteClient
+)
+
 
 
 /* MongoDB Pipelines Testing Routes */
