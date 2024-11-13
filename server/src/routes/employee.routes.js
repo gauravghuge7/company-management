@@ -1,29 +1,18 @@
 import express from 'express';
 
-import {
-    fetchProjectById,
-    fetchProjectByTeamId,
-    forwardTicketsAndTasksToAnotherEmployee,
-    getEmployeeAllTasks,
-    getEmployeeByTeam,
-    getEmployeeDetails,
-    getEmployeeProjects,
-    getTasksByProjectId,
-    getTeamLeadOrNot,
-    getTeamLeadProjects,
-    loginEmployee,
-    logoutEmployee,
-    registerEmployee,
-} from '../controller/employee.controller.js';
-import {
-  assignTasksToTeamMembers,
-  getAllTasks,
-  getTeamTasks,
-} from '../controller/teamLead.controller.js';
+
+
 import { verifyAdmin } from '../middleware/Admin.middleware.js';
 import { verifyEmployee } from '../middleware/Employee.middleware.js';
 import { upload } from '../middleware/multer.middleware.js';
 import { loginUser } from '../controller/common.login.controller.js';
+
+import { getEmployeeByTeam, getEmployeeDetails, logoutEmployee, registerEmployee } from '../controller/Employee/employee.controller.js';
+
+import { getTeamLeadOrNot } from '../controller/Employee/employee.manage.controller.js';
+import { fetchProjectById, forwardTicketsAndTasksToAnotherEmployee, getEmployeeAllTasks, getEmployeeProjects, getTasksByProjectId } from '../controller/Employee/employee.project.controller.js';
+import { fetchProjectByTeamId, getTeamLeadProjects } from '../controller/TeamLead/teamlead.project.controller.js';
+import { assignTasksToTeamMembers, getAllTasks, getTeamTasks } from '../controller/TeamLead/teamLead.controller.js';
 
 const employeeRouter = express.Router();
 
@@ -62,6 +51,7 @@ employeeRouter.route("/isTeamLead").get(
     verifyEmployee,
     getTeamLeadOrNot
 )
+
 
 employeeRouter.route("/getProjects").get(
     

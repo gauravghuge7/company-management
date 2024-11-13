@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import { Employee } from "../model/employee.model.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
-import { ApiError } from "../utils/ApiError.js";
-import { ApiResponse } from "../utils/ApiResponse.js";
+import { asyncHandler } from "../../utils/asyncHandler.js";
+import { ApiError } from "../../utils/ApiError.js";
+import { ApiResponse } from "../../utils/ApiResponse.js";
+
 
 
 
@@ -20,7 +20,7 @@ const getEmployeeDetails = asyncHandler(async (req, res) => {
       console.log("req.user => ", req.user)
 
 
-      const employee = await Employee.aggregate([
+      const employee = await employee.aggregate([
 
          {
             $match: {

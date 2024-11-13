@@ -13,9 +13,6 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 
 
 
-
-
-
 //    conditional login 
 
 
@@ -23,7 +20,7 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 
 // common options for all users
 const options = {
-    
+
    httpOnly: true,
    secure: true,
    

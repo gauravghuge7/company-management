@@ -1,17 +1,13 @@
 import express from 'express';
 
-import {
-   createProject,
-   createTicket,
-   fetchProjects,
-   fetchTasks,
-   loginClient,
-   logoutClient,
-   registerClient,
-} from '../controller/client.controller.js';
+
 import { verifyAdmin } from '../middleware/Admin.middleware.js';
 import { verifyClient } from '../middleware/Compony.middleware.js';
 import { upload } from '../middleware/multer.middleware.js';
+import { loginClient, logoutClient, registerClient } from '../controller/Client/client.controller.js';
+import { createProject } from '../controller/Admin/project.controller.js';
+import { fetchProjects } from '../controller/Client/client.project.controller.js';
+import { createTicket, fetchTasks } from '../controller/Client/client.task.controller.js';
 
 const clientRouter= express.Router();
       

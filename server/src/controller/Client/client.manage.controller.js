@@ -4,27 +4,29 @@ import jwt
   from 'jsonwebtoken';   //using the jwt token for the access and refresh token
 import mongoose from 'mongoose';
 
-import { uploadOnCloudinary } from '../helper/cloudinary.js';
-import { Admin } from '../model/admin.model.js';
-import { Client } from '../model/client.model.js';
-import { Employee } from '../model/employee.model.js';
-import { Project } from '../model/project.model.js';
-import { Team } from '../model/team.model.js';
-import { ApiError } from '../utils/ApiError.js';
-import { ApiResponse } from '../utils/ApiResponse.js';
-import { asyncHandler } from '../utils/asyncHandler.js';
+import { uploadOnCloudinary } from '../../helper/cloudinary.js';
+import { Admin } from '../../model/admin.model.js';
+import { Client } from '../../model/client.model.js';
+import { Employee } from '../../model/employee.model.js';
+import { Project } from '../../model/project.model.js';
+import { Team } from '../../model/team.model.js';
+import { ApiError } from '../../utils/ApiError.js';
+import { ApiResponse } from '../../utils/ApiResponse.js';
+import { asyncHandler } from '../../utils/asyncHandler.js';
 
 
-function editClient(req, res) { 
+const editClient = asyncHandler(async(req, res) => {
 
 
     try {
 
-        console.log("req.body => ", req.body);
+        console.log("req.params => ", req.params);
+        console.log ("req.query => ", req.query);
+        console.log("req.param.clientId => ", req.params.clientId);
 
-        const {_id, clientName, clientEmail } = req.body;
+        const {_id } = req.params;
 
-        if(!_id || !clientName || !clientEmail ) {
+        if(!_id) {
             throw new ApiError(400, "Please provide all the required fields");
         }
 
@@ -54,9 +56,9 @@ function editClient(req, res) {
         throw new ApiError(400, error.message);    
     }
 
-}
+} )
 
-function deleteClient(req, res) { 
+const deleteClient = asyncHandler(async(req, res) => {
 
     try {
 
@@ -71,7 +73,7 @@ function deleteClient(req, res) {
 
         // find the entry in the database
         
-        const client = await Client.findById(clientId)
+        const client = await Client.findById(clientId);
         
         if(!client) {
             throw new ApiError(400, "Client does not exist");
@@ -91,7 +93,7 @@ function deleteClient(req, res) {
         throw new ApiError(400, error.message);    
     }
 
-}
+} )
 
 
 export {
