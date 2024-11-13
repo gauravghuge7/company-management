@@ -24,7 +24,9 @@ const editClient = asyncHandler(async(req, res) => {
         console.log ("req.query => ", req.query);
         console.log("req.param.clientId => ", req.params.clientId);
 
-        const {_id } = req.params;
+        const { _id } = req.params;
+
+        const {clientName, clientEmail } = req.body;
 
         if(!_id) {
             throw new ApiError(400, "Please provide all the required fields");
@@ -43,7 +45,7 @@ const editClient = asyncHandler(async(req, res) => {
         const client = await Client.findByIdAndUpdate(_id, {
             clientName,
             clientEmail,
-           
+        
         })
         
         return res.status(200).json(                                           // 
@@ -65,15 +67,15 @@ const deleteClient = asyncHandler(async(req, res) => {
         console.log("req.query => ", req.query);
         console.log("req.params => ", req.params);
 
-        const {clientId} = req.params;
+        const {_id} = req.params;
 
-        if(!clientId) {
+        if(!_id) {
             throw new ApiError(400, "Please provide the client id");
         }
 
         // find the entry in the database
         
-        const client = await Client.findById(clientId);
+        const client = await Client.findById(_id);
         
         if(!client) {
             throw new ApiError(400, "Client does not exist");
@@ -81,7 +83,7 @@ const deleteClient = asyncHandler(async(req, res) => {
         
         // delete the entry in the database 
         
-        await Client.findByIdAndDelete(clientId);
+        await Client.findByIdAndDelete(_id);
         
         return res.status(200).json(                                           // 
             new ApiResponse(200, "Client deleted successfully", client)

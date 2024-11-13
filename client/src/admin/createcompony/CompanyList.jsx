@@ -44,7 +44,7 @@ const CompanyList = ({ setValue, setClientId, setClientName}) => {
         
         console.log(`Edit client with id: ${id}`);
         try {
-            const response = await axios.get(`/api/admin/getClient/${id}`);
+            const response = await axios.put(`/api/admin/editClient/${id}`);
             console.log("API Response:", response.data);
             if (response.data.success) {
                 setEditClient(response.data.data);
@@ -56,26 +56,26 @@ const CompanyList = ({ setValue, setClientId, setClientName}) => {
         }
     };  
 
-    const handleEditSubmit = async () => {
-        if (!editClient) return;
-        console.log("Submitting edit for:", editClient);
-        try {
-            const response = await axios.put(`/api/admin/updateClient/${editClient._id}`, editClient);
-            console.log("API Response:", response.data);
-            if (response.data.success) {
-                setCompanies((prevCompanies) =>
-                    prevCompanies.map((client) =>
-                        client._id === editClient._id ? { ...client, ...editClient } : client
-                    )
-                );
-                alert("Client updated successfully!");
-                setValue("company");
-            }
-        } 
-        catch (error) {
-            console.error("Error updating client:", error);
-        }
-    };  
+    // const handleEditSubmit = async () => {
+    //     if (!editClient) return;
+    //     console.log("Submitting edit for:", editClient);
+    //     try {
+    //         const response = await axios.put(`/api/admin/updateClient/${editClient._id}`, editClient);
+    //         console.log("API Response:", response.data);
+    //         if (response.data.success) {
+    //             setCompanies((prevCompanies) =>
+    //                 prevCompanies.map((client) =>
+    //                     client._id === editClient._id ? { ...client, ...editClient } : client
+    //                 )
+    //             );
+    //             alert("Client updated successfully!");
+    //             setValue("company");
+    //         }
+    //     } 
+    //     catch (error) {
+    //         console.error("Error updating client:", error);
+    //     }
+    // };  
 
 
 
