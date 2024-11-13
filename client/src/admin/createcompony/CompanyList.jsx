@@ -3,11 +3,11 @@ import { useEffect, useState } from 'react';
 import { Container, Row, Col, Table, Button, FormControl, InputGroup } from 'react-bootstrap';
 import { message } from 'react-message-popup';
 
-const CompanyList = ({ setValue, setClientId, setClientName }) => {
+const CompanyList = ({ setValue, setClientId, setClientName}) => {
     const [companies, setCompanies] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
-    const [editCompany, setEditCompany] = useState(null); // New state for edit
+    const [editClient, setEditClient] = useState(null);
 
     const fetchCompanies = async () => {
         try {
@@ -20,16 +20,69 @@ const CompanyList = ({ setValue, setClientId, setClientName }) => {
             message.error(error.message);
         }
     };
+  
 
-    const handleDelete = () => {
+    const handleDelete = async(id) => {
         // Implement delete functionality
+        console.log(`Delete client with id: ${id}`);
+        try {
+            const response = await axios.delete(`/api/admin/deleteClient/${id}`);
+            console.log("API Response:", response.data);
+            if (response.data.success) {
+                setCompanies((prevCompanies) => prevCompanies.filter((client) => client._id !== id));
+                alert("Client deleted successfully!");
+            }
+        } 
+        catch (error) {
+            console.error("Error deleting client:", error);
+        }
+
     };
 
-    const handleEdit = (company) => {
-        setEditCompany(company); // Set the company to be edited
-        setValue("editcompany"); // Assuming "editcompany" is the route to edit the company
-    };
+    const handleEdit = async(id) => {    
 
+        
+        console.log(`Edit client with id: ${id}`);
+        try {
+            const response = await axios.get(`/api/admin/getClient/${id}`);
+            console.log("API Response:", response.data);
+            if (response.data.success) {
+                setEditClient(response.data.data);
+                setValue("editClient");
+            }
+        } 
+        catch (error) {
+            console.error("Error fetching client:", error);
+        }
+    };  
+
+    const handleEditSubmit = async () => {
+        if (!editClient) return;
+        console.log("Submitting edit for:", editClient);
+        try {
+            const response = await axios.put(`/api/admin/updateClient/${editClient._id}`, editClient);
+            console.log("API Response:", response.data);
+            if (response.data.success) {
+                setCompanies((prevCompanies) =>
+                    prevCompanies.map((client) =>
+                        client._id === editClient._id ? { ...client, ...editClient } : client
+                    )
+                );
+                alert("Client updated successfully!");
+                setValue("company");
+            }
+        } 
+        catch (error) {
+            console.error("Error updating client:", error);
+        }
+    };  
+
+
+
+
+
+    
+    
     const setDetails = (clientId, clientName) => {
         setValue("addproject");
         setClientId(clientId);
@@ -132,10 +185,10 @@ const CompanyList = ({ setValue, setClientId, setClientName }) => {
                                         </td>
 
                                         <div className='d-flex'>
-                                            <Button variant="" style={{ color: "#007BFF" }} className="me-2" onClick={() => handleEdit(company)}>
+                                            <Button variant="" onClick={() => handleEdit(company._id)} style={{ color: "#007BFF" }} className="me-2">
                                                 <i className="bi bi-pencil-square"></i>
                                             </Button>
-                                            <Button variant="" onClick={handleDelete} style={{ color: "red" }}>
+                                            <Button variant="" onClick={() => handleDelete(company._id)} style={{ color: "red" }}>
                                                 <i className="bi bi-trash-fill"></i>
                                             </Button>
                                         </div>

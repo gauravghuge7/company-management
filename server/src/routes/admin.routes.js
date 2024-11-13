@@ -13,6 +13,7 @@ import { getAllClients } from '../controller/Admin/client.controller.js';
 import { createTeams, getAllTeams } from '../controller/Admin/team.controller.js';
 import { createProject, getAllProjects } from '../controller/Admin/project.controller.js';
 import { deleteEmployee, editEmployee } from '../controller/Employee/employee.manage.controller.js';
+import { deleteClient, editClient } from '../controller/Client/client.manage.controller.js';
 
 const adminRouter = express.Router();
 
@@ -94,11 +95,23 @@ adminRouter.route(`/updateEmployee/:employeeId`).put(
     upload.none(),
     editEmployee
 )
+adminRouter.route(`/editClient/:_id`).put(
+    verifyAdmin,
+    upload.none(),
+    editClient
+)
 
 adminRouter.route(`/deleteEmployee/:employeeId`).delete(
     verifyAdmin,
     deleteEmployee
 )
+
+adminRouter.route(`/deleteClient/:_id`).delete(
+    verifyAdmin,
+    deleteClient
+
+)
+
 
 
 /* MongoDB Pipelines Testing Routes */

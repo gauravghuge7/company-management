@@ -45,8 +45,7 @@ function Admindashboard() {
     }
   }
 
-  console.log("Documents => ",document.cookie)
-
+ 
   // set the teams in redux
   const fetchTeams = async() => {
 
