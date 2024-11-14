@@ -1,64 +1,61 @@
 import { useState } from "react";
 import { Form, Button, Container, Row, Col, Image } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {message} from "react-message-popup"
+import { message } from "react-message-popup";
 import axios from "axios";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async(event) => {
+  // Function to handle the form submission
+  const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      
       const body = {
-        employeeEmail: email, 
-        employeePassword: password 
-      }
+        employeeEmail: email,
+        employeePassword: password,
+      };
 
       const config = {
         headers: {
-          'Content-Type': 'application/json'
-        }
-      }
+          "Content-Type": "application/json",
+        },
+      };
 
-      const response = await axios.post("/api/employee/login",body, config);
+      const response = await axios.post("/api/employee/login", body, config);
 
       console.log(response.data.data);
 
-      if(response.data.success === true){
-
-        if(response.data.data.userType === "employee") {
+      if (response.data.success === true) {
+        if (response.data.data.userType === "employee") {
           message.success("Employee Logged In Successfully");
           window.location.href = "/employee/dashboard";
-        }
-
-        else if(response.data.data.userType === "admin") {
+        } else if (response.data.data.userType === "admin") {
           message.success("Admin Logged In Successfully");
           window.location.href = "/admin/dashboard";
-        }
-
-        else if(response.data.data.userType === "client") {
+        } else if (response.data.data.userType === "client") {
           message.success("Client Logged In Successfully");
           window.location.href = "/company/dashboard";
         }
-
-        
       }
-    } 
-    catch (error) {
-    
+    } catch (error) {
       console.log(error);
       message.error("Invalid Email or Password");
     }
+  };
+
+  // Function to fill in test credentials
+  const useTestCredentials = () => {
+    setEmail("gaurav@admin.com");
+    setPassword("gaurav");
   };
 
   return (
     <Container
       fluid
       className="d-flex justify-content-center align-items-center"
-      style={{ height: "100vh", maxWidth: "1800px",  backgroundColor: "#E3F2FD" }}
+      style={{ height: "100vh", maxWidth: "1800px", backgroundColor: "#E3F2FD" }}
     >
       <Row
         className="shadow-lg"
@@ -76,16 +73,14 @@ const Login = () => {
           style={{ borderRadius: "15px 0 0 15px" }}
         >
           <Image
-            src="../../../public/accets/GBIS.png"
+            src="../../../public/assets/GBIS.png"
             alt="Login Image"
             fluid
             style={{
               height: "70%",
               width: "70%",
-              margin : "50px 50px 50px 50px",  
-              // objectFit: "cover",
+              margin: "50px 50px 50px 50px",
               borderRadius: "15px 0 0 15px",
-            
             }}
           />
         </Col>
@@ -129,6 +124,20 @@ const Login = () => {
                 }}
               />
             </Form.Group>
+
+            {/* Button to use test credentials */}
+            <Button
+              variant="secondary"
+              className="w-100 mb-3"
+              onClick={useTestCredentials}
+              style={{
+                borderRadius: "10px",
+                padding: "10px",
+                fontWeight: "bold",
+              }}
+            >
+              Use Test Credentials
+            </Button>
 
             <Button
               variant="primary"
