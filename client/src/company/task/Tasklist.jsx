@@ -292,6 +292,8 @@ const TaskList = ({ setConditionalComponent, projectId }) => {
   const fetchTasks = async () => {
     try {
       const response = await axios.get(`/api/client/fetchTasks/${projectId}`);
+
+      console.log(response.data.data);
       if(response.data.success) {
         setTasks(response.data.data);
       }
@@ -379,6 +381,7 @@ const TaskList = ({ setConditionalComponent, projectId }) => {
             >
               <tr>
                 <th>#</th>
+                <th>ticket ID</th>
                 <th>Ticket Name</th>
                 <th>Priority</th>
                 <th>SAP Type</th>
@@ -393,6 +396,7 @@ const TaskList = ({ setConditionalComponent, projectId }) => {
               {currentTasks.map((task, index) => (
                 <tr key={index} style={{ textAlign: "center" }}>
                   <td>{indexOfFirstTask + index + 1}</td>
+                  <td>{task.ticketId}</td>
                   <td>{task.ticketName}</td>
                   <td>{task.priority}</td>
                   <td>{task.saptype}</td>

@@ -206,30 +206,38 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
               >
                 <tr>
                   <th>#</th>
-                  <th>Ticket Name</th>
                   <th>Ticket ID</th>
+                  <th>Ticket Name</th>
+                  
                   <th>Priority</th>
                   <th>SAP Type</th>
-                  <th>Assigned To</th>
+             
                   <th>Assigned By Email</th>
                   <th>Assigned By Name</th>
+                  {/* <th>Assigned To</th> */}
                   <th>Status</th>
-                  <th>Document</th>
+             
                   <th>Description</th>
+                  <th>Document</th>
                 </tr>
               </thead>
               <tbody>
                 {tickets.map((ticket, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
+                    <td>{ticket.ticketId}</td>
+
                     <td>{ticket?.ticketName}</td>
-                    <td>{ticket._id}</td>
+                   
                     <td>{ticket.priority}</td>
                     <td>{ticket.saptype}</td>
-                    <td>{ticket.assignedTo}</td>
+                    
                     <td>{ticket.assignedByEmail}</td>
                     <td>{ticket.assignedByName}</td>
+                    {/* <td>{ticket.assignedByNumber}</td> */}
                     <td>{ticket.status}</td>
+                   
+                    <td>{ticket?.ticketDescription}</td>
                     <td>
                       <a href={ticket ? ticket?.ticketDocument : ""} target="_blank" rel="noreferrer">
                         <button
@@ -249,7 +257,6 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
                         </button>
                       </a>
                     </td>
-                    <td>{ticket?.ticketDescription}</td>
                   </tr>
                 ))}
               </tbody>
@@ -357,6 +364,7 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
               <tr>
                 <th>#</th>
                 <th className="border px-4 py-2">Ticket Type</th>
+                <th className="border px-4 py-2">Ticket ID</th>
                 <th className="border px-4 py-2">Tickets Name</th>
                 <th className="border px-4 py-2">Priority</th>
                 <th className="border px-4 py-2">SAP Type</th>
@@ -374,6 +382,8 @@ const ProjectSection = ({ setConditionalComponent, projectId }) => {
                 <tr key={index}>
                   <td className="border px-4 py-2">{index + 1}</td>
                   <td className="border px-4 py-2">{task.ticket ? "Client Ticket" : "Team Lead Task"}</td>
+                  <td  className="border px-4 py-2">{ task.ticket ? task.ticket.ticketId : task.ticketId}</td>
+
                   <td className="border px-4 py-2">{task.ticket ? task.ticket.ticketName : task.taskName}</td>
                   <td className="border px-4 py-2">{task.ticket ? task.ticket.priority : task.priority}</td>
                   <td className="border px-4 py-2">{task.ticket ? task.ticket.saptype : task.saptype}</td>

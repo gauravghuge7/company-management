@@ -29,20 +29,20 @@ const Login = () => {
 
       if(response.data.success === true){
 
-        if(response.data.data.userType === "employee") {
-          message.success("Employee Logged In Successfully");
-          window.location.href = "/employee/dashboard";
-        }
+        // if(response.data.data.userType === "employee") {
+        //   message.success("Employee Logged In Successfully");
+        //   window.location.href = "/employee/dashboard";
+        // }
 
-        else if(response.data.data.userType === "admin") {
-          message.success("Admin Logged In Successfully");
-          window.location.href = "/admin/dashboard";
-        }
+        // else if(response.data.data.userType === "admin") {
+        //   message.success("Admin Logged In Successfully");
+        //   window.location.href = "/admin/dashboard";
+        // }
 
-        else if(response.data.data.userType === "client") {
-          message.success("Client Logged In Successfully");
-          window.location.href = "/company/dashboard";
-        }
+        // else if(response.data.data.userType === "client") {
+        //   message.success("Client Logged In Successfully");
+        //   window.location.href = "/company/dashboard";
+        // }
 
         
       }

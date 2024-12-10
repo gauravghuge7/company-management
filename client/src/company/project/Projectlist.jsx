@@ -166,7 +166,7 @@ const ProjectList = ({ setConditionalComponent }) => {
                   <td>{data?.team?.map(team => team?.teamLead?.map(teamLead => teamLead))}</td>
                   <td>{data?.description}</td>
                   <td>
-                    <a href={data?.documents} target="_blank" rel="noreferrer">
+                    <a href={data?.descriptionDocument} target="_blank" rel="noreferrer">
                       <Button
                         style={{
                           backgroundColor: "transparent",
@@ -177,7 +177,7 @@ const ProjectList = ({ setConditionalComponent }) => {
                           fontWeight: "bold",
                           transition: "background-color 0.3s ease",
                         }}
-                       
+                      
                       >
                       <i className="bi bi-eye-fill"></i>
                       </Button>

@@ -35,7 +35,7 @@ function Admindashboard() {
       console.log("response => ", response);
 
       if(response.data.success === true) {
-        message.success('Employees fetched successfully');
+        // message.success('Employees fetched successfully');
         dispatch(addEmployee(response.data.data));
       }
     
@@ -58,7 +58,7 @@ function Admindashboard() {
       if(response.data.success === true) {
 
       dispatch(addTeam(response.data.data.team));
-      message.success('Team fetched successfully');
+      // message.success('Team fetched ');
       }
   
     } 

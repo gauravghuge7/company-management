@@ -22,7 +22,7 @@ const Sidebar = ({ setValue, setConditionalComponent }) => {
       }
     } catch (error) {
       console.log(error);
-      message.error("You are not a Team Lead");
+   
     }
   };
 
@@ -104,12 +104,12 @@ const Sidebar = ({ setValue, setConditionalComponent }) => {
           text="Project" 
         />
 
-        <SidebarButton 
+        {/* <SidebarButton 
           onClick={() => setValue("task")}  
           isCollapsed={isCollapsed} 
           icon={<FiList size={20} />} 
           text="Assign Ticket" 
-        />
+        /> */}
       </Nav>
     </div>
   );

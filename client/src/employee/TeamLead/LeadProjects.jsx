@@ -131,9 +131,9 @@ const LeadProjects = ({ setConditionalComponent, teamId, setProjectId }) => {
                     onClick={() => handleDocumentView(project._id)}
                     className=""
                   >
-                  View </button>
+                  <i className="bi bi-eye-fill" style={{ fontSize: "16px", color: "#007BFF" }}></i></button>
                 </td>
-                <td>
+                <td> 
                   <button style={{
                       backgroundColor: "transparent",
                       border: "none",

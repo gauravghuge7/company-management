@@ -5,25 +5,14 @@ import App from './App.jsx'
 import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { store } from './redux/Store.js';
+import { store } from './Redux/Store.js';
 import { Provider } from 'react-redux';
+import axios from 'axios';
 
-
-
-// const router = createBrowserRouter(
-//   createRoutesFromElements(
-//     <Route path="/" element={<Outlet />}>
-//       <Route path="/admin/dashboard" element={Admindashboard} />
-//       <Route path="/company/dashboard" element={<CompanyDashboard />} />
-//       <Route path="/employee/dashboard" element={<Employeedashboard   />} />
-
-
-
-//       <Route path='/' element={<Home />} />
-      
-//     </Route>
-//   )
-// )
+// axios.defaults.baseURL = "https://ticketing-production-9166.up.railway.app";
+axios.defaults.baseURL = "http://localhost:4000";
+axios.defaults.withCredentials = true;
+axios.defaults.proxy = true;
 
 
 

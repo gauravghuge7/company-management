@@ -12,6 +12,8 @@ import { Team } from '../../model/team.model.js';
 import { ApiError } from '../../utils/ApiError.js';
 import { ApiResponse } from '../../utils/ApiResponse.js';
 import { asyncHandler } from '../../utils/asyncHandler.js';
+import {Task } from "../../model/Task.model.js";
+
 
 
 const getEmployeeProjects = asyncHandler(async(req, res) => {

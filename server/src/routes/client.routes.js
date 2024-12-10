@@ -4,7 +4,7 @@ import express from 'express';
 import { verifyAdmin } from '../middleware/Admin.middleware.js';
 import { verifyClient } from '../middleware/Compony.middleware.js';
 import { upload } from '../middleware/multer.middleware.js';
-import { loginClient, logoutClient, registerClient } from '../controller/Client/client.controller.js';
+import { getClient, loginClient, logoutClient, registerClient } from '../controller/Client/client.controller.js';
 import { createProject } from '../controller/Admin/project.controller.js';
 import { fetchProjects } from '../controller/Client/client.project.controller.js';
 import { createTicket, fetchTasks } from '../controller/Client/client.task.controller.js';
@@ -41,6 +41,11 @@ clientRouter.route("/createProject").post( //verify client
 clientRouter.route("/fetchProjects").get( //verify client   
    verifyClient,   
    fetchProjects
+)
+
+clientRouter.route("/getClient").get( //verify client   
+   verifyClient,   
+   getClient
 )
 
 

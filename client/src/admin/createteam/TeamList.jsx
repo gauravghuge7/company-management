@@ -19,7 +19,7 @@ const TeamList = ({ setValue }) => {
             const response = await axios.get('/api/admin/getAllTeams');
             if (response.data.success) {
                 setTeams(response.data.data.team);
-                message.success('Teams fetched successfully');
+                // message.success('Teams fetched successfully');
             }
         } catch (error) {
             message.error(error.message);  

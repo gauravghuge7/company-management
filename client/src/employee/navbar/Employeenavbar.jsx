@@ -53,19 +53,18 @@ const Employeenavbar = () => {
         <Navbar.Brand href="#home" style={{ marginLeft:-80, padding: 0 }}>
           {/* Replace with your logo */}
           <img
-            src="../../../public/accets/GBIS.png"
+            src="../../../accets/GBIS.png"
             width="190"
-            height="150"
             className="d-inline-block align-top"
             alt="Logo"
-       
+            style={{ margin: 0, padding: 0 }}
           />
         </Navbar.Brand>
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <Nav.Item className="d-flex align-items-center text-black">
+            <Nav.Item className="d-flex align-items-center text-2xl mr-4 text-black">
               {employee?.employeeName}
              
             </Nav.Item>

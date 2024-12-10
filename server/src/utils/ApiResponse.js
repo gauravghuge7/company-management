@@ -17,12 +17,3 @@ class ApiResponse {
 
 export { ApiResponse };
 
-/* 
-
-   .json(
-   
-      new ApiResponse(200, "employee registered successfully", employee)
-   )
-
-
-*/
