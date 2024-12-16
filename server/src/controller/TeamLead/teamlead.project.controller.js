@@ -1,11 +1,9 @@
 
-import { Task } from "../../model/Task.model.js";
 import { ApiError } from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
 import { asyncHandler } from "../../utils/asyncHandler.js";
-import {uploadOnCloudinary} from "../../helper/cloudinary.js"
 import mongoose from "mongoose";
-
+import {Project } from "../../model/project.model.js";
 
 
 const getTeamLeadProjects = asyncHandler(async(req, res) => {
@@ -204,6 +202,6 @@ const fetchProjectByTeamId = asyncHandler (async (req, res) => {
 
 export {
    getTeamLeadProjects,
-   fetchProjectByTeamId,
+   fetchProjectByTeamId
 }
 

@@ -4,17 +4,77 @@ import axios from 'axios';
 import { message } from 'react-message-popup';
 import { Button, InputGroup, FormControl, Row, Col } from 'react-bootstrap';
 
+
+
 const ProjectList = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [projectData, setProjectData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
 
+
+
+
+  const handleEdit = async (id) => {
+    try {
+      const response = await axios.put(`/api/admin/editProject/${id}`, projectData);
+      if (response.status === 200) {
+        message.success('Project updated successfully');
+        getAllProjects();
+      } else {
+        message.error('Failed to update project');
+      }
+    } catch (error) {
+      console.error('Error updating project:', error);
+      message.error('Failed to update project');
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(`/api/admin/deleteProject/${id}`);
+      if (response.status === 200) {
+        message.success('Project deleted successfully');
+        getAllProjects();
+      } else {
+        message.error('Failed to delete project');
+      }
+    } catch (error) {
+      console.error('Error deleting project:', error);
+      message.error('Failed to delete project');
+    }
+  };
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     const projectsPerPage = 10;
 
-    const handleAddTask = () => {
-        setIsEditing(true);
-    };
+    
 
     const getAllProjects = async () => {
         try {
@@ -41,14 +101,6 @@ const ProjectList = () => {
     useEffect(() => {
         getAllProjects();
     }, []);
-
-    const handleEdit = () => {
-        setIsEditing(true);
-    };
-
-    const handleDelete = () => {
-        console.log('Project deleted');
-    };
 
     const handleSave = (updatedData) => {
         setProjectData(updatedData);
@@ -122,7 +174,7 @@ const ProjectList = () => {
                     <tr>
                         <th>#</th>
                         <th>Project Name</th>
-                        <th>Client Name</th>
+                       
                         <th>Spokesperson Email</th>
                         <th>Spokesperson Name</th>
                         <th>Spokesperson Number</th>
@@ -130,7 +182,7 @@ const ProjectList = () => {
                         <th>Description</th>
                         <th>Document</th>
                         <th>Actions</th>
-                        <th>Tickets</th>
+                        {/* <th>Tickets</th> */}
                     </tr>
                 </thead>
                 <tbody>
@@ -138,36 +190,37 @@ const ProjectList = () => {
                         <tr key={index}>
                             <td>{indexOfFirstProject + index + 1}</td>
                             <td>{data.projectName}</td>
-                            <td>{data.clientName}</td>
+                          
                             <td>{data.spokePersonEmail}</td>
                             <td>{data.spokePersonName}</td>
                             <td>{data.spokePersonNumber}</td>
                             <td>{data.team?.map((teamMember) => teamMember.teamLead).join(', ')}</td>
                             <td>{data.description}</td>
                             <td>
-                                <a href={data.documents} target="_blank" rel="noreferrer">
+                                <a href={data.descriptionDocument} target="_blank" rel="noreferrer">    
                                     <Button style={{ background: "transparent", border: "none" }}>
-                                        <i className="bi bi-eye-fill" style={{ fontSize: "16px", color: "#007BFF" }}></i>
+                                            <i className="bi bi-eye-fill" style={{ fontSize: "16px", color: "#007BFF" }}></i>   
+                                            
                                     </Button>
                                 </a>
                             </td>
                             <td>
     <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Button style={{ background: "transparent", border: "none" }} onClick={handleEdit}>
+        <Button style={{ background: "transparent", border: "none" }} onClick={() => handleEdit(projectData._id)}>
             <i className="bi bi-pencil-square" style={{ fontSize: "16px", color: "blue", cursor: "pointer" }}></i>
         </Button>
-        <Button style={{ background: "transparent", border: "none" }} onClick={handleDelete}>
+        <Button style={{ background: "transparent", border: "none" }} onClick={() => handleDelete(projectData._id)}>
             <i className="bi bi-trash-fill" style={{ fontSize: "16px", color: "red", cursor: "pointer" }}></i>
         </Button>
     </div>
 </td>
 
 
-                            <td>
+                            {/* <td>
                                 <Button style={{ background: "transparent", border: "none" }} onClick={handleAddTask}>
                                     <i className="bi bi-plus-square-fill" style={{ fontSize: "16px", color: "#007BFF" }}></i>
                                 </Button>
-                            </td>
+                            </td> */}
                         </tr>
                     ))}
                 </tbody>

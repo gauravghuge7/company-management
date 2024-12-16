@@ -8,7 +8,9 @@ import { useNavigate } from 'react-router-dom';
 
 function Componynavabar() {
 
-  const [client, setClient] = useState('');
+  const [client, setClient] = useState({
+
+  });
 
   const navigate = useNavigate();
 
@@ -75,7 +77,7 @@ useEffect(() => {
           {/* Logo */}
           <Navbar.Brand href="#" className="mb-3">
             <img
-              src="../../../public/accets/GBIS.png"
+              src="./assets/GBIS.png"
               alt="Logo"
               style={{ width: "70%", height: "auto" }}
             />
@@ -85,8 +87,8 @@ useEffect(() => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <Nav.Item className="d-flex align-items-center text-black color-red">
-              {client.clientName}
+            <Nav.Item className="d-flex align-items-center text-2xl mr-4 text-black">
+              {client?.clientName}
             </Nav.Item>
             <Nav.Item>
               <Button variant="outline-danger" onClick={onLogout} className="ml-3">

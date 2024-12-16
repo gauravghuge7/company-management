@@ -96,7 +96,7 @@ const CreateProjectForm = ({ clientId, clientName }) => {
                                     />
                                 </Form.Group>
 
-                                <Form.Group controlId="companyName" className="mb-3">
+                                {/* <Form.Group controlId="companyName" className="mb-3">
                                     <Form.Label>Client Name</Form.Label>
                                     <Form.Control
                                         type="text"
@@ -106,7 +106,7 @@ const CreateProjectForm = ({ clientId, clientName }) => {
                                         required
                                         style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
                                     />
-                                </Form.Group>
+                                </Form.Group> */}
 
                                 <Form.Group controlId="spokePersonName" className="mb-3">
                                     <Form.Label>Spokesperson Name</Form.Label>

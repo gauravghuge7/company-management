@@ -36,11 +36,11 @@ const createAccessAndRefreshToken = async (_id) => {
 
 
 const options = {
-
     httpOnly: true,
-    secure: true,
-
-}
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'None',
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+};
 
 
 const registerAdmin = asyncHandler(async (req, res) => {
@@ -185,23 +185,29 @@ const logoutAdmin = asyncHandler(async (req, res) => {
 
 const getAdmin = async(req, res) => {
     
-    const {adminEmail} = req.user;
-
-    if(!adminEmail) {
-        throw new ApiError(400, "Please provide the admin email");
-    }
-
     try {
-
-        
-        const admin = await Admin.findById(req.user._id);
-        
-        return res
-            .status(200)
-            .json(
-                new ApiResponse(200, "Admin fetched successfully", admin)
-            )
-
+        const {adminEmail} = req.user;
+    
+        if(!adminEmail) {
+            throw new ApiError(400, "Please provide the admin email");
+        }
+    
+        try {
+    
+            
+            const admin = await Admin.findById(req.user._id);
+            
+            return res
+                .status(200)
+                .json(
+                    new ApiResponse(200, "Admin fetched successfully", admin)
+                )
+    
+        } 
+        catch (error) {
+            console.log(" Error => ", error.message)
+            throw new ApiError(400, error.message);
+        }
     } 
     catch (error) {
         console.log(" Error => ", error.message)

@@ -15,10 +15,10 @@ const Watch = () => {
                             <div className="card text-white " style={cardStyle} 
                                  onMouseEnter={(e) => { e.currentTarget.style.boxShadow = hoverStyle.boxShadow; }}
                                  onMouseLeave={(e) => { e.currentTarget.style.boxShadow = cardStyle.boxShadow; }}>
-                                <div className="card-header d-flex justify-content-center" style={headerStyle}>Completed Tasks</div>
+                                <div className="card-header d-flex justify-content-center" style={headerStyle}>Completed Ticket</div>
                                 <div className="card-body">
-                                    <h5 className="card-title d-flex justify-content-center" style={titleStyle}>10 Tasks</h5>
-                                    <p className="card-text" style={textStyle}>All tasks that have been successfully completed.</p>
+                                    <h5 className="card-title d-flex justify-content-center" style={titleStyle}>10 Ticket</h5>
+                                    <p className="card-text" style={textStyle}>All Ticket that have been successfully completed.</p>
                                 </div>
                             </div>
                         </div>
@@ -28,10 +28,10 @@ const Watch = () => {
                             <div className="card text-white " style={cardStyle} 
                                  onMouseEnter={(e) => { e.currentTarget.style.boxShadow = hoverStyle.boxShadow; }}
                                  onMouseLeave={(e) => { e.currentTarget.style.boxShadow = cardStyle.boxShadow; }}>
-                                <div className="card-header d-flex justify-content-center" style={headerStyle}>Pending Tasks</div>
+                                <div className="card-header d-flex justify-content-center" style={headerStyle}>Pending Ticket</div>
                                 <div className="card-body">
-                                    <h5 className="card-title d-flex justify-content-center" style={titleStyle}>5 Tasks</h5>
-                                    <p className="card-text" style={textStyle}>Tasks that are still in progress and need to be completed.</p>
+                                    <h5 className="card-title d-flex justify-content-center" style={titleStyle}>5 Ticket</h5>
+                                    <p className="card-text" style={textStyle}>Ticket that are still in progress and need to be completed.</p>
                                 </div>
                             </div>
                         </div>
@@ -41,10 +41,10 @@ const Watch = () => {
                             <div className="card text-white " style={cardStyle} 
                                  onMouseEnter={(e) => { e.currentTarget.style.boxShadow = hoverStyle.boxShadow; }}
                                  onMouseLeave={(e) => { e.currentTarget.style.boxShadow = cardStyle.boxShadow; }}>
-                                <div className="card-header d-flex justify-content-center" style={headerStyle}>To-Do Tasks</div>
+                                <div className="card-header d-flex justify-content-center" style={headerStyle}>To-Do Ticket</div>
                                 <div className="card-body">
                                     <h5 className="card-title d-flex justify-content-center" style={titleStyle}>8 Tasks</h5>
-                                    <p className="card-text" style={textStyle}>Tasks that are planned but not yet started. To-Do Tasks.</p>
+                                    <p className="card-text" style={textStyle}>Ticket that are planned but not yet started. To-Do Ticket.</p>
                                 </div>
                             </div>
                         </div>

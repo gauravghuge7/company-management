@@ -1,7 +1,8 @@
 import {combineReducers, configureStore } from '@reduxjs/toolkit';
-import { employeeReducer } from './reducers';
-import { teamReducer } from './team.reducer';
-import { clientReducer } from './client.reducer';
+import { employeeReducer } from "../../src/Redux/reducers";
+import { teamReducer } from '../../src/Redux/team.reducer';
+import { clientReducer } from '../../src/Redux/client.reducer';
+
 
 const rootReducer = combineReducers({
     employeeReducer,

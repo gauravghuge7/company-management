@@ -3,6 +3,7 @@ import { Project } from "../../model/project.model.js";
 import { ApiError } from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
 import { asyncHandler } from "../../utils/asyncHandler.js";
+import mongoose from "mongoose";
 
 
 
@@ -135,7 +136,105 @@ const fetchProjects = asyncHandler(async (req, res) => {
    }
 })
 
+
+const editProject = asyncHandler( async (req, res) => {
+   
+    try {
+       const {_id} = req.user;
+ 
+       if(!_id) {
+          throw new ApiError(400, "Please provide the admin email");
+       }
+ 
+       const { 
+          projectId,
+          projectName,
+          description,
+          spokePersonNumber,
+          spokePersonName,
+          spokePersonEmail,
+          team,
+          clientName,
+          client,
+       } = req.body;
+ 
+       if(!projectId || !projectName || !spokePersonNumber || !spokePersonName || !spokePersonEmail || !team || !clientName || !client) {
+          throw new ApiError(400, "Please provide all the required fields");
+       }
+ 
+       // check if the project already exists
+       
+       const existedProject = await Project.findOne({ projectId })
+       
+       if(!existedProject) {
+          throw new ApiError(400, "Project does not exist");
+       }
+ 
+       // update the project
+       await Project.findOneAndUpdate(
+          { projectId },
+          {
+             $set: {
+                projectName,
+                description,
+                spokePersonNumber,
+                spokePersonName,
+                spokePersonEmail,
+                team,
+                clientName,
+                client,
+             }
+          },
+          { new: true }
+       )
+ 
+ 
+       return res
+          .status(200)
+          .json(
+             new ApiResponse(200, "Project updated successfully")
+          )
+ 
+ }  catch (error) {
+    return res
+       .status(500)
+       .json(
+          new ApiResponse(500, "Internal server error")
+       )
+ }        
+ 
+ 
+ 
+ 
+ 
+ })  
+ 
+ const deleteProject = async (req, res) => {
+    try {
+       const { projectId } = req.params;
+       const { userId } = req.user;
+       
+       const project = await Project.findByIdAndDelete(projectId);
+       if (!project) {
+          throw new ApiError(404, "Project not found");
+       }
+       
+       await User.findByIdAndUpdate(userId, { $pull: { projects: projectId } });
+       
+       return res.status(200).json(
+          new ApiResponse(200, "Project deleted successfully")
+       )
+    } catch (error) {
+       return res.status(500).json(
+          new ApiResponse(500, "Internal server error")
+       )
+    }
+ }        
+ 
+
 export {
     createProject,
     fetchProjects,
+    editProject,
+    deleteProject
 }

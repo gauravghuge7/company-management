@@ -2,8 +2,11 @@ import React from 'react';
 import { Card, Container, Row, Col } from 'react-bootstrap';
 import { FaUserPlus, FaUsers, FaBuilding, FaProjectDiagram } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-const Admincontain = () => {
+const AdminContain = () => {
+  const navigate = useNavigate();
+
   const employee = useSelector((state) => state.employeeReducer?.employee);
   const teams = useSelector((state) => state.teamReducer?.team);
   const client = useSelector((state) => state.clientReducer?.client.clientList);
@@ -35,16 +38,20 @@ const Admincontain = () => {
   };
 
   const textStyle = {
-    fontSize: '1rem',
+    fontSize: '0.9rem',
     color: '#777',
+  };
+
+  const handleCardClick = (route) => {
+    navigate(route);
   };
 
   return (
     <Container fluid className="p-4">
       <Row className="justify-content-center">
-        <Col md={4} className="mb-4">
+        <Col md={3} className="mb-4">
           <Card
-            style={{ ...cardStyle, backgroundColor: '#e3f2fd' }} // Light blue for Employees
+            style={{ ...cardStyle, backgroundColor: '#e3f2fd' }}
             onMouseEnter={(e) => {
               e.currentTarget.style.boxShadow = hoverStyle.boxShadow;
               e.currentTarget.style.transform = hoverStyle.transform;
@@ -53,11 +60,12 @@ const Admincontain = () => {
               e.currentTarget.style.boxShadow = cardStyle.boxShadow;
               e.currentTarget.style.transform = 'translateY(0)';
             }}
+            onClick={() => handleCardClick('/employees')} // Navigate to Employees page
           >
             <div className="card-header text-center" style={headerStyle}>Employees</div>
             <Card.Body>
               <div className="d-flex justify-content-center mb-3">
-                <FaUserPlus size={50} className="text-primary mb-2" />
+                <FaUserPlus size={40} className="text-primary mb-2" />
               </div>
               <h5 className="card-title text-center" style={titleStyle}>{employee.length}</h5>
               <p className="card-text text-center" style={textStyle}>Total number of employees.</p>
@@ -65,9 +73,9 @@ const Admincontain = () => {
           </Card>
         </Col>
 
-        <Col md={4} className="mb-4">
+        <Col md={3} className="mb-4">
           <Card
-            style={{ ...cardStyle, backgroundColor: '#e8f5e9' }} // Light green for Teams
+            style={{ ...cardStyle, backgroundColor: '#e8f5e9' }}
             onMouseEnter={(e) => {
               e.currentTarget.style.boxShadow = hoverStyle.boxShadow;
               e.currentTarget.style.transform = hoverStyle.transform;
@@ -76,11 +84,12 @@ const Admincontain = () => {
               e.currentTarget.style.boxShadow = cardStyle.boxShadow;
               e.currentTarget.style.transform = 'translateY(0)';
             }}
+            onClick={() => handleCardClick('/teams')} // Navigate to Teams page
           >
             <div className="card-header text-center" style={headerStyle}>Teams</div>
             <Card.Body>
               <div className="d-flex justify-content-center mb-3">
-                <FaUsers size={50} className="text-success mb-2" />
+                <FaUsers size={40} className="text-success mb-2" />
               </div>
               <h5 className="card-title text-center" style={titleStyle}>{teams.length}</h5>
               <p className="card-text text-center" style={textStyle}>Total number of teams.</p>
@@ -88,9 +97,9 @@ const Admincontain = () => {
           </Card>
         </Col>
 
-        <Col md={4} className="mb-4">
+        <Col md={3} className="mb-4">
           <Card
-            style={{ ...cardStyle, backgroundColor: '#fff3e0' }} // Light orange for Clients
+            style={{ ...cardStyle, backgroundColor: '#fff3e0' }}
             onMouseEnter={(e) => {
               e.currentTarget.style.boxShadow = hoverStyle.boxShadow;
               e.currentTarget.style.transform = hoverStyle.transform;
@@ -99,23 +108,22 @@ const Admincontain = () => {
               e.currentTarget.style.boxShadow = cardStyle.boxShadow;
               e.currentTarget.style.transform = 'translateY(0)';
             }}
+            onClick={() => handleCardClick('/clients')} // Navigate to Clients page
           >
             <div className="card-header text-center" style={headerStyle}>Clients</div>
             <Card.Body>
               <div className="d-flex justify-content-center mb-3">
-                <FaBuilding size={50} className="text-warning mb-2" />
+                <FaBuilding size={40} className="text-warning mb-2" />
               </div>
               <h5 className="card-title text-center" style={titleStyle}>{client?.length}</h5>
               <p className="card-text text-center" style={textStyle}>Total number of clients.</p>
             </Card.Body>
           </Card>
         </Col>
-      </Row>
 
-      <Row className="justify-content-center">
-        <Col md={4} className="mb-4">
+        <Col md={3} className="mb-4">
           <Card
-            style={{ ...cardStyle, backgroundColor: '#e0f7fa' }} // Light teal for Projects
+            style={{ ...cardStyle, backgroundColor: '#e0f7fa' }}
             onMouseEnter={(e) => {
               e.currentTarget.style.boxShadow = hoverStyle.boxShadow;
               e.currentTarget.style.transform = hoverStyle.transform;
@@ -123,11 +131,13 @@ const Admincontain = () => {
             onMouseLeave={(e) => {
               e.currentTarget.style.boxShadow = cardStyle.boxShadow;
               e.currentTarget.style.transform = 'translateY(0)';
-            }}>
+            }}
+            onClick={() => handleCardClick('/projects')} // Navigate to Projects page
+          >
             <div className="card-header text-center" style={headerStyle}>Projects</div>
             <Card.Body>
               <div className="d-flex justify-content-center mb-3">
-                <FaProjectDiagram size={50} className="text-info mb-2" />
+                <FaProjectDiagram size={40} className="text-info mb-2" />
               </div>
               <h5 className="card-title text-center" style={titleStyle}>10</h5>
               <p className="card-text text-center" style={textStyle}>Total number of projects.</p>
@@ -135,35 +145,8 @@ const Admincontain = () => {
           </Card>
         </Col>
       </Row>
-   
-
     </Container>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   );
 };
 
-export default Admincontain;
+export default AdminContain;

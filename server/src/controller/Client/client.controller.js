@@ -173,11 +173,30 @@ const logoutClient = asyncHandler(async(req, res) => {
     
 })
 
+const getClient = asyncHandler(async (req, res) => {
+    try {
+
+        const client = await Client.findById(req?.user?._id);
+        
+
+        return res 
+            .status(200)
+            .json(
+                new ApiResponse(200, "Client fetched successfully", client)
+            )
+    } 
+    catch (error) {
+        console.log(" Error => ", error.message)
+        throw new ApiError(400, error.message);
+    }
+})
+
 
 
 
 export {
     registerClient,
     loginClient,
-    logoutClient
+    logoutClient,
+    getClient
 };

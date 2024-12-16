@@ -30,7 +30,7 @@ const Login = () => {
       console.log("response => ", response);
 
       if (response.data.success === true) {
-        navigate("/admin/dashboard");
+        // navigate("/admin/dashboard");
       }
     } catch (error) {
       console.log(error);

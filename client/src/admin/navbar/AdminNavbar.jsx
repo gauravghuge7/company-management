@@ -40,7 +40,7 @@ const AdminNavbar = () => {
       <Container>
         <Navbar.Brand href="#home" className="mr-aut\" style={{ marginLeft:-80, padding: 0 }}>
           <img
-            src="../../../public/accets/GBIS.png"
+            src="../../../accets/GBIS.png"
             width="190"
             className="d-inline-block align-top"
             alt="Logo"

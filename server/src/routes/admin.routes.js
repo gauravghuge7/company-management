@@ -114,19 +114,7 @@ adminRouter.route(`/deleteClient/:_id`).delete(
 
 
 
-/* MongoDB Pipelines Testing Routes */
 
-// adminRouter.route("/totalEmployees").get(
-//     verifyAdmin,
-//     getEmployeeDetails
-
-// )
-
-/**
-
-this is the just repo checking
-
- */
 
 
 

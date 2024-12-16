@@ -186,7 +186,7 @@ const logoutEmployee = asyncHandler(async(req, res) => {
 })
 
 
-const getEmployeeDetails = async(req, res) => {
+const getEmployeeDetails = asyncHandler(async(req, res) => {
 
     try {
         // accept the data from frontend  that this we are using the try catch block
@@ -213,7 +213,7 @@ const getEmployeeDetails = async(req, res) => {
         throw new ApiError(400, error.message);
     }
     
-}
+})
 
 const getEmployeePassword = asyncHandler(async(req, res) => {
 

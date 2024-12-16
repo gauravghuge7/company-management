@@ -88,7 +88,7 @@ const createProject = asyncHandler(async (req, res) => {
 
       const findTeam = await Team.findById(team);
 
-      team.project.push(project._id);
+      team?.project?.push(project._id);
       await findTeam.save({validateBeforeSave: false});
 
       return res  
@@ -110,7 +110,7 @@ catch (error) {
 
 const getAllProjects = asyncHandler(async(req, res) => {
 
-try {
+   try {
 
 
       const project = await Project.aggregate([
@@ -195,17 +195,23 @@ try {
          )
 
       
-} 
-catch (error) {
-      
+   } 
+   catch (error) {
+         
       console.log(" Error => ", error.message)
       throw new ApiError(400, error.message);
-}
+   }
 
 })
+
+
+
+
+
 
 
 export {
    createProject,
    getAllProjects
 }
+  
