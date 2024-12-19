@@ -14,10 +14,15 @@ import TaskList from "../../admin/assigntask/TaskList";
 import ProjectList from "../../admin/CreateProject/ProjectList";
 import CreateProjectForm from "../../admin/createcompony/CreateProjectForm";
 import CreateCompanyForm from "../../admin/createcompony/Createcomponyform";
+import AdminLayout from "./AdminLayout";
 
 const AdminRouter = () => {
   return (
     <Routes>
+
+        <Route path="/" element={<AdminLayout />}>
+
+        
 
         {/*  Base Path of Admin  */}
       <Route path="/" element={<AdminContain />} />
@@ -55,7 +60,7 @@ const AdminRouter = () => {
         
       
 
-
+        </Route>
     </Routes>
   );
 };  

@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { message } from 'react-message-popup';
 import axios from "axios";
 
-const Login = () => {
+const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -138,4 +138,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default AdminLogin;

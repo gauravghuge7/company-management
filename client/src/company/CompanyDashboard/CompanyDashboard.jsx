@@ -41,7 +41,7 @@ function CompanyDashboard() {
         
       <div className="flex-grow-1 p-3">
 
-        {conditionalComponent === "CompanyDashboard" && <Dashboard />}
+        {/* {conditionalComponent === "CompanyDashboard" && <Dashboard />}
         {conditionalComponent === "" && <Dashboard />}
 
 
@@ -59,7 +59,7 @@ function CompanyDashboard() {
 
 
 
-        {conditionalComponent === "Projectlist" && <Projectlist setConditionalComponent={setConditionalComponent} />}
+        {conditionalComponent === "Projectlist" && <Projectlist setConditionalComponent={setConditionalComponent} />} */}
 
       </div>
 

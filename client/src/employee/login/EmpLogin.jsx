@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { message } from "react-message-popup";
 import axios from "axios";
 
-const Login = () => {
+const EmpLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -27,7 +27,6 @@ const Login = () => {
 
       console.log(response.data.data);
 
-<<<<<<< HEAD
       if (response.data.success === true) {
         if (response.data.data.userType === "employee") {
           message.success("Employee Logged In Successfully");
@@ -39,26 +38,6 @@ const Login = () => {
           message.success("Client Logged In Successfully");
           window.location.href = "/company/dashboard";
         }
-=======
-      if(response.data.success === true){
-
-        // if(response.data.data.userType === "employee") {
-        //   message.success("Employee Logged In Successfully");
-        //   window.location.href = "/employee/dashboard";
-        // }
-
-        // else if(response.data.data.userType === "admin") {
-        //   message.success("Admin Logged In Successfully");
-        //   window.location.href = "/admin/dashboard";
-        // }
-
-        // else if(response.data.data.userType === "client") {
-        //   message.success("Client Logged In Successfully");
-        //   window.location.href = "/company/dashboard";
-        // }
-
-        
->>>>>>> main
       }
     } catch (error) {
       console.log(error);
@@ -179,4 +158,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default EmpLogin;
