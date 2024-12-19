@@ -1,33 +1,59 @@
 import { Route, Routes } from "react-router-dom"
-import Admindashboard from "../../admin/dashboard/Admindashboard";
-import Home from "../../views/home/Home"; 
+
 import CompanyDashboard from "../../company/CompanyDashboard/CompanyDashboard";
 import Employeedashboard from "../../employee/dashboard/Employeedashboard";
-import AdminLogin from "../../admin/login/AdminLogin";
-import Login from "../../company/login/Login";
-import EmpLogin from "../../employee/login/EmpLogin";
+
+import EmployeeList from "../../admin/createemployee/EmployeeList";
+import AdminContain from "../../admin/dashboard/Admincontain";
+import NewEmployeeForm from "../../admin/createemployee/NewEmployeeForm ";
+import TeamList from "../../admin/createteam/TeamList";
+import CreateTeamForm from "../../admin/createteam/CreateTeamForm";
+import CompanyList from "../../admin/createcompony/CompanyList";
+import AssignTaskForm from "../../admin/assigntask/AssignTaskForm";
+import TaskList from "../../admin/assigntask/TaskList";
+import ProjectList from "../../admin/CreateProject/ProjectList";
+import CreateProjectForm from "../../admin/createcompony/CreateProjectForm";
+import CreateCompanyForm from "../../admin/createcompony/Createcomponyform";
 
 const AdminRouter = () => {
   return (
     <Routes>
 
-        <Route path="/admin/dashboard" element={<Admindashboard/>} />
-        <Route path="/company/dashboard" element={<CompanyDashboard />} />
-        <Route path="/employee/dashboard" element={<Employeedashboard   />} />
+        {/*  Base Path of Admin  */}
+      <Route path="/" element={<AdminContain />} />
         
         
-        <Route path="/employee/login" element={<EmpLogin   />} />
 
-        <Route path="/admin/login" element={<AdminLogin   />} />
 
-        <Route path="/client/login" element={<Login />} />
+      {/*  All Admin Routing  */}
+
+      {/*  Employee Routing  */}
+      <Route path="/employee" element={<EmployeeList />} />
+
+      <Route path="createEmployee" element={<NewEmployeeForm fetchEmployees={fetchEmployees}  />} />
         
 
 
+      {/*  Team Routing  */}
+      <Route path="/team" element={<TeamList  setValue={setValue} />} />
+        <Route path="/createteam" element={<CreateTeamForm />} />
 
 
+      {/*  Company Routing  */}
+        <Route path="/company" element={<CompanyList setValue={setValue} setClientId={setClientId} setClientName={setClientName} />} />
+        <Route path="/createcompany" element={<CreateCompanyForm />} />
 
-        <Route path='/' element={<Home />} />
+        
+        {/*  Assign Task Routing  */}
+        <Route path="/assigntask" element={<AssignTaskForm />} />
+        <Route path="/task" element={<TaskList setValue={setValue} />} />
+
+
+        {/*  Project Routing  */}
+        <Route path="/project" element={<ProjectList setValue={setValue} />} />
+        <Route path="/addproject" element={<CreateProjectForm clientId={clientId}  clientName={clientName} />} /> 
+        
+      
 
 
     </Routes>

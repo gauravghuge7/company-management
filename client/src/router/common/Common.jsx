@@ -10,10 +10,19 @@ export default function Common() {
 
          <Route path='/' element={<Home />} />
 
-         
+         <Route path="/employee/login" element={<EmpLogin   />} />
+
+         <Route path="/admin/login" element={<AdminLogin   />} />
+
+         <Route path="/client/login" element={<Login />} />
+
+
+
+         <Route path="/company/dashboard" element={<CompanyDashboard />} />
+         <Route path="/employee/dashboard" element={<Employeedashboard   />} />
       
       </Routes>
          
-  
+
    )
 }

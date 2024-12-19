@@ -123,21 +123,29 @@ function Admindashboard() {
       
 
 
-      { value === "employee" && <EmployeeList setValue={setValue}  /> }
-      { value === "" && <Admincontain /> }
-      { value === "dashboard" && <Admincontain /> }
-      { value === "createEmployee" && <NewEmployeeForm fetchEmployees={fetchEmployees}  /> }
-      { value === "team" && <TeamList  setValue={setValue} /> }
-      { value === "createteam" && <CreateTeamForm /> }
+      {/* { value === "employee" && <EmployeeList setValue={setValue}  /> }
+      
+      { value === "" && <Admincontain /> } */}
 
 
-      {value === "compony" && <CompanyList setValue={setValue} setClientId={setClientId} setClientName={setClientName} /> }
+      {/* { value === "dashboard" && <Admincontain /> }
+      { value === "createEmployee" && <NewEmployeeForm fetchEmployees={fetchEmployees}  /> } */}
+
+
+      {/* { value === "team" && <TeamList  setValue={setValue} /> }
+      { value === "createteam" && <CreateTeamForm /> } */}
+
+
+      {/* {value === "compony" && <CompanyList setValue={setValue} setClientId={setClientId} setClientName={setClientName} /> }
 
 
 
-      { value === "createcompany" && <CreateCompany /> }
-      {value === "assigntask" && <AssignTaskForm /> }
-      { value === "task" && <TaskList setValue={setValue} /> }
+      { value === "createcompany" && <CreateCompany /> } */}
+
+
+      {/* {value === "assigntask" && <AssignTaskForm /> }
+      { value === "task" && <TaskList setValue={setValue} /> } */}
+      
       { value === "project" && <ProjectList setValue={setValue} /> }
 
 
