@@ -1,6 +1,7 @@
 // Main.js
 import React from 'react';
 
+
 const Main = () => {
   return (
     <div style={styles.container}>

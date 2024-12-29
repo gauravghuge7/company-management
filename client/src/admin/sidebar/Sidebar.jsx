@@ -9,8 +9,9 @@ import { FiList } from 'react-icons/fi'; // Tickets icon
 import { MdOutlineSupervisorAccount } from 'react-icons/md'; // Team Lead icon
 import { RiTeamLine } from 'react-icons/ri'; // Team icon
 import { FaUserFriends, FaRegBuilding } from 'react-icons/fa'; // Employee and Client icons
+import { useNavigate } from 'react-router-dom';
 
-const Sidebar = ({ setValue, setConditionalComponent }) => {
+const Sidebar = () => {
   const [teams, setTeams] = useState([{ teamLead: "" }]);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -22,9 +23,11 @@ const Sidebar = ({ setValue, setConditionalComponent }) => {
       }
     } catch (error) {
       console.log(error);
-   
+  
     }
   };
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     checkTeamLeadOrNot();
@@ -69,7 +72,7 @@ const Sidebar = ({ setValue, setConditionalComponent }) => {
 
       <Nav className="flex-column">
         <SidebarButton 
-          onClick={() => setValue("dashboard")} 
+          onClick={() => navigate("/admin/dashboard")}
           isCollapsed={isCollapsed} 
           icon={<AiOutlineDashboard size={20} />} 
           text="Dashboard" 
@@ -77,28 +80,28 @@ const Sidebar = ({ setValue, setConditionalComponent }) => {
         
         {/* Additional Buttons with Icons */}
         <SidebarButton 
-          onClick={() => setValue("employee")} 
+          onClick={() => navigate("/admin/employee")}
           isCollapsed={isCollapsed} 
           icon={<FaUserFriends size={20} />} 
           text="Employee" 
         />
 
         <SidebarButton 
-          onClick={() => setValue("team")}  
+          onClick={() => navigate("/admin/team")}
           isCollapsed={isCollapsed} 
           icon={<RiTeamLine size={20} />} 
           text="Team" 
         />
 
         <SidebarButton 
-          onClick={() => setValue("compony")}  
+          onClick={() => navigate("/admin/company")}
           isCollapsed={isCollapsed} 
           icon={<FaRegBuilding size={20} />} 
           text="Client" 
         />
 
         <SidebarButton 
-          onClick={() => setValue("project")}  
+          onClick={() => navigate("/admin/project")}
           isCollapsed={isCollapsed} 
           icon={<AiOutlineProject size={20} />} 
           text="Project" 

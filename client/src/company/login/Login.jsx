@@ -3,6 +3,8 @@ import { Form, Button, Container, Row, Col, Image } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {message} from "react-message-popup"
 import axios from "axios";  
+import { toast, ToastContainer } from "react-toastify";
+import { extractErrorMessage } from "../../Components/CustomError";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -39,7 +41,8 @@ const Login = () => {
     catch (error) {
     
       console.log(error);
-      message.error("Invalid Email or Password");
+      const err = extractErrorMessage(error.response.data);
+      toast.error(err);
     }
 
   };
@@ -50,6 +53,7 @@ const Login = () => {
       className="d-flex justify-content-center align-items-center"
       style={{ height: "100vh", backgroundColor: "#f8f9fa" }}
     >
+      <ToastContainer />
       <Row
         className="shadow-lg"
         style={{

@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken';
+import { ApiError } from '../utils/ApiError.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
 
-export const verifyAdmin = async (req, res, next) => {
+export const verifyAdmin = asyncHandler(async (req, res, next) => {
 
    try {
 
@@ -9,9 +11,8 @@ export const verifyAdmin = async (req, res, next) => {
       const adminAccessToken = req.cookies.adminAccessToken;
 
       if(!adminAccessToken) {
-         return res.status(401).json({
-            message: 'unauthorized admin '
-         })
+         throw new ApiError(401, "unauthorized admin ");
+
       }
  
       const decode = await jwt.verify(adminAccessToken, process.env.ADMIN_ACCESS_SECRET_KEY);
@@ -30,7 +31,7 @@ export const verifyAdmin = async (req, res, next) => {
       })
    }
 
-}
+})
 
 /*
 

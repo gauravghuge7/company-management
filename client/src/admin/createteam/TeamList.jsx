@@ -116,7 +116,7 @@ const TeamList = ({ setValue }) => {
                         }}
                         onMouseEnter={(e) => (e.target.style.backgroundColor = "#0056b3")}
                         onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
-                        onClick={() => setValue("createteam")}
+                        onClick={() => window.location.href = "/admin/createteam"}
                     >
                         Create New Team
                     </Button>

@@ -1,7 +1,7 @@
 
-
+import AdminNavbar from "../../admin/navbar/AdminNavbar"
 import { Outlet } from "react-router-dom";
-
+import Sidebar from "../../admin/sidebar/Sidebar";
 
 const AdminLayout = () => {
    return (
@@ -11,7 +11,7 @@ const AdminLayout = () => {
       
          <div className="d-flex">
             
-            <Sidebar setValue={setValue} />
+            <Sidebar />
 
             <div className="flex-grow-1 p-3">
 
@@ -21,8 +21,6 @@ const AdminLayout = () => {
    
          </div>
       
-      
-         <Adminfooter />
       
       
       </>

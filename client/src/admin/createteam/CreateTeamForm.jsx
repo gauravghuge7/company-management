@@ -3,10 +3,11 @@ import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
 import axios from 'axios';
 import {message} from "react-message-popup"
 import { useSelector } from 'react-redux';
-
+import { setEmployeeData } from '../../Redux/SetDataToRedux/EmployeeData';
+import { extractErrorMessage } from '../../Components/CustomError';
 const CreateTeamForm = () => {
 
-
+    const fetchEmployees = setEmployeeData();
     const [teamName, setTeamName] = useState('');
     const [teamLead, setTeamLead] = useState('');
     const [teamId, setTeamId] = useState('');
@@ -42,7 +43,7 @@ const CreateTeamForm = () => {
 
     /// on mounting the component, set the employees
     useEffect(() => {
-
+        fetchEmployees;
         setEmployee();
 
     },[])
@@ -92,12 +93,13 @@ const CreateTeamForm = () => {
 
             if(response.data.success) {
                 message.success('Team created successfully');
-                
+                window.location.href = "/admin/team";
             }
             
         } 
         catch (error) {
-            message.error(error.message);
+            const err = extractErrorMessage(error?.response?.data);
+            message.error(err);
         }
 
     };

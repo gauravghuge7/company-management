@@ -2,6 +2,7 @@ import  { useState } from 'react';
 import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
 import axios from "axios";
 import {message } from "react-message-popup";
+import { extractErrorMessage } from '../../Components/CustomError';
 
 const CreateCompanyForm = () => {
     const [companyName, setCompanyName] = useState('');
@@ -36,11 +37,14 @@ const CreateCompanyForm = () => {
 
             if(response?.data?.success) {
                 message.success(response?.data?.message);
+                window.location.href = "/admin/company";
             }
             
         } 
         catch (error) {
-            message.error(error.message);
+            const err = extractErrorMessage(error?.response?.data);
+            message.error(err);
+        
         }
         
     };

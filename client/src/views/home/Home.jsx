@@ -90,7 +90,7 @@ const Home = () => {
         <div className="relative bg-gradient-to-tr from-green-500 to-green-700 rounded-3xl shadow-lg p-6 transition transform hover:scale-105">
           <h3 className="text-3xl font-bold text-white mb-2">Admin Dashboard</h3>
           <p className="text-white mb-4">Manage team tasks, oversee ticket statuses, and enhance productivity.</p>
-          <Link to="/admin/dashboard" className="inline-block px-6 py-2 bg-white text-green-700 rounded-full shadow-md transition hover:bg-green-100">
+          <Link to="/admin/login" className="inline-block px-6 py-2 bg-white text-green-700 rounded-full shadow-md transition hover:bg-green-100">
             Admin Dashboard
           </Link>
         </div>

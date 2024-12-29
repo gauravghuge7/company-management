@@ -35,7 +35,7 @@ const options = {
 };
 
 
-const registerClient = async(req, res) => {
+const registerClient = asyncHandler(async(req, res) => {
 
     try {
         // accept the data from frontend  that this we are using the try catch block
@@ -85,7 +85,7 @@ const registerClient = async(req, res) => {
         throw new ApiError(400, error.message);    
     }
 
-}
+})
 
 const loginClient = asyncHandler(async(req, res) => {
     

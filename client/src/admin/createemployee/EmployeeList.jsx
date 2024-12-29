@@ -3,8 +3,9 @@ import { useSelector } from "react-redux";
 import { Container, Table, Button, FormControl, InputGroup, Modal, Form } from 'react-bootstrap';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import axios from 'axios';
+import { setEmployeeData } from "../../Redux/SetDataToRedux/EmployeeData";
 
-const EmployeeList = ({ setValue }) => {
+const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
@@ -14,12 +15,15 @@ const EmployeeList = ({ setValue }) => {
 
   const data = useSelector((state) => state.employeeReducer.employee);
 
+  const fetchEmployees = setEmployeeData();
+
   useEffect(() => {
+    fetchEmployees;
     setEmployees(data);
   }, [data]);
 
   const filteredEmployees = employees.filter((employee) =>
-    employee.employeeName.toLowerCase().includes(searchQuery.toLowerCase())
+    employee?.employeeName?.toLowerCase()?.includes(searchQuery?.toLowerCase())
   );
 
   const indexOfLastEmployee = currentPage * employeesPerPage;
@@ -117,7 +121,7 @@ const EmployeeList = ({ setValue }) => {
             style={{ backgroundColor: "#007BFF", border: "none", whiteSpace: "nowrap", borderRadius: "8px", color: "#fff", fontWeight: "bold", transition: "background-color 0.3s ease" }}
             onMouseEnter={(e) => (e.target.style.backgroundColor = "#0056b3")}
             onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
-            onClick={() => setValue("createEmployee")}
+            onClick={() => window.location.href = "/admin/createEmployee"}
           >
             Add New Employee
           </Button>

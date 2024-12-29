@@ -56,38 +56,6 @@ const CompanyList = ({ setValue, setClientId, setClientName}) => {
         }
     };  
 
-    // const handleEditSubmit = async () => {
-    //     if (!editClient) return;
-    //     console.log("Submitting edit for:", editClient);
-    //     try {
-    //         const response = await axios.put(`/api/admin/updateClient/${editClient._id}`, editClient);
-    //         console.log("API Response:", response.data);
-    //         if (response.data.success) {
-    //             setCompanies((prevCompanies) =>
-    //                 prevCompanies.map((client) =>
-    //                     client._id === editClient._id ? { ...client, ...editClient } : client
-    //                 )
-    //             );
-    //             alert("Client updated successfully!");
-    //             setValue("company");
-    //         }
-    //     } 
-    //     catch (error) {
-    //         console.error("Error updating client:", error);
-    //     }
-    // };  
-
-
-
-
-
-    
-    
-    const setDetails = (clientId, clientName) => {
-        setValue("addproject");
-        setClientId(clientId);
-        setClientName(clientName);
-    };
 
     useEffect(() => {
         fetchCompanies();
@@ -133,7 +101,7 @@ const CompanyList = ({ setValue, setClientId, setClientName}) => {
                         style={{ backgroundColor: "#007BFF", border: "none", whiteSpace: "nowrap", borderRadius: "8px", color: "#fff", fontWeight: "bold", transition: "background-color 0.3s ease", }}
                         onMouseEnter={(e) => (e.target.style.backgroundColor = "#0056b3")}
                         onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
-                        onClick={() => setValue("createcompany")}
+                        onClick={() => window.location.href = "/admin/createcompany"}
                     >
                         Add New Client
                     </Button>
@@ -179,7 +147,11 @@ const CompanyList = ({ setValue, setClientId, setClientName}) => {
                                             {company.clientPassword}
                                         </td>
                                         <td style={{ textAlign: "center" }}>
-                                            <Button style={{ background: "transparent", border: "none", textAlign: "center" }} onClick={() => setDetails(company._id, company.clientName)}>
+                                            <Button 
+                                                style={{ background: "transparent", border: "none", textAlign: "center" }} 
+                                                onClick={() =>window.location.href = `/admin/addproject/${company._id}/${company.clientName}`}
+                                                
+                                                >
                                                 <i className="bi bi-plus-square-fill" style={{ fontSize: "16px", color: "#007BFF" }}></i>
                                             </Button>
                                         </td>

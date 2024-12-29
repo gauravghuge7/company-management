@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { message } from 'react-message-popup';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 
-const CreateProjectForm = ({ clientId, clientName }) => {
+const CreateProjectForm = () => {
+    
     const [formData, setFormData] = useState({
         projectName: '',
         companyName: '',
@@ -18,8 +20,22 @@ const CreateProjectForm = ({ clientId, clientName }) => {
         file: ""
     });
 
+    
+
+
+
     // Get data from the redux store
     const teams = useSelector(state => state.teamReducer.team);
+    
+    console.log("teams => ", teams);
+
+    const clientId = useParams().clientId;
+    const clientName = useParams().clientName;
+
+    
+    useEffect(() => {
+        
+    }, [clientId, clientName]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;

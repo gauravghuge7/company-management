@@ -1,7 +1,5 @@
 import { Route, Routes } from "react-router-dom"
 
-import CompanyDashboard from "../../company/CompanyDashboard/CompanyDashboard";
-import Employeedashboard from "../../employee/dashboard/Employeedashboard";
 
 import EmployeeList from "../../admin/createemployee/EmployeeList";
 import AdminContain from "../../admin/dashboard/Admincontain";
@@ -20,44 +18,44 @@ const AdminRouter = () => {
   return (
     <Routes>
 
-        <Route path="/" element={<AdminLayout />}>
+      <Route path="/" element={<AdminLayout />}>
 
         
 
-        {/*  Base Path of Admin  */}
-      <Route path="/" element={<AdminContain />} />
+          {/*  Base Path of Admin  */}
+        <Route path="dashboard" element={<AdminContain />} />
+          
+          
+
+
+        {/*  All Admin Routing  */}
+
+        {/*  Employee Routing  */}
+        <Route path="/employee" element={<EmployeeList />} />
+
+        <Route path="createEmployee" element={<NewEmployeeForm />} />
         
-        
 
 
-      {/*  All Admin Routing  */}
-
-      {/*  Employee Routing  */}
-      <Route path="/employee" element={<EmployeeList />} />
-
-      <Route path="createEmployee" element={<NewEmployeeForm fetchEmployees={fetchEmployees}  />} />
-        
-
-
-      {/*  Team Routing  */}
-      <Route path="/team" element={<TeamList  setValue={setValue} />} />
+        {/*  Team Routing  */}
+        <Route path="/team" element={<TeamList  />} />
         <Route path="/createteam" element={<CreateTeamForm />} />
 
 
-      {/*  Company Routing  */}
-        <Route path="/company" element={<CompanyList setValue={setValue} setClientId={setClientId} setClientName={setClientName} />} />
+          {/*  Company Routing  */}
+        <Route path="/company" element={<CompanyList  />} />
         <Route path="/createcompany" element={<CreateCompanyForm />} />
 
-        
-        {/*  Assign Task Routing  */}
-        <Route path="/assigntask" element={<AssignTaskForm />} />
-        <Route path="/task" element={<TaskList setValue={setValue} />} />
+          
+          {/*  Assign Task Routing  */}
+          <Route path="/assigntask" element={<AssignTaskForm />} />
+          <Route path="/task" element={<TaskList />} />
 
 
-        {/*  Project Routing  */}
-        <Route path="/project" element={<ProjectList setValue={setValue} />} />
-        <Route path="/addproject" element={<CreateProjectForm clientId={clientId}  clientName={clientName} />} /> 
-        
+          {/*  Project Routing  */}
+          <Route path="/project" element={<ProjectList  />} />
+          <Route path="/addproject/:clientId/:clientName" element={<CreateProjectForm  />} />
+          
       
 
         </Route>

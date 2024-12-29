@@ -4,10 +4,13 @@ import { Form, Button, Container, Row, Col, Image } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { message } from 'react-message-popup';
 import axios from "axios";
+import { extractErrorMessage } from "../../Components/CustomError";
+import { ToastContainer, toast } from 'react-toastify';
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
@@ -30,12 +33,22 @@ const AdminLogin = () => {
       console.log("response => ", response);
 
       if (response.data.success === true) {
-        // navigate("/admin/dashboard");
+        navigate("/admin/dashboard");
       }
-    } catch (error) {
+    } 
+    catch (error) {
       console.log(error);
-      message.error(error.message);
+      const err = extractErrorMessage(error.response.data);
+      
+      toast.error(err);
+      setError(err);
     }
+  };
+
+  // Function to fill in test credentials
+  const useTestCredentials = () => {
+    setEmail("gaurav@admin.com");
+    setPassword("gaurav");
   };
 
   return (
@@ -51,6 +64,10 @@ const AdminLogin = () => {
         backgroundRepeat: "no-repeat", // Do not repeat the image
       }}
     >
+      <ToastContainer />
+
+      
+
       <Row
         className="shadow-lg"
         style={{
@@ -89,6 +106,10 @@ const AdminLogin = () => {
             Admin Login
           </h2>
           <Form onSubmit={handleSubmit}>
+
+            <div>
+              {error && <p style={{ color: "red" }}>{error}</p>}
+            </div>
             <Form.Group controlId="formBasicEmail" className="mb-3">
               <Form.Label>Email</Form.Label>
               <Form.Control
@@ -103,6 +124,7 @@ const AdminLogin = () => {
                 }}
               />
             </Form.Group>
+            
 
             <Form.Group controlId="formBasicPassword" className="mb-4">
               <Form.Label>Password</Form.Label>
@@ -118,6 +140,19 @@ const AdminLogin = () => {
                 }}
               />
             </Form.Group>
+
+            <Button
+              variant="secondary"
+              className="w-100 mb-3"
+              onClick={useTestCredentials}
+              style={{
+                borderRadius: "10px",
+                padding: "10px",
+                fontWeight: "bold",
+              }}
+            >
+              Use Test Credentials
+            </Button>
 
             <Button
               variant="primary"

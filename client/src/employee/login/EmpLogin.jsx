@@ -3,10 +3,13 @@ import { Form, Button, Container, Row, Col, Image } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { message } from "react-message-popup";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import { extractErrorMessage } from "../../Components/CustomError";
 
 const EmpLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   // Function to handle the form submission
   const handleSubmit = async (event) => {
@@ -30,6 +33,7 @@ const EmpLogin = () => {
       if (response.data.success === true) {
         if (response.data.data.userType === "employee") {
           message.success("Employee Logged In Successfully");
+          toast.success("Employee Logged In Successfully");
           window.location.href = "/employee/dashboard";
         } else if (response.data.data.userType === "admin") {
           message.success("Admin Logged In Successfully");
@@ -39,9 +43,12 @@ const EmpLogin = () => {
           window.location.href = "/company/dashboard";
         }
       }
-    } catch (error) {
+    } 
+    catch (error) {
       console.log(error);
-      message.error("Invalid Email or Password");
+      const err = extractErrorMessage(error.response.data);
+      toast.error(err);
+      // setError(err);
     }
   };
 
@@ -57,6 +64,8 @@ const EmpLogin = () => {
       className="d-flex justify-content-center align-items-center"
       style={{ height: "100vh", maxWidth: "1800px", backgroundColor: "#E3F2FD" }}
     >
+      <ToastContainer />
+
       <Row
         className="shadow-lg"
         style={{
@@ -95,6 +104,10 @@ const EmpLogin = () => {
             Login Here
           </h2>
           <Form onSubmit={handleSubmit}>
+            <div>
+
+              {error && <p style={{ color: "red" }}>{error}</p>}
+            </div>
             <Form.Group controlId="formBasicEmail" className="mb-3">
               <Form.Label>Email</Form.Label>
               <Form.Control
@@ -109,6 +122,7 @@ const EmpLogin = () => {
                 }}
               />
             </Form.Group>
+
 
             <Form.Group controlId="formBasicPassword" className="mb-4">
               <Form.Label>Password</Form.Label>

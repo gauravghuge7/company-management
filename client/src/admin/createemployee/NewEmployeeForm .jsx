@@ -3,6 +3,7 @@ import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { message } from 'react-message-popup';
 import axios from 'axios';
+import { extractErrorMessage } from "../../Components/CustomError";
 
 const NewEmployeeForm = ({ fetchEmployees }) => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ const NewEmployeeForm = ({ fetchEmployees }) => {
     designation: "",
     
   });
+
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -48,11 +50,16 @@ const NewEmployeeForm = ({ fetchEmployees }) => {
 
       if(response.data.success === true) {
         message.success('Employee added successfully');
+        window.location.href = "/admin/employee";
       }
       fetchEmployees();
     } 
     catch (error) {
-      message.error(error.message);
+      console.log("error => ", error);
+
+      const err = extractErrorMessage(error?.response?.data);
+      message.error(err);
+
     }
 
   
