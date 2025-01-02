@@ -6,6 +6,11 @@ import morgan from 'morgan';
 
 const app = express();
 
+import dotenv from 'dotenv';
+
+dotenv.config({
+  path: './.env'
+})
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
@@ -15,18 +20,18 @@ app.use(express.urlencoded({extended: true}))
 
 app.use(cookieParser());
 
-// const allowedOrigins = process.env.CLIENT_URL;
+const allowedOrigins = process.env.CLIENT_URL;
 
 // const allowedOrigins = "http://localhost:5173";
 
-const allowedOrigins = "http://localhost:3000";
+// const allowedOrigins = "http://localhost:3000";
 
 app.use(cors({
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
 
-    if (allowedOrigins.includes(origin)) {
+    if (allowedOrigins?.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
