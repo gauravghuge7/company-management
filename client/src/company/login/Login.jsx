@@ -5,10 +5,12 @@ import {message} from "react-message-popup"
 import axios from "axios";  
 import { toast, ToastContainer } from "react-toastify";
 import { extractErrorMessage } from "../../Components/CustomError";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async(event) => {
     event.preventDefault();
@@ -33,7 +35,7 @@ const Login = () => {
 
       if(response.data.success === true){
         message.success("Client Logged In Successfully");
-        window.location.href = "/company/dashboard";
+        navigate("/admin/companylist");
         
       }
     } 

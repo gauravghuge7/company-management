@@ -4,6 +4,8 @@ import { Container, Table, Button, FormControl, InputGroup, Modal, Form } from '
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import axios from 'axios';
 import { setEmployeeData } from "../../Redux/SetDataToRedux/EmployeeData";
+import { useNavigate } from "react-router-dom";
+
 
 const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
@@ -12,6 +14,8 @@ const EmployeeList = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const employeesPerPage = 10;
+
+  const navigate = useNavigate();
 
   const data = useSelector((state) => state.employeeReducer.employee);
 
@@ -121,7 +125,7 @@ const EmployeeList = () => {
             style={{ backgroundColor: "#007BFF", border: "none", whiteSpace: "nowrap", borderRadius: "8px", color: "#fff", fontWeight: "bold", transition: "background-color 0.3s ease" }}
             onMouseEnter={(e) => (e.target.style.backgroundColor = "#0056b3")}
             onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
-            onClick={() => window.location.href = "/admin/createEmployee"}
+            onClick={() => navigate("/admin/createemployee")}
           >
             Add New Employee
           </Button>

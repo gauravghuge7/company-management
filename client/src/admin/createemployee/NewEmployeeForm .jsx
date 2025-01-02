@@ -5,6 +5,8 @@ import { message } from 'react-message-popup';
 import axios from 'axios';
 import { extractErrorMessage } from "../../Components/CustomError";
 
+import { useNavigate } from "react-router-dom";
+
 const NewEmployeeForm = ({ fetchEmployees }) => {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -15,6 +17,7 @@ const NewEmployeeForm = ({ fetchEmployees }) => {
     
   });
 
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -50,7 +53,7 @@ const NewEmployeeForm = ({ fetchEmployees }) => {
 
       if(response.data.success === true) {
         message.success('Employee added successfully');
-        window.location.href = "/admin/employee";
+        navigate('/admin/employeelist');
       }
       fetchEmployees();
     } 

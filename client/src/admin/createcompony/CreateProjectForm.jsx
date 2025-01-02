@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { message } from 'react-message-popup';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import { setTeamData } from '../../Redux/SetDataToRedux/TeamData';
 
 const CreateProjectForm = () => {
     
@@ -31,10 +32,10 @@ const CreateProjectForm = () => {
 
     const clientId = useParams().clientId;
     const clientName = useParams().clientName;
-
+    const fetchTeams = setTeamData();
     
     useEffect(() => {
-        
+        fetchTeams
     }, [clientId, clientName]);
 
     const handleChange = (e) => {

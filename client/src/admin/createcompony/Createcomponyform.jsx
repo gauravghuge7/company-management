@@ -3,12 +3,16 @@ import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
 import axios from "axios";
 import {message } from "react-message-popup";
 import { extractErrorMessage } from '../../Components/CustomError';
+import { useNavigate } from 'react-router-dom';
+
 
 const CreateCompanyForm = () => {
     const [companyName, setCompanyName] = useState('');
     const [companyEmail, setCompanyEmail] = useState('');
     const [companyPassword, setCompanyPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+
+    const navigate = useNavigate();
 
     const handleSubmit = async(event) => {
         event.preventDefault();
@@ -37,7 +41,7 @@ const CreateCompanyForm = () => {
 
             if(response?.data?.success) {
                 message.success(response?.data?.message);
-                window.location.href = "/admin/company";
+                navigate('/admin/companylist');
             }
             
         } 

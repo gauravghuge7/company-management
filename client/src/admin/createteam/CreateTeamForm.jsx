@@ -5,6 +5,7 @@ import {message} from "react-message-popup"
 import { useSelector } from 'react-redux';
 import { setEmployeeData } from '../../Redux/SetDataToRedux/EmployeeData';
 import { extractErrorMessage } from '../../Components/CustomError';
+import { useNavigate } from 'react-router-dom';
 const CreateTeamForm = () => {
 
     const fetchEmployees = setEmployeeData();
@@ -15,6 +16,7 @@ const CreateTeamForm = () => {
     const [teamMembers, setTeamMembers] = useState(['']);
     const [selectedEmployees, setSelectedEmployees] = useState([]);  // this state are mandatory for the checkboxes
 
+    const navigate = useNavigate();
 
     /// get data from the central store
     const emp = useSelector((state) => state.employeeReducer.employee);
@@ -93,7 +95,7 @@ const CreateTeamForm = () => {
 
             if(response.data.success) {
                 message.success('Team created successfully');
-                window.location.href = "/admin/team";
+                navigate("/admin/team") ;
             }
             
         } 

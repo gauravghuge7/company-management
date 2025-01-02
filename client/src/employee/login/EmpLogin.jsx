@@ -5,11 +5,14 @@ import { message } from "react-message-popup";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { extractErrorMessage } from "../../Components/CustomError";
+import { useNavigate } from "react-router-dom";
 
 const EmpLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   // Function to handle the form submission
   const handleSubmit = async (event) => {
@@ -34,13 +37,13 @@ const EmpLogin = () => {
         if (response.data.data.userType === "employee") {
           message.success("Employee Logged In Successfully");
           toast.success("Employee Logged In Successfully");
-          window.location.href = "/employee/dashboard";
+          navigate("/employee/dashboard");
         } else if (response.data.data.userType === "admin") {
           message.success("Admin Logged In Successfully");
-          window.location.href = "/admin/dashboard";
+          navigate("/admin/dashboard");
         } else if (response.data.data.userType === "client") {
           message.success("Client Logged In Successfully");
-          window.location.href = "/company/dashboard";
+          navigate("/client/dashboard");
         }
       }
     } 

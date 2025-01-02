@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { message } from 'react-message-popup';
 import axios from 'axios';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi'; 
 import { AiOutlineDashboard, AiOutlineProject } from 'react-icons/ai'; // Dashboard and Project 
-import { FiList } from 'react-icons/fi'; // Tickets icon
-import { MdOutlineSupervisorAccount } from 'react-icons/md'; // Team Lead icon
 import { RiTeamLine } from 'react-icons/ri'; // Team icon
 import { FaUserFriends, FaRegBuilding } from 'react-icons/fa'; // Employee and Client icons
 import { useNavigate } from 'react-router-dom';

@@ -3,6 +3,7 @@ import { Container, Row, Col, Table, Button, InputGroup, FormControl, Modal, For
 import { useDispatch } from 'react-redux';
 import { message } from "react-message-popup";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 const TeamList = ({ setValue }) => {
     const [teams, setTeams] = useState([]);
@@ -13,6 +14,7 @@ const TeamList = ({ setValue }) => {
     const teamsPerPage = 10;
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const fetchTeams = async () => {
         try {
@@ -116,7 +118,7 @@ const TeamList = ({ setValue }) => {
                         }}
                         onMouseEnter={(e) => (e.target.style.backgroundColor = "#0056b3")}
                         onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
-                        onClick={() => window.location.href = "/admin/createteam"}
+                        onClick={() => navigate("/admin/createteam")}
                     >
                         Create New Team
                     </Button>

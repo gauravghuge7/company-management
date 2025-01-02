@@ -3,13 +3,14 @@ import { useEffect } from "react";
 import { message } from "react-message-popup";
 import { useDispatch } from "react-redux";
 import { addEmployee } from "../reducers";
-import { extractErrorMessage } from "../../Components/CustomError";
+import { useNavigate } from "react-router-dom";
 
 
 
 export const setEmployeeData = () => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     // set the employees in redux
     const fetchEmployees = async() => {
@@ -29,7 +30,7 @@ export const setEmployeeData = () => {
             const err = error?.response?.data?.message;
             message.error(err);
             if(err === "unauthorized admin ") {
-                window.location.href = "/employee/login";
+                navigate("/employee/login");
             }
         }
         finally {

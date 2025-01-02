@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Container, Row, Col, Image } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { message } from 'react-message-popup';
 import axios from "axios";
 import { extractErrorMessage } from "../../Components/CustomError";
 import { ToastContainer, toast } from 'react-toastify';

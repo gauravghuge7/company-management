@@ -2,12 +2,16 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Container, Row, Col, Table, Button, FormControl, InputGroup } from 'react-bootstrap';
 import { message } from 'react-message-popup';
+import { useNavigate } from 'react-router-dom';
 
-const CompanyList = ({ setValue, setClientId, setClientName}) => {
+
+const CompanyList = () => {
     const [companies, setCompanies] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
     const [editClient, setEditClient] = useState(null);
+
+    const navigate = useNavigate();
 
     const fetchCompanies = async () => {
         try {
@@ -101,7 +105,7 @@ const CompanyList = ({ setValue, setClientId, setClientName}) => {
                         style={{ backgroundColor: "#007BFF", border: "none", whiteSpace: "nowrap", borderRadius: "8px", color: "#fff", fontWeight: "bold", transition: "background-color 0.3s ease", }}
                         onMouseEnter={(e) => (e.target.style.backgroundColor = "#0056b3")}
                         onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
-                        onClick={() => window.location.href = "/admin/createcompany"}
+                        onClick={() => navigate("/admin/createcompany")}
                     >
                         Add New Client
                     </Button>
@@ -149,7 +153,7 @@ const CompanyList = ({ setValue, setClientId, setClientName}) => {
                                         <td style={{ textAlign: "center" }}>
                                             <Button 
                                                 style={{ background: "transparent", border: "none", textAlign: "center" }} 
-                                                onClick={() =>window.location.href = `/admin/addproject/${company._id}/${company.clientName}`}
+                                                onClick={() => navigate(`/admin/addproject/${company._id}/${company.clientName}`)}
                                                 
                                                 >
                                                 <i className="bi bi-plus-square-fill" style={{ fontSize: "16px", color: "#007BFF" }}></i>

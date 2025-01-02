@@ -37,7 +37,7 @@ const Employeenavbar = () => {
       const response = await axios.post('/api/employee/logout');  // this is the api call we are using the axios
       console.log("response => ", response);  // this is the api call we are using the axios
       if(response.data.success === true) {
-        window.location.href = '/';
+        navigate('/login');
         navigate('/login');
       }
 

@@ -1,11 +1,8 @@
 import { useState } from "react";
-import { Form, Button, Row, Col, Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { message } from "react-message-popup";
 import axios from "axios";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [email, setEmail] = useState("");
@@ -13,6 +10,7 @@ const Home = () => {
   const [contactName, setContactName] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [contactMessage, setContactMessage] = useState("");
+  const navigate = useNavigate();
 
   // Common font styles
   const fontStyle = {
@@ -43,13 +41,13 @@ const Home = () => {
       if (response.data.success === true) {
         if (response.data.data.userType === "employee") {
           message.success("Employee Logged In Successfully");
-          window.location.href = "/employee/dashboard";
+          navigate("/employee/dashboard");
         } else if (response.data.data.userType === "admin") {
           message.success("Admin Logged In Successfully");
-          window.location.href = "/admin/dashboard";
+         navigate("/admin/dashboard");
         } else if (response.data.data.userType === "client") {
           message.success("Client Logged In Successfully");
-          window.location.href = "/company/dashboard";
+          navigate("/client/dashboard");
         }
       }
     } catch (error) {

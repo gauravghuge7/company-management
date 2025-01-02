@@ -1,56 +1,14 @@
-import axios from 'axios';
-import React, { useEffect } from 'react';
+
 import { Card, Container, Row, Col } from 'react-bootstrap';
 import { FaUserPlus, FaUsers, FaBuilding, FaProjectDiagram } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { message } from 'react-message-popup';
-import { addTeam } from '../../Redux/team.reducer';
-import { setEmployeeData } from '../../Redux/SetDataToRedux/EmployeeData';
-import { setClientData } from '../../Redux/SetDataToRedux/ClientData';
 
 
 const AdminContain = () => {
+
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
-  const fetchEmployees = setEmployeeData();
-  const fetchCompanies = setClientData();
-
-  const fetchTeams = async() => {
-
-    try {
-
-        const response = await axios.get('/api/admin/getAllTeams');
-        
-        console.log("response => ", response);
-    
-        if(response.data.success === true) {
-    
-          dispatch(addTeam(response.data.data.team));
-          console.log("teams => ", response.data.data.team);
-          // message.success('Team fetched ');
-        }
-
-    } 
-    catch (error) {
-        const err = error?.response?.data?.message;
-        message.error(err);
-        if(err === "unauthorized admin ") {
-            window.location.href = "/admin/login";
-        }
-        message.error(error.message);  
-    }
-
-}
-
-
-useEffect(() => {
-  fetchEmployees;
-  fetchTeams();
-  fetchCompanies;
-
-},[])
 
 
   const employee = useSelector((state) => state.employeeReducer?.employee);
@@ -110,7 +68,7 @@ useEffect(() => {
               e.currentTarget.style.boxShadow = cardStyle.boxShadow;
               e.currentTarget.style.transform = 'translateY(0)';
             }}
-            onClick={() => handleCardClick('/admin/employee')} // Navigate to Employees page
+            onClick={() => handleCardClick('/admin/employee')} // navigate to Employees page
           >
             <div className="card-header text-center" style={headerStyle}>Employees</div>
             <Card.Body>
@@ -134,7 +92,7 @@ useEffect(() => {
               e.currentTarget.style.boxShadow = cardStyle.boxShadow;
               e.currentTarget.style.transform = 'translateY(0)';
             }}
-            onClick={() => handleCardClick('/admin/team')} // Navigate to Teams page
+            onClick={() => handleCardClick('/admin/team')} // navigate to Teams page
           >
             <div className="card-header text-center" style={headerStyle}>Teams</div>
             <Card.Body>
@@ -158,7 +116,7 @@ useEffect(() => {
               e.currentTarget.style.boxShadow = cardStyle.boxShadow;
               e.currentTarget.style.transform = 'translateY(0)';
             }}
-            onClick={() => handleCardClick('/admin/company')} // Navigate to Clients page
+            onClick={() => handleCardClick('/admin/company')} // navigate to Clients page
           >
             <div className="card-header text-center" style={headerStyle}>Clients</div>
             <Card.Body>
@@ -182,7 +140,7 @@ useEffect(() => {
               e.currentTarget.style.boxShadow = cardStyle.boxShadow;
               e.currentTarget.style.transform = 'translateY(0)';
             }}
-            onClick={() => handleCardClick('/admin/project')} // Navigate to Projects page
+            onClick={() => handleCardClick('/admin/project')} // navigate to Projects page
           >
             <div className="card-header text-center" style={headerStyle}>Projects</div>
             <Card.Body>
