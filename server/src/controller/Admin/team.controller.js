@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
 
-import { uploadOnCloudinary } from "../../helper/cloudinary.js";
-import { Admin } from "../../model/admin.model.js";
 import { Employee } from "../../model/employee.model.js";
 import { Team } from "../../model/team.model.js";
 import { ApiError } from "../../utils/ApiError.js";
@@ -192,9 +190,34 @@ const getAllTeams = async(req, res) => {
 }
 
 
+const deleteTeams =  asyncHandler(async (req, res) => {
+
+    try {
+
+        const { id } = req.params;
+
+        const team = await Team.findByIdAndDelete(id);
+
+        if (!team) {
+            throw new ApiError(404, "Team not found");
+        }
+
+        return res
+        .status(200)
+        .json(new ApiResponse(200, "Team deleted successfully", team));
+
+    } 
+    catch (error) {
+        console.log(" Error => ", error.message)
+        throw new ApiError(400, error.message);
+    }
+})
+
+
 
 export {
     createTeams,
     getAllTeams,
+    deleteTeams
 }
 

@@ -76,9 +76,17 @@ const TeamList = ({ setValue }) => {
         }
     };
 
-    const handleDelete = (id) => {
+    const handleDelete = async(id) => {
         // Implement delete functionality (optional)
         console.log(`Delete team with id: ${id}`);
+
+        try {
+            const response = await axios.delete(`/api/admin/deleteTeam/${id}`);
+
+        } 
+        catch (error) {
+            console.log(error);
+        }
     };
 
     return (

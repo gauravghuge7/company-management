@@ -17,9 +17,9 @@ const EmployeeList = () => {
 
   const navigate = useNavigate();
 
-  const data = useSelector((state) => state.employeeReducer.employee);
-
+  
   const fetchEmployees = setEmployeeData();
+  const data = useSelector((state) => state.employeeReducer.employee);
 
   useEffect(() => {
     fetchEmployees;

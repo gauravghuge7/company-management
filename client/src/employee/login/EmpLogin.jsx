@@ -57,7 +57,7 @@ const EmpLogin = () => {
 
   // Function to fill in test credentials
   const useTestCredentials = () => {
-    setEmail("gaurav@admin.com");
+    setEmail("gaurav@employee.com");
     setPassword("gaurav");
   };
 
@@ -142,6 +142,8 @@ const EmpLogin = () => {
               />
             </Form.Group>
 
+            <p> employee doesn&apos;t exist you can create one using admin login and create a employee</p>
+
             {/* Button to use test credentials */}
             <Button
               variant="secondary"
@@ -155,6 +157,7 @@ const EmpLogin = () => {
             >
               Use Test Credentials
             </Button>
+              
 
             <Button
               variant="primary"

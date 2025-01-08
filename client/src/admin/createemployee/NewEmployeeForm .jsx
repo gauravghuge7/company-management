@@ -7,7 +7,7 @@ import { extractErrorMessage } from "../../Components/CustomError";
 
 import { useNavigate } from "react-router-dom";
 
-const NewEmployeeForm = ({ fetchEmployees }) => {
+const NewEmployeeForm = ( ) => {
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -53,9 +53,8 @@ const NewEmployeeForm = ({ fetchEmployees }) => {
 
       if(response.data.success === true) {
         message.success('Employee added successfully');
-        navigate('/admin/employeelist');
+        navigate('/admin/employee');
       }
-      fetchEmployees();
     } 
     catch (error) {
       console.log("error => ", error);
