@@ -32,6 +32,7 @@ const AdminLogin = () => {
       console.log("response => ", response);
 
       if (response.data.success === true) {
+        localStorage.setItem('CompanyAdmin', email);
         navigate("/admin/dashboard");
       }
     } 

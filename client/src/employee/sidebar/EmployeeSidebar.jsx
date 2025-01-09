@@ -7,8 +7,11 @@ import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 import { AiOutlineDashboard, AiOutlineProject } from 'react-icons/ai'; // Dashboard and Project 
 import { FiList } from 'react-icons/fi'; // Tickets icon
 import { MdOutlineSupervisorAccount } from 'react-icons/md'; // Team Lead icon
+import { useNavigate } from 'react-router-dom';
 
 const EmployeeSidebar = ({ setConditionalComponent }) => {
+
+  const navigate = useNavigate();
   const [teams, setTeams] = useState([{ teamLead: "" }]);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -68,21 +71,21 @@ const EmployeeSidebar = ({ setConditionalComponent }) => {
 
       <Nav className="flex-column">
         <SidebarButton 
-          onClick={() => setConditionalComponent("Contain")} 
+          onClick={() => navigate("/employee/dashboard")}
           isCollapsed={isCollapsed} 
           icon={<AiOutlineDashboard size={20} />} 
           text="Dashboard" 
         />
 
         <SidebarButton 
-          onClick={() => setConditionalComponent("projects")} 
+          onClick={() => navigate("/employee/projects")}
           isCollapsed={isCollapsed} 
           icon={<AiOutlineProject size={20} />} 
           text="Project Section" 
         />
 
         <SidebarButton 
-          onClick={() => setConditionalComponent("TaskList")} 
+          onClick={() => navigate("/employee/EmployeeTasks")}
           isCollapsed={isCollapsed} 
           icon={<FiList size={20} />} 
           text="Tickets" 
@@ -90,7 +93,7 @@ const EmployeeSidebar = ({ setConditionalComponent }) => {
 
         {teams?.length > 0 && (
           <SidebarButton 
-            onClick={() => setConditionalComponent("teamLead")} 
+            onClick={() => navigate("/employee/teamlead")}
             isCollapsed={isCollapsed} 
             icon={<MdOutlineSupervisorAccount size={20} />} 
             text="Team Lead Section" 

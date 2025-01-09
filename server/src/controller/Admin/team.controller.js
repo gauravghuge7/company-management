@@ -17,11 +17,11 @@ const createTeams = asyncHandler(async (req, res) => {
 
 
 
-       const {teamName, teamLead, projectId, employee, teamId} = req.body;
+       const {teamName, teamLead, employee, teamId} = req.body;
 
        // validate the data
        
-       if(!teamName || !teamLead || !projectId || !employee) {
+       if(!teamName || !teamLead  || !employee) {
            throw new ApiError(400, "Please provide all the required fields");
        }
 
@@ -63,7 +63,6 @@ const createTeams = asyncHandler(async (req, res) => {
        const team = await Team.create({
            teamName,
            teamLead: teamLeadId._id,
-           projectId,
            employee: employeeId.map(data => data._id),
            teamId,
            admin: req.user._id

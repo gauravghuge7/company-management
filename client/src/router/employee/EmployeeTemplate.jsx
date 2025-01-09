@@ -10,14 +10,13 @@ const EmployeeTemplate = () => {
       <>
          <Employeenavbar />
          <div className="d-flex">
-            <EmployeeSidebar setValue={setValue} />
+            <EmployeeSidebar  />
             <div className="flex-grow-1 p-3">
                <Outlet />   
          
             </div>
    
          </div>   
-         <Adminfooter />
       
       
       </>

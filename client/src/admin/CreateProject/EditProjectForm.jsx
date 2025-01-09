@@ -3,21 +3,9 @@ import JoditEditor from 'jodit-react';
 import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
 import axios from 'axios';  // Import axios for making API calls
 
-const TaskForm = () => {
-    const editor = useRef(null);
-    const [content, setContent] = useState('');
 
-    // State to store form data
-    const [formData, setFormData] = useState({
-        taskName: '',
-        priority: '',
-        saptype: '',
-        assignteam: '',
-        dueDate: '',
-        assignName: '',
-        assignEmail: '',
-        description: ''
-    });
+const EditProjectForm = ({ projectData, onSave }) => {
+
 
     // State to store teams fetched from API
     const [teams, setTeams] = useState([]);
@@ -38,35 +26,32 @@ const TaskForm = () => {
         fetchTeams();
     }, []);
 
-    // Config for JoditEditor
-    const config = {
-        readonly: false,
-        placeholder: 'Start typing your task details...',
-    };
 
-    // Handle input changes for form fields
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
+        projectData[e.target.name] = e.target.value;
+    }
 
-    // Handle Jodit editor changes
-    const handleJoditChange = (newContent) => {
-        setContent(newContent);
-        setFormData({
-            ...formData,
-            taskDetail: newContent,
-        });
+    const onImageChange = (e) => {
+        projectData = { ...projectData, file: e.target.files[0] };
     };
-
+    
     // Handle form submission
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Form Data Submitted:', formData);
-        // Handle form submission logic here
+    const handleSubmit =async () => {
+
+        try {
+            const response = await axios.put(`/api/admin/editProject/${projectData._id}`, projectData);
+            if (response.status === 200) {
+                message.success('Project updated successfully');
+                onSave();
+            } 
+            else {
+                message.error('Failed to update project');
+            }
+        } 
+        catch (error) {
+            console.error('Error updating project:', error);
+            message.error('Failed to update project');
+        }
     };
 
     return (
@@ -77,135 +62,119 @@ const TaskForm = () => {
                         <Card.Body>
                             <h2 className="text-center mb-4" style={{ fontWeight: 'bold' }}>Create New Task</h2>
                             <Form onSubmit={handleSubmit}>
-                                <Form.Group controlId="taskName" className="mb-3">
-                                    <Form.Label>Task Name</Form.Label>
+                            <Form.Group controlId="projectId" className="mb-3">
+                                    <Form.Label>Project ID</Form.Label>
                                     <Form.Control
-                                        type="text"
-                                        name="taskName"
-                                        value={formData.taskName}
+                                        type="tel"
+                                        name="projectId"
+                                        value={projectData.projectId}
                                         onChange={handleChange}
                                         required
                                         style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
                                     />
                                 </Form.Group>
 
-                                <Form.Group controlId="priority" className="mb-3">
-                                    <Form.Label>Priority</Form.Label>
+                                <Form.Group controlId="projectName" className="mb-3">
+                                    <Form.Label>Project Name</Form.Label>
                                     <Form.Control
-                                        as="select"
-                                        name="priority"
-                                        value={formData.priority}
+                                        type="text"
+                                        name="projectName"
+                                        value={projectData.projectName}
                                         onChange={handleChange}
                                         required
                                         style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
-                                    >
-                                        <option value="">Select Priority</option>
-                                        <option value="High">High</option>
-                                        <option value="Medium">Medium</option>
-                                        <option value="Low">Low</option>
-                                    </Form.Control>
+                                    />
                                 </Form.Group>
 
-                                <Form.Group controlId="saptype" className="mb-3">
-                                    <Form.Label>SAP Type</Form.Label>
+                                {/* <Form.Group controlId="companyName" className="mb-3">
+                                    <Form.Label>Client Name</Form.Label>
                                     <Form.Control
-                                        as="select"
-                                        name="saptype"
-                                        value={formData.saptype}
+                                        type="text"
+                                        name="companyName"
+                                        value={projectData.companyName}
                                         onChange={handleChange}
                                         required
                                         style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
-                                    >
-                                        <option value="">Select SAP Type</option>
-                                        <option value="sapabap">SAP ABAP</option>
-                                        <option value="sapmm">SAP MM</option>
-                                        <option value="sappp">SAP PP</option>
-                                        <option value="sapfico">SAP FICO</option>
-                                        <option value="sapsd">SAP SD</option>
-                                    </Form.Control>
+                                    />
+                                </Form.Group> */}
+
+                                <Form.Group controlId="spokePersonName" className="mb-3">
+                                    <Form.Label>Spokesperson Name</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="spokePersonName"
+                                        value={projectData.spokePersonName}
+                                        onChange={handleChange}
+                                        required
+                                        style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
+                                    />
                                 </Form.Group>
 
-                                {/* Dynamic Assign To Team Dropdown */}
-                                <Form.Group controlId="assignteam" className="mb-3">
-                                    <Form.Label>Assign To Team</Form.Label>
+                                <Form.Group controlId="spokePersonEmail" className="mb-3">
+                                    <Form.Label>Spokesperson Email</Form.Label>
+                                    <Form.Control
+                                        type="email"
+                                        name="spokePersonEmail"
+                                        value={projectData.spokePersonEmail}
+                                        onChange={handleChange}
+                                        required
+                                        style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
+                                    />
+                                </Form.Group>
+
+                                <Form.Group controlId="spokePersonNumber" className="mb-3">
+                                    <Form.Label>Spokesperson Number</Form.Label>
+                                    <Form.Control
+                                        type="tel"
+                                        name="spokePersonNumber"
+                                        value={projectData.spokePersonNumber}
+                                        onChange={handleChange}
+                                        required
+                                        style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
+                                    />
+                                </Form.Group>
+
+                                <Form.Group controlId="team" className="mb-3">
+                                    <Form.Label>Team</Form.Label>
                                     <Form.Control
                                         as="select"
-                                        name="assignteam"
-                                        value={formData.assignteam}
+                                        name="team"
+                                        value={projectData.team}
                                         onChange={handleChange}
                                         required
                                         style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
                                     >
-                                        <option value="">Select Team</option>
-                                        {teams.map((team) => (
-                                            <option key={team._id} value={team.teamName}>
-                                                {team.teamName}
-                                            </option>
+                                        <option value="team">Select Team</option>
+                                        {teams.map((team, index) => (
+                                            <option key={index} value={team._id}>{team.teamName}</option>
                                         ))}
                                     </Form.Control>
                                 </Form.Group>
 
-                                <Form.Group controlId="dueDate" className="mb-3">
-                                    <Form.Label>Due Date</Form.Label>
-                                    <Form.Control
-                                        type="date"
-                                        name="dueDate"
-                                        value={formData.dueDate}
-                                        onChange={handleChange}
-                                        required
-                                        style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
-                                    />
-                                </Form.Group>
-
-                                <Form.Group controlId="assignName" className="mb-3">
-                                    <Form.Label>Assign BY From</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="assignName"
-                                        value={formData.assignName}
-                                        onChange={handleChange}
-                                        required
-                                        style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
-                                    />
-                                </Form.Group>
-                                <Form.Group controlId="assignName" className="mb-3">
-                                    <Form.Label>Assign By Email</Form.Label>
-                                    <Form.Control
-                                        type="Email"
-                                        name="assignEmail"
-                                        value={formData.assignEmail}
-                                        onChange={handleChange}
-                                        required
-                                        style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
-                                    />
-                                </Form.Group>
-
                                 <section>
-                  <label> Project Description </label>
-                  <textarea 
-                     cols="50" 
-                     className='w-full border p-2 mb-4'
-                     placeholder="Add text to the slide"
-                     value={formData.description}
-                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                     style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
-                  >
-                  </textarea>
-               </section>
-               <div>
-                  <label> Select Document </label>
-                  <br/>
-                  <input 
-                     type="file"
-                     
-                     accept='*'
-                  />
-              
+                                    <label>Project Description</label>
+                                    <textarea
+                                        cols="50"
+                                        className='w-full border p-2 mb-4'
+                                        placeholder="Add project description"
+                                        value={projectData.description}
+                                        onChange={(e) => setFormData({ ...projectData, description: e.target.value })}
+                                        style={{ borderRadius: '12px', padding: '10px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)' }}
+                                    ></textarea>
+                                </section>
 
-               </div>
-               <br/>
+                                <div>
+                                    <label>Select Document</label>
+                                    <br />
+                                    <input
+                                        type="file"
+                                        onChange={onImageChange}
+                                        accept='*'
+                                    />
+                                    <br />
+                                </div>
+                                <br />
 
-              
                                 <Button
                                     variant="primary"
                                     type="submit"
@@ -229,7 +198,7 @@ const TaskForm = () => {
                                         e.target.style.transform = 'scale(1)'; // Reset scale when not hovering
                                     }}
                                 >
-                                    Submit Task
+                                    Submit Project
                                 </Button>
                             </Form>
                         </Card.Body>
@@ -240,4 +209,4 @@ const TaskForm = () => {
     );
 };
 
-export default TaskForm;
+export default EditProjectForm;

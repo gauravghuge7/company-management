@@ -30,7 +30,7 @@ export const setEmployeeData = () => {
             const err = error?.response?.data?.message;
             message.error(err);
             if(err === "unauthorized admin ") {
-                navigate("/employee/login");
+                navigate("/admin/login");
             }
         }
         finally {

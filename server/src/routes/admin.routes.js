@@ -14,6 +14,7 @@ import { createTeams, deleteTeams, getAllTeams } from '../controller/Admin/team.
 import { createProject, getAllProjects } from '../controller/Admin/project.controller.js';
 import { deleteEmployee, editEmployee } from '../controller/Employee/employee.manage.controller.js';
 import { deleteClient, editClient } from '../controller/Client/client.manage.controller.js';
+import { deleteProject, editProject } from '../controller/Client/client.project.controller.js';
 
 const adminRouter = express.Router();
 
@@ -117,7 +118,19 @@ adminRouter.route(`/deleteClient/:_id`).delete(
 
 
 
+/**
+    delete the project
+*/
 
+adminRouter.route("/deleteProject/:projectId").delete(
+    verifyAdmin,
+    deleteProject
+)
+
+adminRouter.route("/editProject/:projectId").put(
+    verifyAdmin,
+    editProject
+)
 
 
 

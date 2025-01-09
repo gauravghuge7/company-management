@@ -21,10 +21,9 @@ const EmployeeRouter = () => {
 
                 <Route path="/projects" element={<EmpProjects />} />
 
-
-                <Route path="teamlead" element={<LeadTeam />} />
-                <Route path="/leadprojects" element={<LeadProjects />} />
-                <Route path="/viewteamleadproject" element={<ProjectSection />} />
+                <Route path="/teamlead" element={<LeadTeam />} />
+                <Route path="/leadprojects/:teamId" element={<LeadProjects />} />
+                <Route path="/viewteamleadproject/:teamId/:projectId" element={<ProjectSection />} />
 
             </Route>
             

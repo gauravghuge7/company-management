@@ -41,7 +41,7 @@ const CreateCompanyForm = () => {
 
             if(response?.data?.success) {
                 message.success(response?.data?.message);
-                navigate('/admin/companylist');
+                navigate('/admin/company');
             }
             
         } 

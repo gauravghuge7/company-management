@@ -52,7 +52,6 @@ const CompanyList = () => {
             console.log("API Response:", response.data);
             if (response.data.success) {
                 setEditClient(response.data.data);
-                setValue("editClient");
             }
         } 
         catch (error) {

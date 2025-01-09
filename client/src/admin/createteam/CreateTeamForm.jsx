@@ -78,7 +78,6 @@ const CreateTeamForm = () => {
             const body = {    // teamName, teamLead, projectId, employee, teamId
                 teamName,  // teamName
                 teamLead,  // teamLead
-                projectId, // projectId
                 employee: teamMembers.filter(member => member.trim() !== ''),
                 teamId
             }
@@ -170,42 +169,32 @@ const CreateTeamForm = () => {
                                     />
                                 </Form.Group>
 
-                                <Form.Group controlId="teamLead" className="mb-3">
-                                    <Form.Label>Project Id</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="Project Id"
-                                        value={projectId}
-                                        onChange={(e) => setProjectId(e.target.value)}
-                                        required
-                                        style={{ borderRadius: '10px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}
-                                    />
-                                </Form.Group>
+                            
                                 <Form.Group
-    controlId="numberOfMembers"
-    className="mb-3"
-    style={{ borderRadius: '10px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}
->
-    <Form.Label id="members">Select Employees for Team</Form.Label>
-    <br/>
-    <div style={{ maxHeight: '200px', overflowY: 'auto', borderRadius: '10px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
-        {
-            employees.map((employee, index) => (
-                <div key={index}>
-                    <input 
-                        type="checkbox" 
-                        className='mr-2'
-                        value={employee}
-                        name='employee'
-                        onChange={handleMemberChange}
-                        style={{ borderRadius: '10px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}
-                    />
-                    <label id='employee'>{employee}</label>
-                </div>
-            ))
-        }
-    </div>
-</Form.Group>
+                                    controlId="numberOfMembers"
+                                    className="mb-3"
+                                    style={{ borderRadius: '10px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}
+                                >
+                                    <Form.Label id="members">Select Employees for Team</Form.Label>
+                                    <br/>
+                                    <div style={{ maxHeight: '200px', overflowY: 'auto', borderRadius: '10px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
+                                        {
+                                            employees.map((employee, index) => (
+                                                <div key={index}>
+                                                    <input 
+                                                        type="checkbox" 
+                                                        className='mr-2'
+                                                        value={employee}
+                                                        name='employee'
+                                                        onChange={handleMemberChange}
+                                                        style={{ borderRadius: '10px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}
+                                                    />
+                                                    <label id='employee'>{employee}</label>
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+                                </Form.Group>
 
 
 

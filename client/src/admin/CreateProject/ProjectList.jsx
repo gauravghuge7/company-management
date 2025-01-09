@@ -11,32 +11,25 @@ const ProjectList = () => {
     const [projectData, setProjectData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
+    const [currentProject, setCurrentProject] = useState({});
 
 
 
-
-  const handleEdit = async (id) => {
-    try {
-      const response = await axios.put(`/api/admin/editProject/${id}`, projectData);
-      if (response.status === 200) {
-        message.success('Project updated successfully');
-        getAllProjects();
-      } else {
-        message.error('Failed to update project');
-      }
-    } catch (error) {
-      console.error('Error updating project:', error);
-      message.error('Failed to update project');
-    }
-  };
+const handleEdit = async (id) => {
+    setCurrentProject(id);
+    setIsEditing(true);
+};
 
   const handleDelete = async (id) => {
     try {
+        console.log("id => ", id);
       const response = await axios.delete(`/api/admin/deleteProject/${id}`);
+
       if (response.status === 200) {
         message.success('Project deleted successfully');
         getAllProjects();
-      } else {
+      } 
+      else {
         message.error('Failed to delete project');
       }
     } catch (error) {
@@ -45,32 +38,6 @@ const ProjectList = () => {
     }
   };
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     const projectsPerPage = 10;
 
@@ -102,8 +69,7 @@ const ProjectList = () => {
         getAllProjects();
     }, []);
 
-    const handleSave = (updatedData) => {
-        setProjectData(updatedData);
+    const handleSave = () => {
         setIsEditing(false);
     };
 
@@ -122,7 +88,7 @@ const ProjectList = () => {
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     if (isEditing) {
-        return <EditProjectForm projectData={projectData} onSave={handleSave} />;
+        return <EditProjectForm projectData={currentProject} onSave={handleSave} />;
     }
 
     return (
@@ -187,10 +153,11 @@ const ProjectList = () => {
                 </thead>
                 <tbody>
                     {currentProjects.map((data, index) => (
+
                         <tr key={index}>
                             <td>{indexOfFirstProject + index + 1}</td>
                             <td>{data.projectName}</td>
-                          
+                        
                             <td>{data.spokePersonEmail}</td>
                             <td>{data.spokePersonName}</td>
                             <td>{data.spokePersonNumber}</td>
@@ -205,15 +172,16 @@ const ProjectList = () => {
                                 </a>
                             </td>
                             <td>
-    <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Button style={{ background: "transparent", border: "none" }} onClick={() => handleEdit(projectData._id)}>
-            <i className="bi bi-pencil-square" style={{ fontSize: "16px", color: "blue", cursor: "pointer" }}></i>
-        </Button>
-        <Button style={{ background: "transparent", border: "none" }} onClick={() => handleDelete(projectData._id)}>
-            <i className="bi bi-trash-fill" style={{ fontSize: "16px", color: "red", cursor: "pointer" }}></i>
-        </Button>
-    </div>
-</td>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                
+                                <Button style={{ background: "transparent", border: "none" }} onClick={() => handleEdit(data)}>
+                                    <i className="bi bi-pencil-square" style={{ fontSize: "16px", color: "blue", cursor: "pointer" }}></i>
+                                </Button>
+                                <Button style={{ background: "transparent", border: "none" }} onClick={() => handleDelete(data._id)}>
+                                    <i className="bi bi-trash-fill" style={{ fontSize: "16px", color: "red", cursor: "pointer" }}></i>
+                                </Button>
+                            </div>
+                        </td>
 
 
                             {/* <td>
@@ -221,7 +189,9 @@ const ProjectList = () => {
                                     <i className="bi bi-plus-square-fill" style={{ fontSize: "16px", color: "#007BFF" }}></i>
                                 </Button>
                             </td> */}
+
                         </tr>
+                        
                     ))}
                 </tbody>
             </table>

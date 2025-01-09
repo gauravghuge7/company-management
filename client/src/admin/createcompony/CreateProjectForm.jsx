@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { message } from 'react-message-popup';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { setTeamData } from '../../Redux/SetDataToRedux/TeamData';
 
 const CreateProjectForm = () => {
@@ -50,6 +50,8 @@ const CreateProjectForm = () => {
         setFormData({ ...formData, file: e.target.files[0] });
     };
 
+    const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -74,10 +76,16 @@ const CreateProjectForm = () => {
             withCredentials: true,
         };
 
-        const response = await axios.post("/api/admin/project", body, config);
-
-        if (response.data.success) {
-            message.success(response.data.message);
+        try {
+            const response = await axios.post("/api/admin/project", body, config);
+    
+            if (response.data.success) {
+                message.success(response.data.message);
+                navigate("/admin/company");
+            }
+        } 
+        catch (error) {
+            console.log(error);
         }
     };
 
