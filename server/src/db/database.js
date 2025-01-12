@@ -2,12 +2,14 @@ import mongoose from 'mongoose';
 
 
 
+const connectionString = "mongodb://localhost:27017/myFirstDatabase";
+
 
 const connectDB = async () => {
 
    try {
 
-      const connect = await mongoose.connect(process.env.MONGODB_URI, {
+      const connect = await mongoose.connect(connectionString, {
      
       });
 
